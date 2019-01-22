@@ -6,9 +6,11 @@ import ProductForm from './ViewApp/ProductForm';
 const RouterComponent = () => {
     
     return (
-      <Router> 
-      <Scene key="listProduct" component={ListProduct} title="main" initial />
-      <Scene key="productForm" component={ProductForm}  title="productos" />
+      <Router>
+      <Scene key="root"> 
+      <Scene key="listProduct" component={ListProduct} title="Header" initial />
+      <Scene key="productForm" component={ProductForm}  title="Crear Oferta" />
+      </Scene>
       </Router>
     );
   };
