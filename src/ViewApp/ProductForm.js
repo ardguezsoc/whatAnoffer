@@ -42,6 +42,7 @@ class ProductForm extends Component {
         <Picker.Item label="Carne" value="Carne" />
         <Picker.Item label="Frutas y verduras" value="Frutas y verduras" />
         <Picker.Item label="Pan y dulces" value="Pan y dulces" />
+        <Picker.Item label="Lácteos" value="Lácteos" />
         <Picker.Item label="Otros" value="Otros" />
         </Picker>
         </View>

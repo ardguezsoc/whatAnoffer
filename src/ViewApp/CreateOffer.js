@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { Button, CardContainer } from "../component";
 import ProductForm from "./ProductForm";
-import { productUpdate, productCreate } from "../actions";
-import { connect } from "react-redux";
+import { productUpdate, productCreate, today, nowHour} from "../actions";
+import { connect } from "react-redux"
+
 
 class CreateOffer extends Component {
   
   onButtonPress() {
     const { title, description, date, kind, price } = this.props;
-
-    this.props.productCreate({ title, description, date, kind, price });
+    const currentTime = today() + " " + nowHour()
+    this.props.productCreate({ title, description, date, kind, price, currentTime });
 
   }
 

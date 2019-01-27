@@ -15,7 +15,7 @@ const DatePick = ({ dateDefault, value, onDateChange }) => {
       mode="date"
       placeholder="Selecciona una fecha:"
       format="DD-MM-YYYY"
-      minDate="01-06-2019"
+      minDate="21-01-2019"
       maxDate= "01-06-2020"
       confirmBtnText="Confirm"
       cancelBtnText="Cancel"

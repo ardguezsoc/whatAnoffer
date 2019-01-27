@@ -3,7 +3,7 @@ import { View, Text, ImageBackground } from "react-native";
 import { Avatar } from "react-native-elements";
 
 
-const CardItem = () => {
+const CardItem = ({title, price}) => {
   const {
     roundBorder,viewContainer,priceStyle, roundBorder2
   } = styles;
@@ -19,7 +19,7 @@ const CardItem = () => {
         style={{ width: "100%", height: "100%",  }}
       >
       <View style={[roundBorder2, priceStyle]}>
-      <Text style={{ textAlign:'center', color:"white" }} >10€</Text>
+      <Text style={{ textAlign:'center', color:"white" }} >{price} €</Text>
       </View>
       <View style={{ 
       alignSelf:'center',
@@ -35,7 +35,7 @@ const CardItem = () => {
           }}
          
         />
-      <Text style={{color: "white", fontSize: 20, opacity: 1}}>Pan de molde</Text>
+      <Text style={{color: "white", fontSize: 20, opacity: 1}}>{title}</Text>
       <Text style={{color: "white", fontSize: 16, opacity: 1}}>P. Sherman, calle Wallaby, 42, Sydney</Text>
       </View>
       </ImageBackground>
