@@ -3,22 +3,23 @@ import { View,Text } from "react-native";
 import DatePicker from "react-native-datepicker";
 
 
-const DatePick = () => {
-    const {inputStyle, labelStyle,viewStyle} = styles;
+const DatePick = ({ dateDefault, value, onDateChange }) => {
+    const { labelStyle,viewStyle } = styles;
     return(
   <View style={viewStyle}>
-    <Text style={labelStyle}>Fecha caducidad:</Text>
+    <Text style={labelStyle}>Consumir pref antes del :</Text>
     <DatePicker
-      style={{ width: 150 }}
-      //date={this.state.date}
-      date={"21-01-2019"}
+      style={{ width: 140 }}
+      
+      date={ value }
       mode="date"
       placeholder="Selecciona una fecha:"
       format="DD-MM-YYYY"
-      minDate="21-01-2019"
-      maxDate="21-01-2099"
+      minDate="01-06-2019"
+      maxDate= "01-06-2020"
       confirmBtnText="Confirm"
       cancelBtnText="Cancel"
+      onDateChange={onDateChange}
       customStyles={{
         dateIcon: {
           position: "absolute",
@@ -29,9 +30,6 @@ const DatePick = () => {
         dateInput: {
           marginLeft: 36
         }
-      }}
-      onDateChange={date => {
-        this.setState({ date: date });
       }}
     />
   </View>
@@ -52,4 +50,4 @@ const styles = {
   }
 };
 
-export {DatePick};
+export { DatePick };

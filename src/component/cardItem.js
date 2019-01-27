@@ -1,90 +1,88 @@
 import React from "react";
-import { View, Text,  } from "react-native";
+import { View, Text, ImageBackground } from "react-native";
 import { Avatar } from "react-native-elements";
 
+
 const CardItem = () => {
-    const {containerStyle,priceStyle, containerDescription, textName, textDescription} = styles;
+  const {
+    roundBorder,viewContainer,priceStyle, roundBorder2
+  } = styles;
+
+
+
   return (
-    <View style={containerStyle}>
-    
-      <View style={styles.divrow}>
-        <Avatar
+    <View
+      style={ [roundBorder, viewContainer]}
+    >
+      <ImageBackground
+        source={require('./pan.jpg')}
+        style={{ width: "100%", height: "100%",  }}
+      >
+      <View style={[roundBorder2, priceStyle]}>
+      <Text style={{ textAlign:'center', color:"white" }} >10€</Text>
+      </View>
+      <View style={{ 
+      alignSelf:'center',
+      justifyContent: 'center',
+      alignItems: 'center',
+      }}>
+       <Avatar
           medium
           rounded
           source={{
             uri:
-              "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
+            "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
           }}
-          activeOpacity={0.7}
+         
         />
-        <View>
-
-          <Text style={[textDescription, textName]}>
-            Laura Santana
-          </Text>
-          
-          <View style={containerDescription}>
-          <Text style={priceStyle}> 3.45$ </Text>
-          <Text style={textDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-            iaculis varius tellus et gravida. Cras vel felis eu magna volutpat
-            consequat. Suspendisse non lorem nisi.
-          </Text>
-          
-          </View>
-        </View>
+      <Text style={{color: "white", fontSize: 20, opacity: 1}}>Pan de molde</Text>
+      <Text style={{color: "white", fontSize: 16, opacity: 1}}>P. Sherman, calle Wallaby, 42, Sydney</Text>
       </View>
+      </ImageBackground>
+
     </View>
   );
 };
 
-const styles = {
-  containerStyle: {
-    borderBottomWidth: 1,
-    padding: 5,
-    backgroundColor: "#fff",
-    justifyContent: "flex-start",
-    flexDirection: "column",
-    borderColor: "#ddd",
-    position: "relative",
-    flexWrap: "wrap"
-  },
-  
-  containerDescription: {
-    width: '95%',
-         flexGrow: 1,
-         flexWrap: 'wrap'
+const styles= {
+  roundBorder:{
+    borderBottomRightRadius: 15,
+        borderTopRightRadius: 15,
+        borderBottomLeftRadius: 15,
+        borderTopLeftRadius: 15,
+        overflow: "hidden",
+       
+        alignSelf: "center"
   },
 
-  textDescription: {
-    color: "black",
-    marginLeft: 10,
-    paddingRight: 10
-    
+  roundBorder2:{
+   // borderBottomRightRadius: 15,
+        borderTopRightRadius: 15,
+         borderBottomLeftRadius: 15,
+        // borderTopLeftRadius: 15,
+        overflow: "hidden",
+       
+        alignSelf: "center"
   },
 
-  priceStyle: {
-    color: 'grey',
-    marginLeft: 10
+  viewContainer: {
+    width: "95%",
+    height: 150,
+    marginTop: 5,
+    flex: 1,
   },
 
-  divrow: {
-    flexDirection: "row"
-  },
-
-  divColumn: {
-    flexDirection: "column"
-  },
-
-  textName: {
-    fontWeight: "bold"
-  },
-
-  wrap: {
-    flexWrap: "wrap"
+  priceStyle:{
+    width: '20%', 
+    height: '20%', 
+    backgroundColor:"white", 
+    alignSelf:'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor:'#52A128'
+ 
   }
+
 };
-
-
 
 export { CardItem };
