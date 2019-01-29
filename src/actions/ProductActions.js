@@ -34,3 +34,15 @@ export const productFetch = () => {
     });
   };
 };
+
+export const productDelete = ({ uid }) => {
+  return() => {
+    firebase
+    .database()
+    .ref(`/offer/${uid}`)
+    .remove()
+    .then(() => {
+      Actions.pop();
+    });
+  };
+};

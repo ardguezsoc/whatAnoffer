@@ -3,31 +3,28 @@ import { View, Text, ImageBackground } from "react-native";
 import { Avatar } from "react-native-elements";
 
 
-const CardItem = ({title, price}) => {
+const CardProductView = ({title, price}) => {
   const {
-    roundBorder,viewContainer,priceStyle, roundBorder2
+    viewContainer,
   } = styles;
 
 
 
   return (
     <View
-      style={ [roundBorder, viewContainer]}
+      style={ [ viewContainer ]}
     >
       <ImageBackground
         source={require('./pan.jpg')}
         style={{ width: "100%", height: "100%",  }}
       >
-      <View style={[roundBorder2, priceStyle]}>
-      <Text style={{ textAlign:'center', color:"white" }} >{price} €</Text>
-      </View>
       <View style={{ 
-      alignSelf:'center',
-      justifyContent: 'center',
-      alignItems: 'center',
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center'
       }}>
        <Avatar
-          medium
+          large
           rounded
           source={{
             uri:
@@ -35,8 +32,6 @@ const CardItem = ({title, price}) => {
           }}
          
         />
-      <Text style={{color: "white", fontSize: 20, opacity: 1}}>{title}</Text>
-      <Text style={{color: "white", fontSize: 16, opacity: 1}}>P. Sherman, calle Wallaby, 42, Sydney</Text>
       </View>
       </ImageBackground>
 
@@ -51,7 +46,7 @@ const styles= {
         borderBottomLeftRadius: 15,
         borderTopLeftRadius: 15,
         overflow: "hidden",
-       
+
         alignSelf: "center"
   },
 
@@ -63,10 +58,11 @@ const styles= {
   },
 
   viewContainer: {
-    width: "95%",
+    width: "100%",
     height: 150,
-    marginTop: 5,
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   priceStyle:{
@@ -82,4 +78,4 @@ const styles= {
 
 };
 
-export { CardItem };
+export { CardProductView };
