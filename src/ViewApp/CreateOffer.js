@@ -1,41 +1,55 @@
 import React, { Component } from "react";
-import { View } from "react-native";
-import { Button, CardContainer } from "../component";
-import ProductForm from "./ProductForm";
-import { productUpdate, productCreate, today, nowHour} from "../actions";
+import _ from 'lodash';
+import { View, ListView, Text } from "react-native";
+import ListKind from '../component/ListKind';
+import { today, nowHour, kindFetch} from "../actions";
 import { connect } from "react-redux"
 
 
 class CreateOffer extends Component {
-  
-  onButtonPress() {
-    const { title, description, date, kind, price } = this.props;
-    const currentTime = today() + " " + nowHour()
-    this.props.productCreate({ title, description, date, kind, price, currentTime });
+  componentWillMount() {
+   this.props.kindFetch();
+   this.createDataSource(this.props);
+    
+  }
 
+  componentWillReceiveProps(nextProps) {
+
+    this.createDataSource(nextProps);
+  }
+
+  createDataSource({ kindP }) {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+
+    this.dataSource = ds.cloneWithRows(kindP);
+  }
+
+  renderRow(kindP){
+    return <ListKind kindP={ kindP} />
   }
 
   render() {
     return (
       <View>
-        <ProductForm {...this.props} />
-        <CardContainer>
-          <Button onPress={this.onButtonPress.bind(this)}>
-            Crear oferta
-          </Button>
-        </CardContainer>
-      </View>
+      <ListView
+      enableEmptySections
+      dataSource={this.dataSource}
+      renderRow={this.renderRow}
+     />
+     </View>
     );
   }
 }
 
 const mapStateToProps = state => {
-  const { title, description, date, kind, price } = state.productForm;
+  const kindP = _.map(state.kindP, (val, uid) => {
+      return { ...val, uid};
+  });
+  console.log(kindP)
+  return { kindP }
 
-  return { title, description, date, kind, price };
 };
 
-export default connect(
-  mapStateToProps,
-  { productUpdate, productCreate }
-)(CreateOffer);
+export default connect( mapStateToProps,{ kindFetch })(CreateOffer);

@@ -10,7 +10,7 @@ const RouterComponent = () => {
       <Router>
       <Scene key="root"> 
       <Scene key="home" component = { ListProduct } title="Header" initial />
-      <Scene key="createOffer" component = { CreateOffer }  title="Crear Oferta" />
+      <Scene key="createOffer" component = { CreateOffer }  title="Tipo de producto a crear" />
       <Scene key="productView" component = { ProductView } />
       </Scene>
       </Router>

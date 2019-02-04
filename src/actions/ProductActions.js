@@ -1,4 +1,4 @@
-import { PRODUCT_UPDATE, PRODUCT_CREATE, PRODUCT_FETCH_SUCCESS } from "./type";
+import { PRODUCT_UPDATE, PRODUCT_CREATE, PRODUCT_FETCH_SUCCESS, KIND_FETCH_SUCCESS } from "./type";
 import firebase from "@firebase/app";
 import "@firebase/database";
 import { Actions } from "react-native-router-flux";
@@ -27,10 +27,20 @@ export const productCreate = ({ title, description, date, kind, price, currentTi
 export const productFetch = () => {
 
   return (dispatch) => {
-
     firebase.database().ref(`/offer`)
     .on('value', snapshot => {
       dispatch({ type: PRODUCT_FETCH_SUCCESS, payload: snapshot.val() });
+    });
+    };
+};
+
+export const kindFetch = () => {
+
+  return (dispatch) => {
+
+    firebase.database().ref(`/Product`)
+    .on('value', snapshot => {
+      dispatch({ type: KIND_FETCH_SUCCESS, payload: snapshot.val() });
     });
   };
 };

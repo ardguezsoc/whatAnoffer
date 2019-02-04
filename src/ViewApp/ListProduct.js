@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from "react";
-import { ListView, View } from "react-native";
+import { ListView, View, FlatList } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { productFetch } from "../actions";
 import FAB from "react-native-fab";
@@ -12,8 +12,7 @@ class ListProduct extends Component {
 
 
   componentWillMount() {
-    this.props.productFetch();
-
+  this.props.productFetch();
     this.createDataSource(this.props);
   }
 
@@ -37,9 +36,9 @@ class ListProduct extends Component {
 
   render() {
     return (
-    <View>
-     <ListView 
-      enableEmptySections 
+    <View >
+     <ListView
+      enableEmptySections
       dataSource={this.dataSource}
       renderRow={this.renderRow}
      />

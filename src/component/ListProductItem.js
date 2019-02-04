@@ -9,14 +9,16 @@ class ListProductItem extends Component {
   }
 
   render() {
-    const { title, price } = this.props.product;
+    const { title, price, date } = this.props.product;
 
     return (
-      <TouchableNativeFeedback onPress={ this.onItemPress.bind(this) }>
+      <View >
+      <TouchableNativeFeedback onPress={ this.onItemPress.bind(this)} >
         <View>
-          <CardItem title={ title } price={ price } />
+          <CardItem title={ title } price={ price }  />
         </View>
       </TouchableNativeFeedback>
+      </View>
     );
   }
 }
