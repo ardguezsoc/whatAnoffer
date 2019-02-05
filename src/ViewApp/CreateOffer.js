@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import _ from 'lodash';
-import { View, ListView, Text } from "react-native";
+import { View, ListView } from "react-native";
 import ListKind from '../component/ListKind';
-import { today, nowHour, kindFetch} from "../actions";
+import { kindFetch} from "../actions";
 import { connect } from "react-redux"
 
 
@@ -47,7 +47,6 @@ const mapStateToProps = state => {
   const kindP = _.map(state.kindP, (val, uid) => {
       return { ...val, uid};
   });
-  console.log(kindP)
   return { kindP }
 
 };

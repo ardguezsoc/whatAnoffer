@@ -14,15 +14,7 @@ class ProductForm extends Component {
   render() {
     return (
       <View>
-
-        <Input 
-        label="Título" 
-        placeholder="Nombre de oferta" 
-        value={this.props.title}
-        onChangeText={value => this.props.productUpdate({ prop: 'title', value })}
-        />
-
-        <Input 
+      <Input 
         label="Descripción" 
         placeholder="Breve descipción de la oferta" 
         value={this.props.description}
@@ -35,24 +27,21 @@ class ProductForm extends Component {
         onDateChange={ value => this.props.productUpdate({prop: 'date', value  })}
         dateDefault="22/01/2019"
         />
-
-        <Text>Tipo de producto:</Text>
-        <Picker selectedValue={this.props.kind} onValueChange={value => this.props.productUpdate({ prop: 'kind', value })}>
-        <Picker.Item label="Pescado" value="Pescado" />
-        <Picker.Item label="Carne" value="Carne" />
-        <Picker.Item label="Frutas y verduras" value="Frutas y verduras" />
-        <Picker.Item label="Pan y dulces" value="Pan y dulces" />
-        <Picker.Item label="Lácteos" value="Lácteos" />
-        <Picker.Item label="Otros" value="Otros" />
-        </Picker>
         </View>
 
         <Input 
-        label="Precio" 
+        label="Precio original" 
         placeholder="0.00€" 
         keyboard="numeric"
         value={this.props.price}
-        onChangeText={value => this.props.productUpdate({ prop: 'price', value })}
+        onChangeText={value => this.props.productUpdate({ prop: 'priceOld', value })}
+        />
+        <Input 
+        label="Precio actual" 
+        placeholder="0.00€" 
+        keyboard="numeric"
+        value={this.props.price}
+        onChangeText={value => this.props.productUpdate({ prop: 'priceNew', value })}
         />
       </View>
     );
