@@ -8,8 +8,7 @@ import { Actions } from "react-native-router-flux";
 
 class PlaceView extends Component {
   componentDidMount () {
-    console.log(this.props.values)
-    state = {kindProduct: this.props.values}
+    state = {kindProduct: this.props.values, kindSection: this.props.kindSectionVal}
   }
 
   componentWillMount() {
@@ -32,7 +31,7 @@ class PlaceView extends Component {
   }
   
   renderRow(placeToSend){
-    return <ListPlaces place = { placeToSend } prodVal = {this.state.kindProduct}   />
+    return <ListPlaces place = { placeToSend } prodVal = {this.state.kindProduct}  kindOfProduct = {this.state.kindSection}  />
   }
   
   render() {
@@ -63,7 +62,7 @@ class PlaceView extends Component {
 
   class ListPlaces extends Component {
   onItemPress(value) {
-    Actions.finalCreateOffer({ placeValue: value, productValue: this.props.prodVal});
+    Actions.finalCreateOffer({ placeValue: value, productValue: this.props.prodVal, productKindValue: this.props.kindOfProduct});
   }
 
   render() {

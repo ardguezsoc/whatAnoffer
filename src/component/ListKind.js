@@ -4,8 +4,8 @@ import {Button} from '../component';
 import { Actions } from "react-native-router-flux";
 
 class ListKind extends Component {
-  onItemPress(value) {
-    Actions.placeChooser({values: value});
+  onItemPress(value, kindSection) {
+    Actions.placeChooser({values: value, kindSectionVal: kindSection});
   }
 
   render() {
@@ -15,7 +15,7 @@ class ListKind extends Component {
     for (var key in this.props.kindP) {
       if( key != "uid"){
       const val  = this.props.kindP[key];
-      payment.push( <Button key={this.props.kindP[key]} value={this.props.kindP[key]} onPress={ () => this.onItemPress(val) } style={{ backgroundColor:"white", justifyContent:'center', alignItems: 'center', borderColor:"grey", height: 60 , borderWidth:0, borderBottomWidth: 1,borderRadius:0, marginLeft:0, marginRight:0}}><Text style={{color:"black"}}>{this.props.kindP[key]}</Text></Button>)
+      payment.push( <Button key={this.props.kindP[key]} value={this.props.kindP[key]} onPress={ () => this.onItemPress(val, this.props.kindP[key]) } style={{ backgroundColor:"white", justifyContent:'center', alignItems: 'center', borderColor:"grey", height: 60 , borderWidth:0, borderBottomWidth: 1,borderRadius:0, marginLeft:0, marginRight:0}}><Text style={{color:"black"}}>{this.props.kindP[key]}</Text></Button>)
       }
     }
     return (

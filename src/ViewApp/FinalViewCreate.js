@@ -7,23 +7,23 @@ import { connect } from "react-redux";
 
 class FinalViewCreate extends Component {
   onButtonPress() {
-    const { title, description, date, kind, price } = this.props;
+    const { productValue,  placeValue, productKindValue, description, date,  priceOld, priceNew } = this.props;
     const currentTime = today() + " " + nowHour();
     this.props.productCreate({
-      title,
-      description,
-      date,
-      kind,
-      price,
-      currentTime
+    placeValue,
+    productValue,
+    productKindValue,
+    description,
+    date,
+    priceOld,
+    priceNew,
+    currentTime
     });
   }
 
   render() {
     return (
       <View>
-          <Text>{this.props.placeValue}</Text>
-          <Text>{this.props.productValue}</Text>
         <ProductForm {...this.props} />
         <CardContainer>
           <Button onPress={this.onButtonPress.bind(this)}>Crear oferta</Button>
@@ -34,9 +34,9 @@ class FinalViewCreate extends Component {
 }
 
 const mapStateToProps = state => {
-  const { title, description, date, kind, price } = state.productForm;
+  const {  description, date,  priceOld, priceNew, address, productName } = state.productForm;
 
-  return { title, description, date, kind, price };
+  return {  description, date, priceOld, priceNew, address, productName };
 };
 
 export default connect(

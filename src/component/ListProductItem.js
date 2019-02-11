@@ -9,13 +9,18 @@ class ListProductItem extends Component {
   }
 
   render() {
-    const { title, price, date } = this.props.product;
-
+    const { productValue, priceNew, priceOld, placeValue, date } = this.props.product;
     return (
       <View >
       <TouchableNativeFeedback onPress={ this.onItemPress.bind(this)} >
         <View>
-          <CardItem title={ title } price={ price }  />
+          <CardItem 
+          title={ productValue } 
+          priceNew = { priceNew } 
+          priceOld = { priceOld } 
+          address = { placeValue } 
+          dateProd = { date } 
+          /> 
         </View>
       </TouchableNativeFeedback>
       </View>
