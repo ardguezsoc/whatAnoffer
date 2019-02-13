@@ -72,7 +72,7 @@ class PlaceView extends Component {
     for (var key in this.props.place) {
       if( key != "uid"){
       const val  = this.props.place[key];
-      payment.push( <Button key={ this.props.place[key] } value={ this.props.place[key] } onPress={ () => this.onItemPress(val) } style={{ backgroundColor:"white", borderColor:"grey", borderWidth:0, borderBottomWidth: 1,borderRadius:0, marginLeft:0, marginRight:0}}><Text style={{color:"black"}}>{this.props.place[key]}</Text></Button>)
+      payment.push( <Button key= { this.props.place[key] } value= { this.props.place[key] } onPress= { () => this.onItemPress(val) } style= {{ backgroundColor:"white", borderColor:"grey", borderWidth:0, borderBottomWidth: 1,borderRadius:0, marginLeft:0, marginRight:0}}><Text style={{color:"black"}}>{this.props.place[key]}</Text></Button>)
       }
     }
     

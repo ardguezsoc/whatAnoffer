@@ -3,7 +3,7 @@ import { View, Text, ImageBackground } from "react-native";
 import { Avatar } from "react-native-elements";
 
 
-const CardProductView = ({title, price}) => {
+const CardProductView = ({imagUrl}) => {
   const {
     viewContainer,
   } = styles;
@@ -15,7 +15,7 @@ const CardProductView = ({title, price}) => {
       style={ [ viewContainer ]}
     >
       <ImageBackground
-        source={require('./pan.jpg')}
+        source={{uri: imagUrl}}
         style={{ width: "100%", height: "100%",  }}
       >
       <View style={{ 

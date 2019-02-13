@@ -10,12 +10,12 @@ export const productUpdate = ({ prop, value }) => {
   };
 };
 
-export const productCreate = ({ placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime }) => {
+export const productCreate = ({ placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime, urlOfImag }) => {
   return dispatch => {
     firebase
       .database()
       .ref(`/offer`)
-      .push({ placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime })
+      .push({ placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime, urlOfImag })
       .then(() => {
           dispatch({ type: PRODUCT_CREATE});
           Actions.home();

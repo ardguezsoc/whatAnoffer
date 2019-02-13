@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 import { Button, ModalConfirm } from "../component";
 
 class ProductView extends Component {
-  state = { modalStatus: false}
+  state = { modalStatus: false,
+            imgUrl : this.props.product.urlOfImag
+          }
 
   onAccept(){
     const { uid } = this.props.product;
@@ -22,7 +24,7 @@ onDecline(){
     return (
       <View>
         <View style={{ height: "30%", width: "100%" }}>
-          <CardProductView />
+          <CardProductView  imagUrl = {this.state.imgUrl}/>
         </View>
         <View style={{ backgroundColor: "white", height: "70%" }}>
           <View style={{ flexDirection: "row", marginTop: 3, marginBottom: 3 }}>

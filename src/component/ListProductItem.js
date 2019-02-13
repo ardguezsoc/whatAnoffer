@@ -9,7 +9,8 @@ class ListProductItem extends Component {
   }
 
   render() {
-    const { productValue, priceNew, priceOld, placeValue, date } = this.props.product;
+    const { productValue, priceNew, priceOld, placeValue, date, urlOfImag } = this.props.product;
+    console.log(urlOfImag)
     return (
       <View >
       <TouchableNativeFeedback onPress={ this.onItemPress.bind(this)} >
@@ -20,6 +21,7 @@ class ListProductItem extends Component {
           priceOld = { priceOld } 
           address = { placeValue } 
           dateProd = { date } 
+          urlImag = { urlOfImag }
           /> 
         </View>
       </TouchableNativeFeedback>

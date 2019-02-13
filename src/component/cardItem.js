@@ -3,15 +3,15 @@ import { View, Text, ImageBackground } from "react-native";
 import { Icon } from 'react-native-elements'
 
 
-const CardItem = ({ title, priceNew, priceOld, address, dateProd }) => {
+const CardItem = ({ title, priceNew, priceOld, address, dateProd, urlImag }) => {
   const { roundBorder, viewContainer, priceStyle, roundBorder2 } = styles;
-
+  console.log(urlImag)
   return (
     <View style={[roundBorder, viewContainer]}>
 
     <View  style={{ width: "40%", height:"100%"}}>
       <ImageBackground
-        source={require("./pan.jpg")}
+        source={{uri:  urlImag }}
         style={{ width: "100%", height:"100%", marginRight:0  }}
       >
         <View style={[roundBorder2, priceStyle]}>
