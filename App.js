@@ -25,6 +25,7 @@ componentWillMount() {
 
 
   render() {
+    console.disableYellowBox = true;
     return (
       <Provider store={createStore(reducer, {}, applyMiddleware(ReduxThunk))}>
         <Router />
