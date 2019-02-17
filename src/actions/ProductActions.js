@@ -18,7 +18,7 @@ export const productCreate = ({ placeValue,productValue,productKindValue,descrip
       .push({ placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime, urlOfImag })
       .then(() => {
           dispatch({ type: PRODUCT_CREATE});
-          Actions.home();
+          Actions.osu();
       })
       ;
   };

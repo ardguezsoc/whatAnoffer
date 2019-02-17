@@ -45,6 +45,8 @@ class ProductForm extends Component {
           label="Descripción"
           placeholder="Breve descipción de la oferta"
           value={this.props.description}
+          multiline={true}
+          numberOfLines = {4}
           onChangeText={value =>
             this.props.productUpdate({ prop: "description", value })
           }

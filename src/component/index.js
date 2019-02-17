@@ -7,3 +7,4 @@ export * from './ListKind';
 export * from './CardProductView';
 export * from './CardText';
 export * from './ModalConfirm';
+export * from './ButtonImag';

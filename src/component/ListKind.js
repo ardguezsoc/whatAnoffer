@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
-import {Button} from '../component';
+import { View, Text, Image } from "react-native";
+import {ButtonImag} from '../component';
 import { Actions } from "react-native-router-flux";
 
 class ListKind extends Component {
@@ -14,16 +14,20 @@ class ListKind extends Component {
     const { uid } = this.props.kindP;
     for (var key in this.props.kindP) {
       if( key != "uid"){
-      const val  = this.props.kindP[key];
-      payment.push( <Button key={this.props.kindP[key]} value={this.props.kindP[key]} onPress={ () => this.onItemPress(val, this.props.kindP[key]) } style={{ backgroundColor:"white", justifyContent:'center', alignItems: 'center', borderColor:"grey", height: 60 , borderWidth:0, borderBottomWidth: 1,borderRadius:0, marginLeft:0, marginRight:0}}><Text style={{color:"black"}}>{this.props.kindP[key]}</Text></Button>)
+      const val  = key;
+      payment.push( <ButtonImag  key={key} value={this.props.kindP[key]} onPress={ () => this.onItemPress(val, this.props.kindP[key]) } iconUri={this.props.kindP[key]} style={{ backgroundColor:"white",  borderColor:"black", height: 120 , borderRightWidth:1, borderRadius:0, marginLeft:0, marginRight:0, width: 150 }}>
+      <Text style={{color:"black"}}>{key}</Text>
+      </ButtonImag>)
       }
     }
     return (
 
-      <View >
-        <View>
+      <View>
+        <View >
           <Text style={ styles.textStyle }>{uid}</Text>
+          <View style={{flexDirection: "row"}}>
           {payment}
+          </View>
         </View>
      
       </View>

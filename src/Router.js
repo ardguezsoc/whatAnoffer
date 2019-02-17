@@ -24,6 +24,7 @@ const RouterComponent = () => {
           </Scene>
           
         </Scene>
+        <Scene key="home" component={ListProduct} title="Header" />
         <Scene
               key="createOffer"
               component={CreateOffer}
