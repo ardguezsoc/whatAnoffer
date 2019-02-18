@@ -39,7 +39,7 @@ const RouterComponent = () => {
             <Scene
               key="finalCreateOffer"
               component={FinalViewCreate}
-              title="Finalizar oferta"
+              title="Crear oferta"
             />
       </Scene>
 

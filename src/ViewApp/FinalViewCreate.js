@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Button, CardContainer } from "../component";
+import { Button, CardContainer, Spinner } from "../component";
 import ImagePicker from "react-native-image-picker";
 import RNFetchBlob from "react-native-fetch-blob";
 import ProductForm from "./ProductForm";
@@ -15,9 +15,11 @@ class FinalViewCreate extends Component {
     super(props);
     this.state = {
       productImage: null,
-      uploadingImage: false,
+      // uploadingImage: false,
       fileToImage: "",
-      secureUrl: ""
+      secureUrl: "",
+      buttonStatus: true
+      
     };
     this.submit = this.submit.bind(this);
   }
@@ -38,19 +40,20 @@ class FinalViewCreate extends Component {
       } else if (response.customButton) {
         console.log("User tapped custom button: ", response.customButton);
       } else {
-        this.setState({
-          uploadingImg: true
-        });
+        // this.setState({
+        //   uploadingImg: true
+        // });
         this.setState({
           fileToImage: response,
           productImage: { uri: response.uri },
-          uploadingImg: false
+          // uploadingImg: false
         });
       }
      console.log(response);
     });
   }
   onButtonPress() {
+    this.setState({buttonStatus : false})
     const {
       productValue,
       placeValue,
@@ -79,6 +82,7 @@ class FinalViewCreate extends Component {
               currentTime,
               urlOfImag
             });
+            this.setState({buttonStatus : true})
         
       })
 
@@ -95,8 +99,9 @@ class FinalViewCreate extends Component {
        currentTime,
        urlOfImag
      });
+     this.setState({buttonStatus : true})
     }
- 
+    
   }
 
   render() {
@@ -125,9 +130,11 @@ class FinalViewCreate extends Component {
         /> }
         </TouchableOpacity>
         </View>
+        {this.state.buttonStatus ?
         <CardContainer>
-          <Button onPress={this.onButtonPress.bind(this)}>Crear oferta</Button>
+           <Button onPress={this.onButtonPress.bind(this)}>Listo</Button> 
         </CardContainer>
+        : <Spinner styleSpin={{marginTop:15}} /> }
       </View>
     );
   }

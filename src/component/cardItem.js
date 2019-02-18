@@ -5,7 +5,6 @@ import { Icon } from 'react-native-elements'
 
 const CardItem = ({ title, priceNew, priceOld, address, dateProd, urlImag }) => {
   const { roundBorder, viewContainer, priceStyle, roundBorder2 } = styles;
-  console.log(urlImag)
   return (
     <View style={[roundBorder, viewContainer]}>
 

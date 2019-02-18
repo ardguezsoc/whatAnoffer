@@ -11,11 +11,12 @@ export const productUpdate = ({ prop, value }) => {
 };
 
 export const productCreate = ({ placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime, urlOfImag }) => {
+  const status = "read";
   return dispatch => {
     firebase
       .database()
       .ref(`/offer`)
-      .push({ placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime, urlOfImag })
+      .push({ placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime, urlOfImag, status })
       .then(() => {
           dispatch({ type: PRODUCT_CREATE});
           Actions.osu();
@@ -27,7 +28,7 @@ export const productCreate = ({ placeValue,productValue,productKindValue,descrip
 export const productFetch = () => {
 
   return (dispatch) => {
-    firebase.database().ref(`/offer`)
+    firebase.database().ref(`/offer`).orderByChild("status").equalTo("read")
     .on('value', snapshot => {
       dispatch({ type: PRODUCT_FETCH_SUCCESS, payload: snapshot.val() });
     });
@@ -55,11 +56,12 @@ export const placeFetch = () => {
 };
 
 export const productDelete = ({ uid }) => {
+  const status = "hidden";
   return() => {
     firebase
     .database()
     .ref(`/offer/${uid}`)
-    .remove()
+    .set({status})
     .then(() => {
       Actions.pop();
     });

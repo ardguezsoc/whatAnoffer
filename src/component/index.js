@@ -8,3 +8,4 @@ export * from './CardProductView';
 export * from './CardText';
 export * from './ModalConfirm';
 export * from './ButtonImag';
+export * from  './Spinner';
