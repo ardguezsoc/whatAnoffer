@@ -1,3 +1,8 @@
+import RNFetchBlob from "react-native-fetch-blob";
+
+const cloudyName = "dfir4b1pq";
+const cloudyPreset = "rihdprth";
+
 export const today =  () => {
     currentDay = new Date();
     if(currentDay.getMonth() < 10 ){
@@ -13,3 +18,23 @@ export const nowHour = ( ) => {
     currentHour = currentHour.getHours() + ":" + currentHour.getMinutes() + ":" + currentHour.getSeconds()
     return currentHour;
 }
+
+export const  uploadFile = (file)  => {
+    return RNFetchBlob.fetch(
+      "POST",
+      "https://api.cloudinary.com/v1_1/" +
+        cloudyName +
+        "/image/upload?upload_preset=" +
+        cloudyPreset,
+      {
+        "Content-Type": "multipart/form-data"
+      },
+      [
+        {
+          name: "file",
+          filename: file.fileName,
+          data: RNFetchBlob.wrap(file.path)
+        }
+      ]
+    );
+  }

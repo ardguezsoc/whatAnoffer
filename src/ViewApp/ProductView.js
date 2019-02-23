@@ -17,6 +17,7 @@ class ProductView extends Component {
   }      
 
   onAccept(){
+    this.setState({modalStatus: false})
     const { uid } = this.props.product;
     this.props.productDelete({ uid });
 
@@ -68,9 +69,9 @@ onDecline(){
 }
 
 const mapStateToProps = state => {
-  const { title, price } = state.product;
+  const { title, priceNew } = state.product;
 
-  return { title, price };
+  return { title, priceNew };
 };
 
 export default connect(mapStateToProps,{ productUpdate, productDelete })(ProductView);

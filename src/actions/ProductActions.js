@@ -55,6 +55,20 @@ export const placeFetch = () => {
   };
 };
 
+export const productEdit = ({uid,placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime,status,urlOfImag}) => {
+  return (dispatch) => {
+    firebase
+    .database()
+    .ref(`/offer/${uid}`)
+    .set({placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime,status,urlOfImag})
+    .then(() => {
+      dispatch({ type: PRODUCT_CREATE});
+        Actions.osu();
+    })
+    ;
+  }
+}
+
 export const productDelete = ({ uid }) => {
   const status = "hidden";
   return() => {

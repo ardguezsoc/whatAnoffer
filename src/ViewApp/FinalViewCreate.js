@@ -1,21 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity, Image } from "react-native";
 import { Button, CardContainer, Spinner } from "../component";
 import ImagePicker from "react-native-image-picker";
-import RNFetchBlob from "react-native-fetch-blob";
 import ProductForm from "./ProductForm";
 import { productUpdate, productCreate, today, nowHour } from "../actions";
 import { connect } from "react-redux";
-
-const cloudyName = "dfir4b1pq"
-const cloudyPreset = "rihdprth"
+import { uploadFile } from "../actions";
 
 class FinalViewCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
       productImage: null,
-      // uploadingImage: false,
       fileToImage: "",
       secureUrl: "",
       buttonStatus: true
@@ -40,13 +36,9 @@ class FinalViewCreate extends Component {
       } else if (response.customButton) {
         console.log("User tapped custom button: ", response.customButton);
       } else {
-        // this.setState({
-        //   uploadingImg: true
-        // });
         this.setState({
           fileToImage: response,
           productImage: { uri: response.uri },
-          // uploadingImg: false
         });
       }
     });
@@ -88,7 +80,7 @@ class FinalViewCreate extends Component {
       })
 
     }else{
-      const urlOfImag = "noPhoto"
+      const urlOfImag = "https://res.cloudinary.com/dfir4b1pq/image/upload/q_auto:good/v1550940285/nophoto.jpg"
      this.props.productCreate({
        placeValue,
        productValue,
@@ -140,28 +132,6 @@ class FinalViewCreate extends Component {
     );
   }
 }
-
-function uploadFile(file) {
-
-  return RNFetchBlob.fetch(
-    "POST",
-    "https://api.cloudinary.com/v1_1/" +
-      cloudyName +
-      "/image/upload?upload_preset=" +
-      cloudyPreset,
-    {
-      "Content-Type": "multipart/form-data"
-    },
-    [
-      {
-        name: "file",
-        filename: file.fileName,
-        data: RNFetchBlob.wrap(file.path)
-      }
-    ]
-  );
-  }
-
 
 const mapStateToProps = state => {
   const {

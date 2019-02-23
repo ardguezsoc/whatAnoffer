@@ -6,10 +6,6 @@ import { DatePick } from "../component/DatePicker";
 import { productUpdate, today } from "../actions";
 
 class ProductForm extends Component {
-  constructor(props) {
-    console.log(props)
-    super(props);
-  }
   render() {
     return (
       <View>
@@ -65,22 +61,22 @@ class ProductForm extends Component {
           label="Precio original"
           placeholder="0.00€"
           keyboard="numeric"
-          value={this.props.priceNew}
+          value={this.props.priceOld}
           onChangeText={value =>
             this.props.productUpdate({ prop: "priceOld", value })
           }
         />
 
         <Input
-          label="Precio actual"
-          placeholder="0.00€"
-          keyboard="numeric"
-          value={this.props.priceOld}
-          onChangeText={value =>
-            this.props.productUpdate({ prop: "priceNew", value })
-          }
+        label="Precio actual"
+        placeholder="0.0€"
+        keyboard="numeric"
+        value={this.props.priceNew}
+        onChangeText= {value => this.props.productUpdate({prop: "priceNew", value})}
         />
       </View>
+
+
     );
   }
 }
