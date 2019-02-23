@@ -6,6 +6,8 @@ import CreateOffer from "./ViewApp/CreateOffer";
 import ProductView from "./ViewApp/ProductView";
 import PlaceView from "./ViewApp/PlaceView";
 import FinalViewCreate from "./ViewApp/FinalViewCreate";
+import EditView from './ViewApp/EditView';
+
 
 const TabIcon = ({ selected, title }) => {
   return (<Text style={{ color: selected ? "red" : "black" }}> {title} </Text>);
@@ -17,20 +19,20 @@ const RouterComponent = () => {
       <Scene key="root">
         <Scene key="tabsBottom" tabs hideNavBar tabBarStyle={{ backgroundColor: "#FFFFFF" }}>
           <Scene key="osu" title="Co"  icon={TabIcon}>
-            <Scene key="home" component={ListProduct} title="Header" />
+            <Scene key="home" component={ListProduct} title="WAO!" />
           </Scene>
           <Scene key="Tuturu" title="Tururu"  icon={TabIcon}>
             <Scene key="home" component={ListProduct} title="Header" />
           </Scene>
           
         </Scene>
-        <Scene key="home" component={ListProduct} title="Header" />
+        
         <Scene
               key="createOffer"
               component={CreateOffer}
               title="Tipo de producto a crear"
             />
-            <Scene key="productView" component={ProductView} />
+            <Scene key="productView" component={ProductView} title="Oferta" />
             <Scene
               key="placeChooser"
               component={PlaceView}
@@ -40,6 +42,11 @@ const RouterComponent = () => {
               key="finalCreateOffer"
               component={FinalViewCreate}
               title="Crear oferta"
+            />
+            <Scene 
+            key="editView"
+            component = { EditView }
+            title="Editar oferta"
             />
       </Scene>
 

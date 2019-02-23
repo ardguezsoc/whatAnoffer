@@ -4,17 +4,17 @@ import { TextInput, View, Text } from "react-native";
 const Input = ({label, placeholder,keyboard, value, onChangeText, editable, multiline, numberOfLines}) => {
     const {inputStyle, labelStyle, viewStyle} = styles;
   return (
-    <View style={viewStyle}>
-      <Text style={labelStyle}>{label}</Text>
+    <View style = { viewStyle }>
+      <Text style = { labelStyle }>{ label }</Text>
       <TextInput
-      multiline={multiline}
-      numberOfLines={numberOfLines}
-      style={inputStyle} 
-      placeholder={placeholder} 
-      editable={editable}
-      autoCorrect={false} 
-      keyboardType={keyboard}
-      value={value}
+      multiline = { multiline }
+      numberOfLines = { numberOfLines }
+      style = { inputStyle } 
+      placeholder = { placeholder } 
+      editable = { editable }
+      autoCorrect = { false } 
+      keyboardType = { keyboard }
+      value = { value }
       onChangeText = { onChangeText }
       />
     </View>
@@ -40,4 +40,4 @@ const styles = {
   }
 };
 
-export {Input};
+export { Input };

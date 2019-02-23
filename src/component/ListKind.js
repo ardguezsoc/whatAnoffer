@@ -15,7 +15,9 @@ class ListKind extends Component {
     for (var key in this.props.kindP) {
       if( key != "uid"){
       const val  = key;
-      payment.push( <ButtonImag  key={key} value={this.props.kindP[key]} onPress={ () => this.onItemPress(val, this.props.kindP[key]) } iconUri={this.props.kindP[key]} style={styles.buttonStyle}>
+      payment.push( <ButtonImag  key={key} value={this.props.kindP[key]} 
+      onPress={ () => this.onItemPress(val, this.props.kindP[key]) } 
+      iconUri={this.props.kindP[key]} style={styles.buttonStyle}>
       <Text style={{color:"black"}}>{key}</Text>
       </ButtonImag>)
       }

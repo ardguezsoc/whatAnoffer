@@ -5,11 +5,16 @@ import { productUpdate, productDelete } from "../actions";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { Button, ModalConfirm } from "../component";
+import { Actions } from "react-native-router-flux";
 
 class ProductView extends Component {
   state = { modalStatus: false,
             imgUrl : this.props.product.urlOfImag
           }
+
+  editOffer(){
+    Actions.editView({ product: this.props.product });
+  }      
 
   onAccept(){
     const { uid } = this.props.product;
@@ -28,7 +33,7 @@ onDecline(){
         </View>
         <View style={{ backgroundColor: "white", height: "70%" }}>
           <View style={{ flexDirection: "row", marginTop: 3, marginBottom: 3 }}>
-            <Button style={{ borderColor: "#086BC5"  }} ><Text style={{ color: "#086BC5"}}>Editar</Text> </Button>
+            <Button onPress={() => this.editOffer()} style={{ borderColor: "#086BC5"  }} ><Text style={{ color: "#086BC5"}}>Editar</Text> </Button>
             <Button 
             onPress={() => this.setState({modalStatus: !this.state.modalStatus})}
             style={{ borderColor: "#E31616"  }} >

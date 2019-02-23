@@ -49,9 +49,10 @@ class FinalViewCreate extends Component {
           // uploadingImg: false
         });
       }
-     console.log(response);
     });
   }
+
+  
   onButtonPress() {
     this.setState({buttonStatus : false})
     const {
@@ -134,7 +135,7 @@ class FinalViewCreate extends Component {
         <CardContainer>
            <Button onPress={this.onButtonPress.bind(this)}>Listo</Button> 
         </CardContainer>
-        : <Spinner styleSpin={{marginTop:15}} /> }
+        : <Spinner styleSpin={{ marginTop:15 }} /> }
       </View>
     );
   }

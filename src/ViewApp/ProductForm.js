@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, Picker } from "react-native";
+import { View } from "react-native";
 import { Input } from "../component/Input";
 import { connect } from "react-redux";
-import Icon from "react-native-vector-icons/FontAwesome";
 import { DatePick } from "../component/DatePicker";
-import { productUpdate } from "../actions";
+import { productUpdate, today } from "../actions";
 
 class ProductForm extends Component {
   constructor(props) {
+    console.log(props)
     super(props);
-    this.state = { date: "21-01-2019" };
   }
   render() {
     return (
@@ -58,7 +57,7 @@ class ProductForm extends Component {
             onDateChange={value =>
               this.props.productUpdate({ prop: "date", value })
             }
-            dateDefault="22/01/2019"
+             dateDefault = {today()}
           />
         </View>
 
@@ -66,16 +65,17 @@ class ProductForm extends Component {
           label="Precio original"
           placeholder="0.00€"
           keyboard="numeric"
-          value={this.props.price}
+          value={this.props.priceNew}
           onChangeText={value =>
             this.props.productUpdate({ prop: "priceOld", value })
           }
         />
+
         <Input
           label="Precio actual"
           placeholder="0.00€"
           keyboard="numeric"
-          value={this.props.price}
+          value={this.props.priceOld}
           onChangeText={value =>
             this.props.productUpdate({ prop: "priceNew", value })
           }

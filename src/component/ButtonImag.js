@@ -4,9 +4,10 @@ import { Text, TouchableOpacity, Image, View} from 'react-native';
 const ButtonImag = ({ onPress, children, style, iconUri }) => {
     const {buttonStyle, textStyle} = styles; 
     return (
-        
         <TouchableOpacity onPress={ onPress } style={ [buttonStyle, style ]}>
-            <View style={{marginTop:4, justifyContent:"center", alignItems:"center"}}><Image source={{uri: iconUri}} style={{height: 50, width: 50}} /></View>
+            <View style={{marginTop:4, justifyContent:"center", alignItems:"center"}}>
+            <Image source={{uri: iconUri }} style={{height: 50, width: 50}} />
+            </View>
             <Text style={ textStyle }>{ children }</Text> 
 
         </TouchableOpacity>
