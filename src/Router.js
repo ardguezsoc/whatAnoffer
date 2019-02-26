@@ -36,7 +36,7 @@ const RouterComponent = () => {
             <Scene
               key="placeChooser"
               component={PlaceView}
-              title="Lugar donde está la oferta"
+              title="Supermercados sugeridos"
             />
             <Scene
               key="finalCreateOffer"
