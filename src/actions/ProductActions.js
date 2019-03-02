@@ -46,10 +46,10 @@ export const kindFetch = () => {
   };
 };
 
-export const placeFetch = (geoHash) => {
+export const placeFetch = () => {
   
   return (dispatch) => {
-    firebase.database().ref(`/Places`).orderByChild("Geohash").equalTo(`${geoHash}`)
+    firebase.database().ref(`/Places`)
     .on('value', snapshot => {
       dispatch({ type: PLACE_FETCH_SUCCESS, payload: snapshot.val() })
     });

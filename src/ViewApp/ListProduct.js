@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from "react";
-import { ListView, View, FlatList } from "react-native";
+import { ListView, View, ViewPropTypes } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { productFetch } from "../actions";
 import FAB from "react-native-fab";
@@ -47,6 +47,7 @@ class ListProduct extends Component {
           iconTextColor="#FFFFFF"
           onClickAction={() => Actions.createOffer()}
           visible={true}
+          
           iconTextComponent={<Icon name="md-pricetags" />}
         />
       </View>

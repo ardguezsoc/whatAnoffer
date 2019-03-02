@@ -7,6 +7,7 @@ import ProductView from "./ViewApp/ProductView";
 import PlaceView from "./ViewApp/PlaceView";
 import FinalViewCreate from "./ViewApp/FinalViewCreate";
 import EditView from './ViewApp/EditView';
+import SearchView from './ViewApp/SearchView';
 
 
 const TabIcon = ({ selected, title }) => {
@@ -21,8 +22,8 @@ const RouterComponent = () => {
           <Scene key="osu" title="Co"  icon={TabIcon}>
             <Scene key="home" component={ListProduct} title="WAO!" />
           </Scene>
-          <Scene key="Tuturu" title="Tururu"  icon={TabIcon}>
-            <Scene key="home" component={ListProduct} title="Header" />
+          <Scene key="Search" title="Buscar"  icon={TabIcon}>
+            <Scene key="SearchView" component={SearchView} hideNavBar />
           </Scene>
           
         </Scene>
