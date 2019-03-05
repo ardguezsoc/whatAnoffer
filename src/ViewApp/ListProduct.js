@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from "react";
-import { ListView, View, ViewPropTypes } from "react-native";
+import { ListView, View } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { productFetch } from "../actions";
 import FAB from "react-native-fab";
@@ -43,7 +43,7 @@ class ListProduct extends Component {
       renderRow={this.renderRow}
      />
         <FAB
-          buttonColor="green"
+          buttonColor="#109C59"
           iconTextColor="#FFFFFF"
           onClickAction={() => Actions.createOffer()}
           visible={true}

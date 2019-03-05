@@ -61,7 +61,7 @@ class PlaceView extends Component {
         {this.state.noCoincidence == 0 ? (
           <View style={styles.container}>
             <Text style={styles.notFoundStyle}>
-              No se han encontrado coincidencias :(
+              Ha habido un error intentalo de nuevo :(
             </Text>
           </View>
         ) : null}
@@ -150,8 +150,7 @@ const styles = {
     fontSize: 18,
     height: 27,
     backgroundColor: "#30A66D",
-    color: "white",
-    
+    color: "white"
   },
   container: {
     justifyContent: "center",

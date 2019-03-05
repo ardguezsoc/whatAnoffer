@@ -18,8 +18,8 @@ class ProductView extends Component {
 
   onAccept(){
     this.setState({modalStatus: false})
-    const { uid } = this.props.product;
-    this.props.productDelete({ uid });
+    const { uid,placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime,urlOfImag } = this.props.product;
+    this.props.productDelete({ uid,placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime,urlOfImag });
 
 }
 

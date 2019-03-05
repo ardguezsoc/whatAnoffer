@@ -70,13 +70,13 @@ export const productEdit = ({uid,placeValue,productValue,productKindValue,descri
   }
 }
 
-export const productDelete = ({ uid }) => {
+export const productDelete = ({ uid,placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime,urlOfImag }) => {
   const status = "hidden";
   return() => {
     firebase
     .database()
     .ref(`/offer/${uid}`)
-    .set({status})
+    .set({status,placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime,urlOfImag})
     .then(() => {
       Actions.pop();
     });
