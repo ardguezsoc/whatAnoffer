@@ -52,7 +52,8 @@ class EditView extends Component {
   }
 
   onAccept(){
-    this.setState({modalStatus: false})
+    this.setState({modalStatus: false, buttonStatus: false})
+    
     this.onButtonPress();
   
 }
@@ -100,7 +101,6 @@ class EditView extends Component {
             urlOfImag
           });
 
-          this.setState({ buttonStatus: true });
         });
     } else {
       const urlOfImag = this.props.product.urlOfImag;
@@ -117,7 +117,6 @@ class EditView extends Component {
         status,
         urlOfImag
       });
-      this.setState({ buttonStatus: true });
     }
   }
 

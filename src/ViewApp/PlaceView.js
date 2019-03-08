@@ -61,7 +61,7 @@ class PlaceView extends Component {
         {this.state.noCoincidence == 0 ? (
           <View style={styles.container}>
             <Text style={styles.notFoundStyle}>
-              Ha habido un error intentalo de nuevo :(
+              Ha habido un error intentalo de nuevo =(
             </Text>
           </View>
         ) : null}
