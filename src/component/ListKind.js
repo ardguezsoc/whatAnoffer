@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import {ButtonImag} from '../component';
 import { Actions } from "react-native-router-flux";
 
@@ -9,7 +9,6 @@ class ListKind extends Component {
   }
 
   render() {
-    
     const payment = [];
     const { uid } = this.props.kindP;
     for (var key in this.props.kindP) {

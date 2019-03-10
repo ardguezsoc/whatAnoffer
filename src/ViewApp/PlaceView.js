@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import { View, ListView, Text } from "react-native";
+import { View, ListView, Text, ActivityIndicator } from "react-native";
 import { placeFetch } from "../actions";
 import { connect } from "react-redux";
 import { Button } from "../component";
@@ -9,6 +9,13 @@ import Geohash from "latlon-geohash";
 
 var geoM;
 class PlaceView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: false
+    };
+  }
   state = { noCoincidence: null };
 
   componentDidMount() {
@@ -16,6 +23,7 @@ class PlaceView extends Component {
       kindProduct: this.props.values,
       kindSection: this.props.kindSectionVal
     };
+    this.setState({ loading: true });
     navigator.geolocation.getCurrentPosition(
       position => {
         const lat = parseFloat(position.coords.latitude);
@@ -23,7 +31,7 @@ class PlaceView extends Component {
         geoM = Geohash.encode(lat, long, 7);
         this.props.placeFetch();
       },
-      error1 => this.setState({ error1: error.message }),
+      error1 => this.setState({ error1: error1.message }),
       { enableHighAccuracy: false, timeout: 5000, maximumAge: 1000 }
     );
   }
@@ -34,6 +42,7 @@ class PlaceView extends Component {
 
   componentWillReceiveProps(newProps) {
     this.createDataSource(newProps);
+    this.setState({ loading: false });
   }
 
   createDataSource({ place }) {
@@ -56,22 +65,32 @@ class PlaceView extends Component {
   }
 
   render() {
-    return (
-      <View style={{ flex: 1, backgroundColor: "white" }}>
-        {this.state.noCoincidence == 0 ? (
-          <View style={styles.container}>
-            <Text style={styles.notFoundStyle}>
-              Ha habido un error intentalo de nuevo =(
-            </Text>
-          </View>
-        ) : null}
-        <ListView
-          enableEmptySections
-          dataSource={this.dataSource}
-          renderRow={this.renderRow}
-        />
-      </View>
-    );
+    if (this.state.loading) {
+      return (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <ActivityIndicator />
+        </View>
+      );
+    } else {
+      return (
+        <View style={{ flex: 1, backgroundColor: "white" }}>
+          {this.state.noCoincidence == 0 ? (
+            <View style={styles.container}>
+              <Text style={styles.notFoundStyle}>
+                Ha habido un error intentalo de nuevo =(
+              </Text>
+            </View>
+          ) : null}
+          <ListView
+            enableEmptySections
+            dataSource={this.dataSource}
+            renderRow={this.renderRow}
+          />
+        </View>
+      );
+    }
   }
 }
 

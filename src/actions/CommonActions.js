@@ -13,6 +13,11 @@ export const today =  () => {
     return currentDay;
 }
 
+export const todayEpoch = () => {
+  return new Date().getTime();
+};
+
+
 export const nowHour = ( ) => {
     currentHour = new Date();
     currentHour = currentHour.getHours() + ":" + currentHour.getMinutes() + ":" + currentHour.getSeconds()

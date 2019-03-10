@@ -100,7 +100,7 @@ const styles = {
   },
 
   viewContainer: {
-    width: "95%",
+    width: "92%",
     height: 170,
     marginTop: 10,
     flex: 1,

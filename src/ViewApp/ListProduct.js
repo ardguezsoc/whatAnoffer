@@ -11,13 +11,12 @@ import { connect } from "react-redux";
 class ListProduct extends Component {
   constructor(props) {
     super(props);
-
+   
     this.state = {
       loading: false,
       data: [],
       error: null
     };
-
   }
 
   componentWillMount() {
