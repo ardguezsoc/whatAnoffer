@@ -13,6 +13,17 @@ export const today =  () => {
     return currentDay;
 }
 
+export const oneMonth = () => {
+  oneMonthLater = todayEpoch() + 2592000000 ;
+  oneMonthLater = new Date(oneMonthLater)
+  if(oneMonthLater.getMonth() < 10 ){
+    oneMonthLater = oneMonthLater.getDate() + "/" + "0" + (oneMonthLater.getMonth() + 1)  + "/" + oneMonthLater.getFullYear()
+  }else{
+    oneMonthLater = oneMonthLater.getDate() + "/" + (oneMonthLater.getMonth() + 1)  + "/" + oneMonthLater.getFullYear()
+  }
+  return oneMonthLater;
+}
+
 export const todayEpoch = () => {
   return new Date().getTime();
 };

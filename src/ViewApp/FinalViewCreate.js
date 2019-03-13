@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Image } from "react-native";
+import { ScrollView,View, TouchableOpacity, Image } from "react-native";
 import { Button, CardContainer, Spinner } from "../component";
 import ImagePicker from "react-native-image-picker";
 import ProductForm from "./ProductForm";
-import { productUpdate, productCreate, todayEpoch } from "../actions";
+import { productUpdate, productCreate, todayEpoch, today } from "../actions";
 import { connect } from "react-redux";
 import { uploadFile } from "../actions";
 
@@ -45,7 +45,7 @@ class FinalViewCreate extends Component {
 
   onButtonPress() {
     this.setState({ buttonStatus: false });
-    const {
+    var {
       productValue,
       placeValue,
       productKindValue,
@@ -54,6 +54,15 @@ class FinalViewCreate extends Component {
       priceOld,
       priceNew
     } = this.props;
+    if(typeof(this.props.priceNew) === 'undefined'){
+      priceNew = 0.00
+    }
+    if(typeof(this.props.priceOld) === 'undefined'){
+      priceOld = 0.00
+    }
+    if(this.props.date === ""){
+      date = today()
+    }
     const currentTime = todayEpoch();
     if (this.state.productImage != null) {
       uploadFile(this.state.fileToImage)
@@ -95,7 +104,7 @@ class FinalViewCreate extends Component {
 
   render() {
     return (
-      <View>
+      <ScrollView style={{flex:1, backgroundColor:"white" }}>
         <ProductForm {...this.props} />
         <View
           style={{
@@ -110,7 +119,8 @@ class FinalViewCreate extends Component {
               height: 80,
               width: 80,
               borderRadius: 40,
-              marginBottom: 20
+              marginBottom: 15,
+              marginTop: 15
             }}
           >
             {this.state.productImage ? (
@@ -133,7 +143,7 @@ class FinalViewCreate extends Component {
         ) : (
           <Spinner styleSpin={{ marginTop: 15 }} />
         )}
-      </View>
+      </ScrollView>
     );
   }
 }

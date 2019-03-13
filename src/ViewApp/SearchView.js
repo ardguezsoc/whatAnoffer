@@ -16,17 +16,17 @@ import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
 import { Icon } from "react-native-elements";
 
 const component1 = () => (
-  <FontAwesome style={{ fontSize: 26 }}>{Icons.fish}</FontAwesome>
+  <FontAwesome style={{ fontSize: 28 }} type={IconTypes.FAS}>{Icons.fish}</FontAwesome>
 );
 
 const component2 = () => (
-  <FontAwesome style={{ fontSize: 28 }} type={IconTypes.FAB}>
+  <FontAwesome style={{ fontSize: 30 }} type={IconTypes.FAB}>
     {Icons.apple}
   </FontAwesome>
 );
 
 const component3 = () => (
-  <FontAwesome style={{ fontSize: 24 }}>{Icons.cookie}</FontAwesome>
+  <FontAwesome style={{ fontSize: 26 }}>{Icons.cookie}</FontAwesome>
 );
 
 const component4 = () => (
@@ -36,8 +36,8 @@ const component4 = () => (
 );
 
 const component5 = () => (
-  <FontAwesome style={{ fontSize: 28 }} type={IconTypes.FA}>
-    {Icons.beer}
+  <FontAwesome style={{ fontSize: 24 }} type={IconTypes.FAS}>
+    {Icons.glassMartiniAlt}
   </FontAwesome>
 );
 
@@ -298,6 +298,8 @@ class SearchView extends Component {
                     selectedIndex={this.state.selectedIndex}
                     buttons={buttons}
                     containerStyle={{
+                      alignItems:"center",
+                      justifyContent:"center",
                       height: 70,
                       width: 350,
                       borderRadius: 15

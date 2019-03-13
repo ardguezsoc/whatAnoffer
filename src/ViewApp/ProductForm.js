@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Input } from "../component/Input";
 import { connect } from "react-redux";
 import { DatePick } from "../component/DatePicker";
@@ -10,7 +10,8 @@ class ProductForm extends Component {
     return (
       <View>
         <Input
-          label="Producto"
+          styleReceived={{ borderBottomColor: "#cfdbe2", borderBottomWidth: 1 }}
+          iconData="product"
           editable={false}
           value={this.props.productValue}
           onChangeText={value =>
@@ -19,7 +20,8 @@ class ProductForm extends Component {
         />
 
         <Input
-          label="Tipo de producto"
+          styleReceived={{ borderBottomColor: "#cfdbe2", borderBottomWidth: 1 }}
+          iconData="complex"          
           editable={false}
           value={this.props.productKindValue}
           onChangeText={value =>
@@ -28,7 +30,8 @@ class ProductForm extends Component {
         />
 
         <Input
-          label="Dirección"
+          styleReceived={{ borderBottomColor: "#cfdbe2", borderBottomWidth: 1 }}
+          iconData="address"          
           editable={false}
           value={this.props.placeValue}
           onChangeText={value =>
@@ -37,11 +40,12 @@ class ProductForm extends Component {
         />
 
         <Input
-          label="Descripción"
+          styleReceived={{ borderBottomColor: "#cfdbe2", borderBottomWidth: 1 }}
+          iconData="description"
           placeholder="Breve descipción de la oferta"
           value={this.props.description}
           multiline={true}
-          numberOfLines = {4}
+          numberOfLines={1}
           onChangeText={value =>
             this.props.productUpdate({ prop: "description", value })
           }
@@ -49,17 +53,18 @@ class ProductForm extends Component {
 
         <View>
           <DatePick
+          styleReceived={{ borderBottomColor: "#cfdbe2", borderBottomWidth: 1 }}
             value={this.props.date}
             onDateChange={value =>
               this.props.productUpdate({ prop: "date", value })
             }
-             dateDefault = {today()}
           />
         </View>
 
         <Input
-          label="Precio original"
-          placeholder="0.00€"
+          styleReceived={{ borderBottomColor: "#cfdbe2", borderBottomWidth: 1 }}
+          iconData="billet"
+          placeholder="Precio original"
           keyboard="numeric"
           value={this.props.priceOld}
           onChangeText={value =>
@@ -68,15 +73,16 @@ class ProductForm extends Component {
         />
 
         <Input
-        label="Precio actual"
-        placeholder="0.0€"
-        keyboard="numeric"
-        value={this.props.priceNew}
-        onChangeText= {value => this.props.productUpdate({prop: "priceNew", value})}
+          styleReceived={{ borderBottomColor: "#cfdbe2", borderBottomWidth: 1 }}
+          placeholder="Precio actual"
+          iconData="coins"
+          keyboard="numeric"
+          value={this.props.priceNew}
+          onChangeText={value =>
+            this.props.productUpdate({ prop: "priceNew", value })
+          }
         />
       </View>
-
-
     );
   }
 }

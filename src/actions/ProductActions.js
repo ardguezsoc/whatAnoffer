@@ -19,7 +19,7 @@ export const productCreate = ({ placeValue,productValue,productKindValue,descrip
       .push({ placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime, urlOfImag, status })
       .then(() => {
           dispatch({ type: PRODUCT_CREATE});
-          Actions.osu();
+          Actions.waoTab();
       })
       ;
   };
@@ -64,7 +64,7 @@ export const productEdit = ({uid,placeValue,productValue,productKindValue,descri
     .set({placeValue,productValue,productKindValue,description,date,priceOld,priceNew,currentTime,status,urlOfImag})
     .then(() => {
       dispatch({ type: PRODUCT_CREATE});
-        Actions.osu();
+        Actions.waoTab();
     })
     ;
   }

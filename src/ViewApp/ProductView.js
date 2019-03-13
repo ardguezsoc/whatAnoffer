@@ -47,7 +47,7 @@ onDecline(){
           <CardText style={{justifyContent:'center', alignSelf:'center'}} value={this.props.product.productValue}/>
           <CardText text="Precio:" value={`${this.props.product.priceNew}€`}   />
           <CardText
-            text="Consumir pref antes del:"
+            text="Consumir pref antes del"
             value={this.props.product.date}
           />
           <CardText text="Tipo:" value={this.props.product.productKindValue} />
