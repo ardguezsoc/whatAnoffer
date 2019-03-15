@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ScrollView,View, TouchableOpacity, Image } from "react-native";
-import { Button, CardContainer, Spinner } from "../component";
+import {  CardContainer, Spinner, ButtonOwn } from "../component";
 import ImagePicker from "react-native-image-picker";
 import ProductForm from "./ProductForm";
 import { productUpdate, productCreate, todayEpoch, today } from "../actions";
@@ -138,7 +138,7 @@ class FinalViewCreate extends Component {
         </View>
         {this.state.buttonStatus ? (
           <CardContainer>
-            <Button onPress={this.onButtonPress.bind(this)}>Listo</Button>
+            <ButtonOwn onPress={this.onButtonPress.bind(this)}>Listo</ButtonOwn>
           </CardContainer>
         ) : (
           <Spinner styleSpin={{ marginTop: 15 }} />

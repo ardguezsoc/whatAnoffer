@@ -3,7 +3,7 @@ import _ from "lodash";
 import { View, ListView, Text, ActivityIndicator } from "react-native";
 import { placeFetch } from "../actions";
 import { connect } from "react-redux";
-import { Button } from "../component";
+import { ButtonOwn } from "../component";
 import { Actions } from "react-native-router-flux";
 import Geohash from "latlon-geohash";
 
@@ -123,25 +123,25 @@ class ListPlaces extends Component {
       const auxStreet = aux[1];
       if (aux[0] != this.props.geoHashV) {
         payment.push(
-          <Button
+          <ButtonOwn
             key={aux[1]}
             value={aux[1]}
             onPress={() => this.onItemPress(auxStreet)}
             style={styles.styleList}
           >
             <Text style={{ color: "black" }}>{aux[1]}</Text>
-          </Button>
+          </ButtonOwn>
         );
       } else {
         nearPlaces.push(
-          <Button
+          <ButtonOwn
             key={aux[1]}
             value={aux[1]}
             onPress={() => this.onItemPress(auxStreet)}
             style={styles.styleList}
           >
             <Text style={{ color: "black" }}>{aux[1]}</Text>
-          </Button>
+          </ButtonOwn>
         );
       }
     }

@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Image, Text } from "react-native";
 import _ from "lodash";
+import Modal from "react-native-modal";
 import { connect } from "react-redux";
 import ProductForm from "./ProductForm";
-import { Button, CardContainer, Spinner, ModalConfirm } from "../component";
+import { Button } from "react-native-elements"
+import { ButtonOwn, CardContainer, Spinner } from "../component";
 import { productUpdate, productEdit } from "../actions";
 import ImagePicker from "react-native-image-picker";
-import {uploadFile} from '../actions';
+import { uploadFile } from "../actions";
 
 class EditView extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       productImage: this.props.product.urlOfImag,
       fileToImage: "",
@@ -45,33 +47,23 @@ class EditView extends Component {
       } else {
         this.setState({
           fileToImage: response,
-          productImage: { uri: response.uri },
+          productImage: { uri: response.uri }
         });
       }
     });
   }
 
-  onAccept(){
-    this.setState({modalStatus: false, buttonStatus: false})
-    
+  onAccept() {
+    this.setState({ modalStatus: false, buttonStatus: false });
     this.onButtonPress();
-  
-}
-
-  onDecline(){
-    this.setState({modalStatus: false})
+  }
+  onDecline() {
+    this.setState({ modalStatus: false });
   }
 
   onButtonPress() {
     this.setState({ buttonStatus: false });
-    const {
-      uid,
-      description,
-      date,
-      priceOld,
-      priceNew,
-     
-    } = this.props;
+    const { uid, description, date, priceOld, priceNew } = this.props;
 
     const {
       productValue,
@@ -79,7 +71,7 @@ class EditView extends Component {
       productKindValue,
       currentTime,
       status
-    } = this.props.product
+    } = this.props.product;
 
     if (this.state.productImage != this.props.product.urlOfImag) {
       uploadFile(this.state.fileToImage)
@@ -100,7 +92,6 @@ class EditView extends Component {
             status,
             urlOfImag
           });
-
         });
     } else {
       const urlOfImag = this.props.product.urlOfImag;
@@ -122,7 +113,7 @@ class EditView extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1, backgroundColor: "white" }}>
         <ProductForm {...this.props.product} />
         <View
           style={{
@@ -137,19 +128,18 @@ class EditView extends Component {
               height: 80,
               width: 80,
               borderRadius: 40,
-              marginBottom: 20
+              marginBottom: 15,
+              marginTop: 15
             }}
           >
-
             {this.state.productImage != this.props.product.urlOfImag ? (
-              
               <Image
-                source= { this.state.productImage }
+                source={this.state.productImage}
                 style={{ height: 80, width: 80, borderRadius: 40 }}
               />
             ) : (
               <Image
-                source={{uri: this.state.productImage}}
+                source={{ uri: this.state.productImage }}
                 style={{ height: 80, width: 80, borderRadius: 40 }}
               />
             )}
@@ -157,19 +147,82 @@ class EditView extends Component {
         </View>
         {this.state.buttonStatus ? (
           <CardContainer>
-            <Button onPress={() => this.setState({modalStatus: !this.state.modalStatus})}>Listo</Button>
+            <ButtonOwn
+              onPress={() =>
+                this.setState({ modalStatus: !this.state.modalStatus })
+              }
+            >
+              Listo
+            </ButtonOwn>
           </CardContainer>
         ) : (
           <Spinner styleSpin={{ marginTop: 15 }} />
         )}
 
-        <ModalConfirm
-        visible={this.state.modalStatus}
-        onAccept={this.onAccept.bind(this)}
-        onCancel={this.onDecline.bind(this)}
-        >
-        <Text style={{textAlign:'center', flex: 1}}>¿ Estás seguro de que quieres guardar los cambios realizados ?</Text>
-        </ModalConfirm>
+        <View style={{ flex: 1 }}>
+          <Modal
+            isVisible={this.state.modalStatus}
+            onBackButtonPress={() => this.onDecline()}
+            onBackdropPress={() => this.onDecline()}
+          >
+            <View
+              style={{
+                backgroundColor: "white",
+                width: "100%",
+                height: "40%",
+                borderRadius: 15
+              }}
+            >
+              <View
+                style={{
+                  alignItems: "flex-end",
+                  marginTop: 10,
+                  marginRight: 10
+                }}
+              />
+              <View style={{ alignSelf: "center", alignItems: "center" }}>
+                <Text
+                  style={{
+                    fontFamily: "Pacifico",
+                    fontSize: 24,
+                    color: "#30A66D"
+                  }}
+                >
+                  ¿Seguro?
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    padding: 10
+                  }}
+                >
+                  ¿Quieres guardar los cambios realizados?
+                </Text>
+                <View style={{ flexDirection: "row", marginTop: 20 }}>
+                  <Button
+                    title="Cancelar"
+                    onPress={() => this.onDecline()}
+                    buttonStyle={{
+                      borderRadius: 15,
+                      width: 120,
+                      backgroundColor: "#ff3333"
+
+                    }}
+                  />
+                  <Button
+                    title="Aceptar"
+                    onPress={() => this.onAccept()}
+                    buttonStyle={{
+                      backgroundColor: "#109C59",
+                      borderRadius: 15,
+                      width: 120,
+                    }}
+                  />
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
       </View>
     );
   }
@@ -190,11 +243,10 @@ const mapStateToProps = state => {
     date,
     description,
     priceNew,
-    priceOld,    
+    priceOld,
     urlOfImag
   };
 };
-
 
 export default connect(
   mapStateToProps,

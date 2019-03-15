@@ -243,6 +243,7 @@ class SearchView extends Component {
             keyExtractor={item => item.uid}
             ListHeaderComponent={this.renderHeader}
             ListEmptyComponent={this.ListEmptyView}
+            stickyHeaderIndices={[0]}
           />
           <View style={{ flex: 1, justifyContent: "flex-end" }}>
             <Modal

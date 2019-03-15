@@ -60,56 +60,60 @@ const RouterComponent = () => {
           </Scene>
           <Scene key="Search" title="search" iconName={"search"} icon={TabIcon}>
             <Scene key="SearchView" component={SearchView} hideNavBar />
-          </Scene>
+          </Scene> 
         </Scene>
 
         <Scene
           key="createOffer"
           component={CreateOffer}
           title="Tipo de producto a crear"
-          headerTitleStyle={{
-            textAlign: "center",
-            flex: 1,
-            color: "white",
-            fontFamily: "Roboto",
-            fontWeight: "200",
-            fontSize: 23
-          }}
+          headerTitleStyle={styles.textNav}
+          barButtonIconStyle={{ tintColor: 'red' }}
           navigationBarStyle={{ backgroundColor: "#30A66D" }}
         />
-        <Scene key="productView" component={ProductView} title="Oferta" />
+        <Scene key="productView" component={ProductView} title="Oferta" 
+        headerTitleStyle={styles.textNavCenter}
+        navigationBarStyle={{ backgroundColor: "#30A66D" }}
+        />
         <Scene
           key="placeChooser"
           component={PlaceView}
           title="Supermercados sugeridos"
-          headerTitleStyle={{
-            textAlign: "center",
-            flex: 1,
-            color: "white",
-            fontFamily: "Roboto",
-            fontWeight: "200",
-            fontSize: 23
-          }}
+          headerTitleStyle={styles.textNav}
           navigationBarStyle={{ backgroundColor: "#30A66D" }}
         />
         <Scene
           key="finalCreateOffer"
           component={FinalViewCreate}
           title="Crear oferta"
-          headerTitleStyle={{
-            textAlign: "center",
-            flex: 1,
-            color: "white",
-            fontFamily: "Roboto",
-            fontWeight: "200",
-            fontSize: 23
-          }}
+          headerTitleStyle={styles.textNavCenter}
           navigationBarStyle={{ backgroundColor: "#30A66D" }}
         />
-        <Scene key="editView" component={EditView} title="Editar oferta" />
+        <Scene key="editView" component={EditView} title="Editar oferta" 
+        headerTitleStyle={styles.textNavCenter}
+        navigationBarStyle={{ backgroundColor: "#30A66D" }}
+        />
       </Scene>
     </Router>
   );
 };
+
+const styles= {
+  textNav: {
+    textAlign: "center",
+    color: "white",
+    fontFamily: "Roboto",
+    fontWeight: "200",
+    fontSize: 23
+  },
+  textNavCenter: {
+    textAlign: "center",
+    color: "white",
+    fontFamily: "Roboto",
+    fontWeight: "200",
+    fontSize: 25,
+    width: 280
+  }
+}
 
 export default RouterComponent;

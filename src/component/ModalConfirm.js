@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Modal } from 'react-native';
-import { Button } from '../component';
+import { ButtonOwn } from '../component';
 import { CardContainer } from '../component';
 
 
@@ -19,8 +19,8 @@ const ModalConfirm = ({ children, visible, onAccept, onCancel }) => {
         <View style={styles.containerStyle}>
          <CardContainer style={styles.cardSectionStyle}><Text style={styles.textStyle} >{children}</Text></CardContainer>
          <CardContainer>
-            <Button onPress={onAccept}>Aceptar</Button> 
-            <Button onPress={onCancel}>Cancelar</Button> 
+            <ButtonOwn onPress={onAccept}>Aceptar</ButtonOwn> 
+            <ButtonOwn onPress={onCancel}>Cancelar</ButtonOwn> 
          </CardContainer>
         </View>
         </Modal>

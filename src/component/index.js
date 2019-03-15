@@ -1,5 +1,5 @@
 export * from './CardItem';
-export * from './Button';
+export * from './ButtonOwn';
 export * from './CardContainer';
 export * from './Input';
 export * from './ListProductItem';
