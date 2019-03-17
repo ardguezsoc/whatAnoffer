@@ -62,7 +62,7 @@ class ProductView extends Component {
               onPress={() => this.editOffer()}
               style={{ borderColor: "#086BC5" }}
             >
-              <Text style={{ color: "#086BC5" }}>Editar</Text>{" "}
+              <Text style={{ color: "#086BC5" }}>Editar</Text>
             </ButtonOwn>
             <ButtonOwn
               onPress={() =>

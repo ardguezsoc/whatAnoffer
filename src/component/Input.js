@@ -111,7 +111,8 @@ const Input = ({
   multiline,
   numberOfLines,
   styleReceived,
-  iconData
+  iconData,
+  secureTextEntry
 }) => {
   const { inputStyle, viewStyle } = styles;
   return (
@@ -119,6 +120,7 @@ const Input = ({
       {iconData == "complex" ? renderIcon(value) : renderIcon(iconData)}
 
       <TextInput
+        secureTextEntry={secureTextEntry}
         multiline={multiline}
         numberOfLines={numberOfLines}
         style={[inputStyle, styleReceived]}

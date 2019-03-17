@@ -7,6 +7,7 @@ import PlaceView from "./ViewApp/PlaceView";
 import FinalViewCreate from "./ViewApp/FinalViewCreate";
 import EditView from "./ViewApp/EditView";
 import SearchView from "./ViewApp/SearchView";
+import Login from "./ViewApp/Login"
 import Icon from "react-native-vector-icons/FontAwesome";
 
 class TabIcon extends React.Component {
@@ -35,6 +36,7 @@ const RouterComponent = () => {
   return (
     <Router>
       <Scene key="root">
+        <Scene key="Login" title="login" component={Login} hideNavBar initial  />
         <Scene
           key="tabsBottom"
           tabs
