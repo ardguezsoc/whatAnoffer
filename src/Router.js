@@ -9,6 +9,7 @@ import EditView from "./ViewApp/EditView";
 import SearchView from "./ViewApp/SearchView";
 import Login from "./ViewApp/Login"
 import Icon from "react-native-vector-icons/FontAwesome";
+import NewUser from "./ViewApp/NewUser";
 
 class TabIcon extends React.Component {
   render() {
@@ -37,6 +38,7 @@ const RouterComponent = () => {
     <Router>
       <Scene key="root">
         <Scene key="Login" title="login" component={Login} hideNavBar initial  />
+        <Scene key="newUser" title="Crear nueva cuenta" component={NewUser} hideNavBar   />
         <Scene
           key="tabsBottom"
           tabs

@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "react-native-elements";
-import {
-  emailChanged,
-  passwordChanged,
-  loginUser,
-  reseterLogin
-} from "../actions";
+import { emailChanged, passwordChanged, nameChanged, createAccount, reseter } from "../actions";
 import { View, Text, ActivityIndicator } from "react-native";
-import { Input, ButtonOwn, CardContainer } from "../component";
-import { Actions } from "react-native-router-flux";
+import { Input } from "../component";
+import { Icon } from "react-native-elements";
 
-class Login extends Component {
+class newUser extends Component {
   constructor(props) {
     super(props);
 
@@ -24,14 +19,18 @@ class Login extends Component {
     this.props.emailChanged(text);
   }
 
+  onNameChange(text) {
+    this.props.nameChanged(text);
+  }
+
   onPasswordChange(text) {
     this.props.passwordChanged(text);
   }
 
   onButtonPress() {
     this.setState({ buttonStatus: true });
-    const { email, password } = this.props;
-    this.props.loginUser({ email, password });
+    const { email, password, name } = this.props;
+    this.props.createAccount({ email, password, name });
   }
 
   render() {
@@ -39,10 +38,25 @@ class Login extends Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: "#30A66D",
-          justifyContent: "center"
+          backgroundColor: "#30A66D"
         }}
       >
+        <View
+          style={{
+            backgroundColor: "#30A66D",
+            justifyContent: "flex-start",
+            height: "20%"
+          }}
+        >
+          <Icon
+            reverse
+            size={21}
+            name="chevron-left"
+            type="font-awesome"
+            color="#30A66D"
+            onPress={() => this.props.reseter() }
+          />
+        </View>
         <View
           style={{
             width: "80%",
@@ -57,8 +71,7 @@ class Login extends Component {
               width: "100%",
               height: "15%",
               justifyContent: "center",
-              marginTop: 15,
-
+              marginTop: 15
             }}
           >
             <Text
@@ -84,6 +97,12 @@ class Login extends Component {
           >
             <Text style={styles.errorTextStyle}>{this.props.error}</Text>
             <Input
+              onChangeText={this.onNameChange.bind(this)}
+              value={this.props.name}
+              placeholder="Nombre"
+              styleReceived={styles.inputStyle}
+            />
+            <Input
               onChangeText={this.onEmailChange.bind(this)}
               value={this.props.email}
               placeholder="Correo electrónico"
@@ -98,21 +117,22 @@ class Login extends Component {
             />
 
             {!this.props.load ? (
-              <CardContainer>
-                <ButtonOwn
-                  style={{
-                    borderColor: "#0E9353",
-                    borderWidth: 1.5,
-                    marginBottom: 10,
-                    marginTop: 5
+              <View style={{ height: 50, width: "100%", marginTop: 15 }}>
+                <Button
+                  title="Crear cuenta"
+                  buttonStyle={{
+                    backgroundColor: "#0A874B",
+                    borderRadius: 5
+                  }}
+                  titleStyle={{
+                    fontSize: 11,
+                    fontFamily: "Pacifico"
                   }}
                   onPress={this.onButtonPress.bind(this)}
-                >
-                  <Text style={{ color: "#20A66D" }}>Iniciar sesión</Text>
-                </ButtonOwn>
-              </CardContainer>
+                />
+              </View>
             ) : (
-              <View style={{ width: "100%", height: 70, alignItems: "center" }}>
+              <View style={{ width: "100%", height: 70, marginTop: 20, alignItems: "center" }}>
                 <ActivityIndicator size="large" />
               </View>
             )}
@@ -123,29 +143,7 @@ class Login extends Component {
                 alignSelf: "center",
                 flex: 1
               }}
-            >
-              <View style={{ textAlign: "center", alignItems: "center" }}>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontFamily: "Pacifico"
-                  }}
-                >
-                  O
-                </Text>
-              </View>
-              <View style={{ height: 50, width: "100%", marginTop: 15 }}>
-                <Button
-                  title="Crear una cuenta"
-                  buttonStyle={{ backgroundColor: "#0A874B", borderRadius: 5 }}
-                  titleStyle={{
-                    fontSize: 11,
-                    fontFamily: "Pacifico"
-                  }}
-                  onPress={() => this.props.reseterLogin()}
-                />
-              </View>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -172,19 +170,19 @@ const styles = {
   },
   errorTextStyle: {
     color: "red",
-    fontSize: 18,
+    fontSize: 17,
     alignSelf: "center",
     marginBottom: 5
   }
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { email, password, error, load } = auth;
+  const { email, password, name, error, load } = auth;
 
-  return { email, password, error, load };
+  return { email, password, name, error, load };
 };
 
 export default connect(
   mapStateToProps,
-  { emailChanged, passwordChanged, loginUser, reseterLogin }
-)(Login);
+  { emailChanged, passwordChanged, nameChanged, createAccount, reseter }
+)(newUser);
