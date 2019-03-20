@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { TouchableNativeFeedback, View } from "react-native";
-import { CardItem } from "./CardItem";
+import { CardItem } from "../component";
 import { Actions } from "react-native-router-flux";
 
 class ListProductItem extends Component {

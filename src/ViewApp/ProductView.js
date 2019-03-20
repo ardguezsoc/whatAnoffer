@@ -14,7 +14,7 @@ class ProductView extends Component {
 
   resetCancel() {
     this.setState({
-     modalStatus: false,
+      modalStatus: false
     });
   }
 
@@ -78,10 +78,18 @@ class ProductView extends Component {
               style={{ justifyContent: "center", alignSelf: "center" }}
               value={this.props.product.productValue}
             />
-            <CardText
-              text="Precio:"
-              value={`${this.props.product.priceNew}€`}
-            />
+            {this.props.product.priceNew == "n/a" ? (
+              <CardText
+                text="Precio:"
+                value={this.props.product.priceNew}
+              />
+            ) : (
+              <CardText
+                text="Precio:"
+                value={`${this.props.product.priceNew}€`}
+              />
+            )}
+
             <CardText
               text="Consumir pref antes del"
               value={this.props.product.date}
@@ -97,7 +105,6 @@ class ProductView extends Component {
         <View style={{ flex: 1 }}>
           <Modal
             isVisible={this.state.modalStatus}
-          
             onBackButtonPress={() => this.resetCancel()}
             onBackdropPress={() => this.resetCancel()}
           >
@@ -115,18 +122,17 @@ class ProductView extends Component {
                   marginTop: 10,
                   marginRight: 10
                 }}
-              >
-              </View>
+              />
               <View style={{ alignSelf: "center", alignItems: "center" }}>
-              <Text
-                    style={{
-                      fontFamily: "Pacifico",
-                      fontSize: 24,
-                      color: "#ff3333"
-                    }}
-                  >
-                    Eliminar
-                  </Text>
+                <Text
+                  style={{
+                    fontFamily: "Pacifico",
+                    fontSize: 24,
+                    color: "#ff3333"
+                  }}
+                >
+                  Eliminar
+                </Text>
                 <Text
                   style={{
                     fontSize: 20,
@@ -135,7 +141,7 @@ class ProductView extends Component {
                 >
                   ¿Quieres eliminar esta oferta?
                 </Text>
-                <View style={{ flexDirection: "row", marginTop: 20,  }}>
+                <View style={{ flexDirection: "row", marginTop: 20 }}>
                   <Button
                     title="Cancelar"
                     onPress={() => this.resetCancel()}
@@ -146,7 +152,7 @@ class ProductView extends Component {
                   />
                   <Button
                     title="Aceptar"
-                    onPress= { () => this.onAccept() }
+                    onPress={() => this.onAccept()}
                     buttonStyle={{
                       borderRadius: 15,
                       width: 120,

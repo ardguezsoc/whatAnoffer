@@ -16,7 +16,8 @@ const CardItem = ({
     priceStyle,
     roundBorder2,
     textStyle,
-    timeStyle
+    timeStyle,
+    textSt
   } = styles;
   return (
     <View style={[roundBorder, viewContainer]}>
@@ -26,9 +27,15 @@ const CardItem = ({
           style={{ width: "100%", height: "100%", marginRight: 0 }}
         >
           <View style={[roundBorder2, priceStyle]}>
-            <Text style={{ textAlign: "center", color: "white" }}>
-              {priceNew} €
-            </Text>
+            {priceNew == "n/a" ? (
+              <Text style={{ textAlign: "center", color: "white" }}>
+                {priceNew}
+              </Text>
+            ) : (
+              <Text style={{ textAlign: "center", color: "white" }}>
+                {priceNew} €
+              </Text>
+            )}
           </View>
         </ImageBackground>
       </View>
@@ -50,11 +57,24 @@ const CardItem = ({
         >
           {title}
         </Text>
-        <Text style={textStyle}>Precio original: {priceOld} €</Text>
-        <Text style={textStyle}>{dateProd}</Text>
+        {priceOld == "n/a" ? (
+          <Text style={[textStyle,textSt,{fontSize: 18 }]}> {priceOld} </Text>
+        ) : (
+          <Text
+            style={[
+              textStyle,textSt,
+              {
+                textDecorationLine: "line-through",
+              }
+            ]}
+          >
+            {priceOld}€
+          </Text>
+        )}
+        <Text style={[textStyle]}>{dateProd}</Text>
         <Text
           style={{
-            fontSize: 13,
+            fontSize: 15,
             marginTop: "3%",
             color: "grey",
             marginLeft: "3%"
@@ -62,7 +82,7 @@ const CardItem = ({
         >
           {address}
         </Text>
-        <Text style={timeStyle}>5 min</Text>
+        {/* <Text style={timeStyle}>5 min</Text> */}
       </View>
     </View>
   );
@@ -77,6 +97,10 @@ const styles = {
     overflow: "hidden",
 
     alignSelf: "center"
+  },
+  textSt: {
+    color: "grey",
+    fontSize: 18,
   },
   timeStyle: {
     fontFamily: "sans-serif-medium",
@@ -94,7 +118,7 @@ const styles = {
     alignSelf: "center"
   },
   textStyle: {
-    fontSize: 14,
+    fontSize: 16,
     marginTop: "3%",
     marginLeft: "3%"
   },

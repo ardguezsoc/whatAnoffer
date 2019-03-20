@@ -60,7 +60,7 @@ class newUser extends Component {
         <View
           style={{
             width: "80%",
-            height: "60%",
+            height: 400,
             alignSelf: "center",
             backgroundColor: "white",
             borderRadius: 15,
@@ -99,7 +99,7 @@ class newUser extends Component {
             <Input
               onChangeText={this.onNameChange.bind(this)}
               value={this.props.name}
-              placeholder="Nombre"
+              placeholder="Nombre de usuario"
               styleReceived={styles.inputStyle}
             />
             <Input

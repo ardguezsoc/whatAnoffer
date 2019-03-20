@@ -38,8 +38,8 @@ class ListKind extends Component {
 const styles = {
   textStyle:{
     textAlign:'center', 
-    fontSize: 18, 
-    backgroundColor: "#30A66D", 
+    fontSize: 19, 
+    backgroundColor: "#109C59", 
     color:"white"
   },
   buttonStyle: {

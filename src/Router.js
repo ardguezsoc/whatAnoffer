@@ -10,6 +10,8 @@ import SearchView from "./ViewApp/SearchView";
 import Login from "./ViewApp/Login"
 import Icon from "react-native-vector-icons/FontAwesome";
 import NewUser from "./ViewApp/NewUser";
+import NoRegisterView from "./ViewApp/NoRegisterView";
+import KindOfLogin from "./ViewApp/KindOfLogin";
 
 class TabIcon extends React.Component {
   render() {
@@ -37,8 +39,18 @@ const RouterComponent = () => {
   return (
     <Router>
       <Scene key="root">
-        <Scene key="Login" title="login" component={Login} hideNavBar initial  />
+        <Scene key="kindOfLogin" title="homie" component={KindOfLogin} hideNavBar initial  />
+        <Scene key="Login" title="login" component={Login} hideNavBar   />
         <Scene key="newUser" title="Crear nueva cuenta" component={NewUser} hideNavBar   />
+        <Scene key="noUserLogin" title="WAO!" component={NoRegisterView} left={()=>null} headerTitleStyle={{
+                textAlign: "center",
+                flex: 1,
+                color: "white",
+                fontFamily: "Pacifico",
+                fontWeight: "200",
+                fontSize: 25
+              }}
+              navigationBarStyle={{ backgroundColor: "#30A66D" }} />
         <Scene
           key="tabsBottom"
           tabs
@@ -82,8 +94,8 @@ const RouterComponent = () => {
         <Scene
           key="placeChooser"
           component={PlaceView}
-          title="Supermercados sugeridos"
-          headerTitleStyle={styles.textNav}
+          title="Lugar de la oferta"
+          headerTitleStyle={[styles.textNav,{fontSize: 22}]}
           navigationBarStyle={{ backgroundColor: "#30A66D" }}
         />
         <Scene

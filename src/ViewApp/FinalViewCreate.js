@@ -55,10 +55,10 @@ class FinalViewCreate extends Component {
       priceNew
     } = this.props;
     if(typeof(this.props.priceNew) === 'undefined'){
-      priceNew = 0.00
+      priceNew = "n/a"
     }
     if(typeof(this.props.priceOld) === 'undefined'){
-      priceOld = 0.00
+      priceOld = "n/a"
     }
     if(this.props.date === ""){
       date = today()

@@ -314,7 +314,7 @@ class SearchView extends Component {
                   >
                     {this.state.number > 0 ? (
                       <Text
-                        style={{ marginTop: 14, marginBottom: 5, fontSize: 17 }}
+                        style={{ marginTop: 14, marginBottom: 5, fontSize: 15 }}
                       >
                         Mostrar ofertas creadas hace {this.state.number}
                         {this.state.number == 1 ? (
@@ -325,7 +325,7 @@ class SearchView extends Component {
                       </Text>
                     ) : (
                       <Text
-                        style={{ marginTop: 14, marginBottom: 5, fontSize: 17 }}
+                        style={{ marginTop: 14, marginBottom: 5, fontSize: 15 }}
                       >
                         {" "}
                         Mostrar ofertas creadas a culaquier hora
@@ -333,10 +333,10 @@ class SearchView extends Component {
                     )}
 
                     <Slider
-                      maximumValue={23}
-                      step={1}
+                      maximumValue={24}
+                      step={3}
                       thumbStyle={{ width: 30, height: 30, borderRadius: 15 }}
-                      style={{ width: 350, marginTop: 5 }}
+                      style={{ width: 250, marginTop: 5, alignSelf: "center" }}
                       thumbTintColor="#52BA88"
                       value={this.state.number}
                       maximumTrackTintColor="#d3d3d3"

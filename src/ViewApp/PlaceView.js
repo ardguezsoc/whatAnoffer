@@ -166,9 +166,9 @@ class ListPlaces extends Component {
 const styles = {
   textStyle: {
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 19,
     height: 27,
-    backgroundColor: "#30A66D",
+    backgroundColor: "#109C59",
     color: "white"
   },
   container: {

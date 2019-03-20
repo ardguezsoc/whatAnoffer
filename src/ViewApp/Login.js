@@ -46,10 +46,10 @@ class Login extends Component {
         <View
           style={{
             width: "80%",
-            height: "60%",
+            height: 400,
             alignSelf: "center",
             backgroundColor: "white",
-            borderRadius: 15,
+            borderRadius: 15
           }}
         >
           <View
@@ -57,8 +57,7 @@ class Login extends Component {
               width: "100%",
               height: "15%",
               justifyContent: "center",
-              marginTop: 15,
-
+              marginTop: 15
             }}
           >
             <Text
@@ -134,7 +133,7 @@ class Login extends Component {
                   O
                 </Text>
               </View>
-              <View style={{ height: 50, width: "100%", marginTop: 15 }}>
+              <View style={{ flex:1, marginTop: 15 }}>
                 <Button
                   title="Crear una cuenta"
                   buttonStyle={{ backgroundColor: "#0A874B", borderRadius: 5 }}
