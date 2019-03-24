@@ -143,11 +143,6 @@ const styles = {
     lineHeight: 30,
     flex: 3
   },
-  labelStyle: {
-    fontSize: 15,
-    paddingLeft: 10,
-    flex: 1
-  },
   viewStyle: {
     flexDirection: "row",
     alignItems: "center"

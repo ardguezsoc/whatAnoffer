@@ -83,6 +83,9 @@ class ListBasicItem extends Component {
   onItemPress() {
     this.setState({ modalStatus: true });
   }
+  hiddenModal(){
+    this.setState({modalStatus: false}, () => {Actions.newUser()})
+  }
 
   render() {
     const {
@@ -150,7 +153,7 @@ class ListBasicItem extends Component {
                 <View style={{ flexDirection: "row", marginTop: 20 }}>
                   <Button
                     title="Registrarse"
-                    onPress={() => Actions.newUser()}
+                    onPress={() => this.hiddenModal()}
                     buttonStyle={{
                       borderRadius: 15,
                       width: 150,

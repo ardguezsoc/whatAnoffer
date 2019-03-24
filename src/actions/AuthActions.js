@@ -9,7 +9,9 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
   RESETER,
-  CREATE_USER_FAIL
+  CREATE_USER_FAIL,
+  FAIL_PASSWORD,
+  FAIL_NAME
 } from "../actions/type";
 
 export const emailChanged = text => {
@@ -47,21 +49,33 @@ export const loginUser = ({ email, password }) => {
 };
 
 export const createAccount = ({ email, password, name }) => {
-  return dispatch => {
-    dispatch({ type: LOGIN_USER });
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(email, password)
-          .then(() => CreateUsers(name));
-      })
-      .catch(() => {
-        createUserFail(dispatch);
-      });
-  };
+  if (name.length < 4) {
+    return dispatch => {
+      dispatch({ type: FAIL_NAME });
+    };
+  } else {
+    return dispatch => {
+      dispatch({ type: LOGIN_USER });
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(() => CreateUsers(name));
+        })
+        .catch(() => {
+          if (password.length < 6) {
+            return dispatch({
+              type: FAIL_PASSWORD
+            });
+          } else {
+            createUserFail(dispatch);
+          }
+        });
+    };
+  }
 };
 
 export const reseter = () => {
@@ -74,11 +88,11 @@ export const reseter = () => {
 };
 
 export const loginUserFail = dispatch => {
-  dispatch({ type: LOGIN_USER_FAIL });
+  return dispatch({ type: LOGIN_USER_FAIL });
 };
 
 export const createUserFail = dispatch => {
-  dispatch({ type: CREATE_USER_FAIL });
+  return dispatch({ type: CREATE_USER_FAIL });
 };
 
 export const reseterLogin = () => {

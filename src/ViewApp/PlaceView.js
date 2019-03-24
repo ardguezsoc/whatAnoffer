@@ -31,8 +31,8 @@ class PlaceView extends Component {
         geoM = Geohash.encode(lat, long, 7);
         this.props.placeFetch();
       },
-      error1 => this.setState({ error1: error1.message }),
-      { enableHighAccuracy: false, timeout: 5000, maximumAge: 1000 }
+      (error) => {geoM = 0, this.props.placeFetch()},
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 1000 }
     );
   }
 

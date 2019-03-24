@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "react-native-elements";
-import { emailChanged, passwordChanged, nameChanged, createAccount, reseter } from "../actions";
-import { View, Text, ActivityIndicator } from "react-native";
+import {
+  emailChanged,
+  passwordChanged,
+  nameChanged,
+  createAccount,
+  reseter,
+} from "../actions";
+import { View, Text, ActivityIndicator, TextInput } from "react-native";
 import { Input } from "../component";
 import { Icon } from "react-native-elements";
 
@@ -11,7 +17,8 @@ class newUser extends Component {
     super(props);
 
     this.state = {
-      buttonStatus: false
+      buttonStatus: false,
+      passwordState: true
     };
   }
 
@@ -54,7 +61,7 @@ class newUser extends Component {
             name="chevron-left"
             type="font-awesome"
             color="#30A66D"
-            onPress={() => this.props.reseter() }
+            onPress={() => this.props.reseter()}
           />
         </View>
         <View
@@ -63,7 +70,7 @@ class newUser extends Component {
             height: 400,
             alignSelf: "center",
             backgroundColor: "white",
-            borderRadius: 15,
+            borderRadius: 15
           }}
         >
           <View
@@ -96,26 +103,43 @@ class newUser extends Component {
             }}
           >
             <Text style={styles.errorTextStyle}>{this.props.error}</Text>
+            <View style={[styles.searchSection, styles.inputStyle]}>
             <Input
               onChangeText={this.onNameChange.bind(this)}
               value={this.props.name}
               placeholder="Nombre de usuario"
-              styleReceived={styles.inputStyle}
-            />
-            <Input
-              onChangeText={this.onEmailChange.bind(this)}
-              value={this.props.email}
-              placeholder="Correo electrónico"
-              styleReceived={styles.inputStyle}
-            />
-            <Input
-              secureTextEntry
-              placeholder="Contraseña"
-              onChangeText={this.onPasswordChange.bind(this)}
-              value={this.props.password}
-              styleReceived={styles.inputStyle}
-            />
+              styleReceived={styles.input}
 
+            />
+            </View>
+            <View style={[styles.searchSection, styles.inputStyle]}>
+              <Input
+                onChangeText={this.onEmailChange.bind(this)}
+                value={this.props.email}
+                placeholder="Correo electrónico"
+                styleReceived={styles.input}
+
+              />
+            </View>
+            <View style={[styles.searchSection, styles.inputStyle]}>
+              <TextInput
+                style={styles.input}
+                secureTextEntry={this.state.passwordState}
+                placeholder="Contraseña"
+                onChangeText={this.onPasswordChange.bind(this)}
+                value={this.props.password}
+                underlineColorAndroid="transparent"
+              />
+              <Icon
+                iconStyle={{ marginRight: 9 }}
+                name="eye"
+                color="grey"
+                type="font-awesome"
+                onPress={() =>
+                  this.setState({ passwordState: !this.state.passwordState })
+                }
+              />
+            </View>
             {!this.props.load ? (
               <View style={{ height: 50, width: "100%", marginTop: 15 }}>
                 <Button
@@ -132,7 +156,14 @@ class newUser extends Component {
                 />
               </View>
             ) : (
-              <View style={{ width: "100%", height: 70, marginTop: 20, alignItems: "center" }}>
+              <View
+                style={{
+                  width: "100%",
+                  height: 50,
+                  marginTop: 20,
+                  alignItems: "center"
+                }}
+              >
                 <ActivityIndicator size="large" />
               </View>
             )}
@@ -163,16 +194,32 @@ const styles = {
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.6,
+    shadowRadius: 2,
 
-    elevation: 2
+    elevation: 4
   },
   errorTextStyle: {
     color: "red",
     fontSize: 17,
     alignSelf: "center",
     marginBottom: 5
+  },
+  searchSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff"
+  },
+  input: {
+    color: "#000",
+    paddingRight: 5,
+    paddingLeft: 2,
+    fontSize: 14,
+    lineHeight: 30,
+    flex: 3,
+    textAlign: "center"
   }
 };
 

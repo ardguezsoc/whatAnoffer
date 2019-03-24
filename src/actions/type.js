@@ -10,6 +10,8 @@ export const LOGIN_USER_FAIL = 'login_user_fail';
 export const NAME_CHANGED = 'name_changed';
 export const RESETER = 'reseter';
 export const CREATE_USER_FAIL = 'create_user_fail';
+export const FAIL_PASSWORD = 'fail_password';
+export const FAIL_NAME = "fail_name";
 
 export const KIND_FETCH_SUCCESS = 'kind_fetch_success';
 
