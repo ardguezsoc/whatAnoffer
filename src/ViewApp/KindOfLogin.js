@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Button } from "react-native-elements";
+import { AsyncStorage, ActivityIndicator } from "react-native";
 import { View, Text } from "react-native";
+import firebase from "@firebase/app";
+import "@firebase/auth";
 import { Actions } from "react-native-router-flux";
 
 class KindOfLogin extends Component {
@@ -8,9 +11,27 @@ class KindOfLogin extends Component {
     super(props);
 
     this.state = {
-      buttonStatus: false
+      buttonStatus: false,
+      loading: true
     };
   }
+
+  componentDidMount() {
+    this.displayData()
+  }
+
+  displayData = async () => {
+    try{
+      let user = await AsyncStorage.getItem('user');
+      firebase
+      .auth()
+      .signInWithEmailAndPassword(JSON.parse(user).email, JSON.parse(user).password).then( () =>  {Actions.waoTab()} )
+    }catch(err){
+      this.setState({loading: false})
+
+    }
+  }
+
   render() {
     const { buttonS, textS } = styles;
     return (
@@ -22,16 +43,7 @@ class KindOfLogin extends Component {
         }}
       >
         <Text
-          style={{
-            color: "white",
-            textAlign: "center",
-            fontFamily: "Pacifico",
-            fontWeight: "200",
-            fontSize: 60,
-            textShadowColor: "rgba(0, 0, 0, 0.50)",
-            textShadowOffset: { width: -2, height: 2 },
-            textShadowRadius: 10
-          }}
+          style={styles.titleStyle}
         >
           WAO!
         </Text>
@@ -45,19 +57,24 @@ class KindOfLogin extends Component {
             alignSelf: "center"
           }}
         >
-          <Button
-            title="Acceder como anónimo"
-            buttonStyle={buttonS}
-            textStyle={[textS,{color: "black"}]}
-            onPress={ () => Actions.noUserLogin()}
-          />
-          <Button
-            title="Acceder con mi cuenta"
-            buttonStyle={[buttonS,{backgroundColor:"#109C59"}]}
-            textStyle={[textS,{color:"white"}]}
-            onPress={() => Actions.Login()}
-          />
-          <Button title="Registrarse" buttonStyle={buttonS} textStyle={textS} onPress={ () => Actions.newUser()} />
+        { this.state.loading ? <ActivityIndicator color="white" size="large" /> : 
+        <View>
+        <Button
+        title="Acceder como anónimo"
+        buttonStyle={buttonS}
+        textStyle={[textS,{color: "black"}]}
+        onPress={ () => Actions.noUserLogin()}
+      />
+      <Button
+        title="Acceder con mi cuenta"
+        buttonStyle={[buttonS,{backgroundColor:"#109C59"}]}
+        textStyle={[textS,{color:"white"}]}
+        onPress={() => Actions.Login()}
+      />
+      <Button title="Registrarse" buttonStyle={buttonS} textStyle={textS} onPress={ () => Actions.newUser()} />
+      </View>
+      }
+          
         </View> 
       </View>
     );
@@ -67,7 +84,7 @@ class KindOfLogin extends Component {
 const styles = {
   textS: {
     color: "#109C59",
-    fontFamily: "Roboto",
+    fontFamily: "Semib",
     fontSize: 21
   },
   buttonS: {
@@ -84,6 +101,16 @@ const styles = {
     shadowRadius: 3.84,
 
     elevation: 5
+  },
+  titleStyle: {
+    color: "white",
+    textAlign: "center",
+    fontFamily: "Pacifico",
+    fontWeight: "200",
+    fontSize: 60,
+    textShadowColor: "rgba(0, 0, 0, 0.50)",
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 10
   }
 };
 

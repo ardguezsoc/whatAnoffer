@@ -66,7 +66,6 @@ class ListProduct extends Component {
   }
 }
 
-
 const mapStateToProps = state => {
     const product = _.map(state.product, (val, uid) => {
         return { ...val, uid};

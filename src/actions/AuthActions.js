@@ -1,4 +1,5 @@
 import firebase from "@firebase/app";
+import { AsyncStorage } from "react-native";
 import "@firebase/auth";
 import { Actions } from "react-native-router-flux";
 import {
@@ -41,7 +42,7 @@ export const loginUser = ({ email, password }) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(user => loginUserSuccess(dispatch, user))
+      .then(user => loginUserSuccess(dispatch, user, email, password))
       .catch(() => {
         loginUserFail(dispatch);
       });
@@ -63,7 +64,7 @@ export const createAccount = ({ email, password, name }) => {
           firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
-            .then(() => CreateUsers(name));
+            .then(() => CreateUsers(email, password, name));
         })
         .catch(() => {
           if (password.length < 6) {
@@ -104,25 +105,40 @@ export const reseterLogin = () => {
   };
 };
 
-export const CreateUsers = name => {
+export const CreateUsers = (emailV, passwordV, name) => {
   const { currentUser } = firebase.auth();
-  firebase
-    .database()
-    .ref()
-    .child("Users")
-    .child(currentUser.uid)
-    .set({
-      nameOfUser: name
-    })
-    .then(() => {
-      Actions.waoTab();
-    });
+  return () => {
+    firebase
+      .database()
+      .ref()
+      .child("Users")
+      .child(currentUser.uid)
+      .set({
+        nameOfUser: name
+      })
+      .then(() => {
+        let obj = {
+          email: emailV,
+          password: passwordV
+        };
+        AsyncStorage.setItem("user", JSON.stringify(obj)).then(() => {
+          Actions.waoTab();
+        });
+      });
+  };
 };
 
-export const loginUserSuccess = (dispatch, user) => {
-  dispatch({
-    type: LOGIN_USER_SUCCESS,
-    payload: user
+export const loginUserSuccess = (dispatch, user, emailV, passwordV) => {
+  let obj = {
+    email: emailV,
+    password: passwordV
+  };
+
+  AsyncStorage.setItem("user", JSON.stringify(obj)).then(() => {
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: user
+      });
+      Actions.waoTab();
   });
-  Actions.waoTab();
 };

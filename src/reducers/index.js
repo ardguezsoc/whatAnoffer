@@ -4,6 +4,7 @@ import ProductReducer from './ProductReducer';
 import KindReducer from './KindReducer';
 import PlaceReducer from './PlaceReducer';
 import AuthReducer from './AuthReducers';
+import ProfileReducer from './ProfileReducer';
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
     product: ProductReducer,
     kindP: KindReducer,
     place: PlaceReducer,
-    auth: AuthReducer
+    auth: AuthReducer,
+    profileR: ProfileReducer
 });  

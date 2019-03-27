@@ -6,7 +6,7 @@ import _ from "lodash";
 import { Button } from "react-native-elements";
 import Modal from "react-native-modal";
 import { connect } from "react-redux";
-import { ButtonOwn, ModalConfirm } from "../component";
+import { ButtonOwn } from "../component";
 import { Actions } from "react-native-router-flux";
 
 class ProductView extends Component {

@@ -13,6 +13,8 @@ export const CREATE_USER_FAIL = 'create_user_fail';
 export const FAIL_PASSWORD = 'fail_password';
 export const FAIL_NAME = "fail_name";
 
+export const PROFILE_FETCH_SUCCESS = 'profile_fetch_success';
+
 export const KIND_FETCH_SUCCESS = 'kind_fetch_success';
 
 export const PLACE_FETCH_SUCCESS = 'place_fetch_success';
