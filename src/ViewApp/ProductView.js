@@ -50,7 +50,7 @@ class ProductView extends Component {
     });
   }
 
-  render(props) {
+  render() {
     return (
       <View>
         <View style={{ height: "30%", width: "100%" }}>
@@ -79,10 +79,7 @@ class ProductView extends Component {
               value={this.props.product.productValue}
             />
             {this.props.product.priceNew == "n/a" ? (
-              <CardText
-                text="Precio:"
-                value={this.props.product.priceNew}
-              />
+              <CardText text="Precio:" value={this.props.product.priceNew} />
             ) : (
               <CardText
                 text="Precio:"

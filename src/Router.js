@@ -5,14 +5,15 @@ import CreateOffer from "./ViewApp/CreateOffer";
 import ProductView from "./ViewApp/ProductView";
 import PlaceView from "./ViewApp/PlaceView";
 import FinalViewCreate from "./ViewApp/FinalViewCreate";
-import EditView from "./ViewApp/EditView";
 import SearchView from "./ViewApp/SearchView";
 import Login from "./ViewApp/Login";
+import EditView from "./ViewApp/EditView";
 import Icon from "react-native-vector-icons/FontAwesome";
 import NewUser from "./ViewApp/NewUser";
 import NoRegisterView from "./ViewApp/NoRegisterView";
 import KindOfLogin from "./ViewApp/KindOfLogin";
 import Profile from "./ViewApp/Profile";
+import EditProfile from "./ViewApp/EditProfile";
 
 class TabIcon extends React.Component {
   render() {
@@ -78,6 +79,22 @@ const RouterComponent = () => {
           navigationBarStyle={{ backgroundColor: "#30A66D" }}
         />
         <Scene
+          key="editView"
+          component={EditView}
+          title="Editar oferta"
+          headerTitleStyle={styles.textNavCenter}
+          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+        />
+        <Scene
+          key="EditProfile"
+          title="Editar Perfil"
+          back={true}
+          component={EditProfile}
+          headerTitleStyle={styles.textNavCenter}
+          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+        />
+
+        <Scene
           key="tabsBottom"
           tabs
           hideNavBar
@@ -99,7 +116,7 @@ const RouterComponent = () => {
               key="ProfileView"
               component={Profile}
               title="Perfil"
-              headerTitleStyle={[styles.textTitle,{ fontFamily: "Semib"}]}
+              headerTitleStyle={[styles.textTitle, { fontFamily: "Semib" }]}
               navigationBarStyle={{ backgroundColor: "#30A66D" }}
             />
           </Scene>
@@ -138,10 +155,11 @@ const RouterComponent = () => {
           headerTitleStyle={styles.textNavCenter}
           navigationBarStyle={{ backgroundColor: "#30A66D" }}
         />
+
         <Scene
-          key="editView"
-          component={EditView}
-          title="Editar oferta"
+          key="EdProfile"
+          component={EditProfile}
+          title="Editar perfil"
           headerTitleStyle={styles.textNavCenter}
           navigationBarStyle={{ backgroundColor: "#30A66D" }}
         />
@@ -166,7 +184,7 @@ const styles = {
     fontSize: 25,
     width: 280
   },
-  textTitle:{
+  textTitle: {
     textAlign: "center",
     flex: 1,
     color: "white",

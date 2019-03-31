@@ -1,14 +1,48 @@
-import { PROFILE_FETCH_SUCCESS } from '../actions/type';
+import {
+  PROFILE_FETCH_SUCCESS,
+  PROFILE_UPDATE,
+  NAMEPROFIL_CHANGED,
+  PROFILE_CREATE
+} from "../actions/type";
 import "@firebase/database";
 import firebase from "@firebase/app";
+import { Actions } from "react-native-router-flux";
 
 
-export const profileFetch = (uidV) => {
-    console.log(uidV)
-    return (dispatch) => {
-        firebase.database().ref(`/Users/${uidV}`)
-        .on('value', snapshot => {
-          dispatch({ type: PROFILE_FETCH_SUCCESS, payload: snapshot.val() });
-        });
-        };
-}
+export const profileUpdate = ({ prop, value }) => {
+  return {
+    type: PROFILE_UPDATE,
+    payload: { prop, value }
+  };
+};
+
+export const profileFetch = uidV => {
+  return dispatch => {
+    firebase
+      .database()
+      .ref(`/Users/${uidV}`)
+      .on('value', (snapshot) => {
+        dispatch({ type: PROFILE_FETCH_SUCCESS, payload: snapshot.val() });
+      });
+  };
+};
+
+export const nameProfileChange = text => {
+  return {
+    type: NAMEPROFIL_CHANGED,
+    payload: text
+  };
+};
+
+export const profileEdit = ({ nameValue,uid, uriValue }) => {
+  return dispatch => {
+    firebase
+      .database()
+      .ref(`/Users/${uid}`)
+      .update({ nameOfUser: nameValue, uriPhoto: uriValue })
+      .then(() => {
+        dispatch({ type: PROFILE_CREATE });
+        Actions.pop();
+      });
+  };
+};

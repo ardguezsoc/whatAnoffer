@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { ScrollView, View } from "react-native";
-import { Input } from "../component/Input";
+import { View } from "react-native";
+import { Input } from "../component";
 import { connect } from "react-redux";
 import { DatePick } from "../component/DatePicker";
-import { productUpdate, today } from "../actions";
+import { productUpdate } from "../actions";
 
 class ProductForm extends Component {
   render() {
