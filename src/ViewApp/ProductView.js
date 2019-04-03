@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import { CardProductView, CardText } from "../component";
-import { productUpdate, productDelete } from "../actions";
+import { productUpdate, productDelete, profileFetch } from "../actions";
 import _ from "lodash";
-import { Button } from "react-native-elements";
+import { Button, Avatar } from "react-native-elements";
 import Modal from "react-native-modal";
 import { connect } from "react-redux";
 import { ButtonOwn } from "../component";
@@ -11,6 +11,10 @@ import { Actions } from "react-native-router-flux";
 
 class ProductView extends Component {
   state = { modalStatus: false, imgUrl: this.props.product.urlOfImag };
+
+  componentWillMount() {
+    this.props.profileFetch(this.props.product.owner);
+  }
 
   resetCancel() {
     this.setState({
@@ -24,37 +28,20 @@ class ProductView extends Component {
 
   onAccept() {
     this.setState({ modalStatus: false });
-    const {
-      uid,
-      placeValue,
-      productValue,
-      productKindValue,
-      description,
-      date,
-      priceOld,
-      priceNew,
-      currentTime,
-      urlOfImag
-    } = this.props.product;
-    this.props.productDelete({
-      uid,
-      placeValue,
-      productValue,
-      productKindValue,
-      description,
-      date,
-      priceOld,
-      priceNew,
-      currentTime,
-      urlOfImag
-    });
+    const { uid } = this.props.product;
+    this.props.productDelete({ uid });
   }
 
   render() {
     return (
       <View>
         <View style={{ height: "30%", width: "100%" }}>
-          <CardProductView imagUrl={this.state.imgUrl} />
+          <CardProductView
+            imagUrl={this.state.imgUrl}
+            uriAvatar={this.props.uriPhoto}
+            nameOfUsr={this.props.nameOfUser}
+            ownerProduct = {this.props.product.owner}
+          />
         </View>
         <View style={{ backgroundColor: "white", height: "70%" }}>
           <View style={{ flexDirection: "row", marginTop: 3, marginBottom: 3 }}>
@@ -168,11 +155,11 @@ class ProductView extends Component {
 
 const mapStateToProps = state => {
   const { title, priceNew } = state.product;
-
-  return { title, priceNew };
+  const { nameOfUser, uriPhoto } = state.profile;
+  return { title, priceNew, nameOfUser, uriPhoto };
 };
 
 export default connect(
   mapStateToProps,
-  { productUpdate, productDelete }
+  { productUpdate, productDelete, profileFetch }
 )(ProductView);

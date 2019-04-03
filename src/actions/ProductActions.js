@@ -128,33 +128,15 @@ export const productEdit = ({
 };
 
 export const productDelete = ({
-  uid,
-  placeValue,
-  productValue,
-  productKindValue,
-  description,
-  date,
-  priceOld,
-  priceNew,
-  currentTime,
-  urlOfImag
+  uid
 }) => {
   const status = "hidden";
   return () => {
     firebase
       .database()
       .ref(`/offer/${uid}`)
-      .set({
-        status,
-        placeValue,
-        productValue,
-        productKindValue,
-        description,
-        date,
-        priceOld,
-        priceNew,
-        currentTime,
-        urlOfImag
+      .update({
+        status
       })
       .then(() => {
         Actions.pop();

@@ -35,14 +35,13 @@ export const nameProfileChange = text => {
 };
 
 export const profileEdit = ({ nameValue,uid, uriValue }) => {
-  return dispatch => {
+  return () => {
     firebase
       .database()
       .ref(`/Users/${uid}`)
       .update({ nameOfUser: nameValue, uriPhoto: uriValue })
       .then(() => {
-        dispatch({ type: PROFILE_CREATE });
-        Actions.pop();
+        Actions.pop({ refresh: {nameOfUser: nameValue,uriPhoto: uriValue } })
       });
   };
 };

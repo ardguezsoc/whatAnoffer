@@ -14,6 +14,7 @@ import NoRegisterView from "./ViewApp/NoRegisterView";
 import KindOfLogin from "./ViewApp/KindOfLogin";
 import Profile from "./ViewApp/Profile";
 import EditProfile from "./ViewApp/EditProfile";
+import ProfileUser from "./ViewApp/ProfileUser";
 
 class TabIcon extends React.Component {
   render() {
@@ -76,14 +77,14 @@ const RouterComponent = () => {
             fontWeight: "200",
             fontSize: 25
           }}
-          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+          navigationBarStyle={styles.colorBack}
         />
         <Scene
           key="editView"
           component={EditView}
           title="Editar oferta"
           headerTitleStyle={styles.textNavCenter}
-          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+          navigationBarStyle={styles.colorBack}
         />
         <Scene
           key="EditProfile"
@@ -91,7 +92,7 @@ const RouterComponent = () => {
           back={true}
           component={EditProfile}
           headerTitleStyle={styles.textNavCenter}
-          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+          navigationBarStyle={styles.colorBack}
         />
 
         <Scene
@@ -107,7 +108,7 @@ const RouterComponent = () => {
               component={ListProduct}
               title="WAO!"
               headerTitleStyle={styles.textTitle}
-              navigationBarStyle={{ backgroundColor: "#30A66D" }}
+              navigationBarStyle={styles.colorBack}
             />
           </Scene>
 
@@ -117,7 +118,7 @@ const RouterComponent = () => {
               component={Profile}
               title="Perfil"
               headerTitleStyle={[styles.textTitle, { fontFamily: "Semib" }]}
-              navigationBarStyle={{ backgroundColor: "#30A66D" }}
+              navigationBarStyle={styles.colorBack}
             />
           </Scene>
 
@@ -132,28 +133,39 @@ const RouterComponent = () => {
           title="Tipo de producto a crear"
           headerTitleStyle={styles.textNav}
           barButtonIconStyle={{ tintColor: "red" }}
-          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+          navigationBarStyle={styles.colorBack}
         />
+
+        <Scene
+          key="ProfileUser"
+          component={ProfileUser}
+          title="Perfil"
+          headerTitleStyle={[styles.textTitle, { fontFamily: "Semib" }]}
+          navigationBarStyle={styles.colorBack}
+        />
+
         <Scene
           key="productView"
           component={ProductView}
           title="Oferta"
           headerTitleStyle={styles.textNavCenter}
-          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+          navigationBarStyle={styles.colorBack}
         />
+
         <Scene
           key="placeChooser"
           component={PlaceView}
           title="Lugar de la oferta"
           headerTitleStyle={[styles.textNav, { fontSize: 22 }]}
-          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+          navigationBarStyle={styles.colorBack}
         />
+
         <Scene
           key="finalCreateOffer"
           component={FinalViewCreate}
           title="Crear oferta"
           headerTitleStyle={styles.textNavCenter}
-          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+          navigationBarStyle={styles.colorBack}
         />
 
         <Scene
@@ -161,7 +173,7 @@ const RouterComponent = () => {
           component={EditProfile}
           title="Editar perfil"
           headerTitleStyle={styles.textNavCenter}
-          navigationBarStyle={{ backgroundColor: "#30A66D" }}
+          navigationBarStyle={styles.colorBack}
         />
       </Scene>
     </Router>
@@ -191,6 +203,9 @@ const styles = {
     fontFamily: "Pacifico",
     fontWeight: "200",
     fontSize: 25
+  },
+  colorBack: {
+    backgroundColor: "#30A66D"
   }
 };
 

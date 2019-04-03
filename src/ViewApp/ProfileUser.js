@@ -1,31 +1,39 @@
 import React, { Component } from "react";
-import _ from "lodash";
-import { View, FlatList, Text } from "react-native";
-import { Avatar, Icon, ButtonGroup } from "react-native-elements";
-import firebase from "@firebase/app";
-import "@firebase/auth";
-import { Actions } from "react-native-router-flux";
-import { productFetch, profileFetch } from "../actions";
+import { View, Text, FlatList } from "react-native";
+import { Avatar, Icon } from "react-native-elements";
+import { productFetch } from "../actions";
 import ListProductItem from "../component/ListProductItem";
 import { connect } from "react-redux";
-import { NavigationEvents } from "react-navigation";
+import { ButtonGroup } from "react-native-elements";
+import _ from "lodash";
 import LinearGradient from "react-native-linear-gradient";
 
-class Profile extends Component {
+class ProfileUser extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      data: [],
-      error: null,
-      selectedIndex: -1
+      selectedIndex: -1,
+      data: []
     };
-
     this.arrayholder = [];
     this.updateIndex = this.updateIndex.bind(this);
   }
 
-  componentDidMount() {
+  updateIndex(selectedIndex) {
+    this.setState({ selectedIndex });
+    if (selectedIndex == 0) {
+      const newData = this.arrayholder.filter(item => {
+        return item.owner.indexOf(this.props.ownerValue) > -1;
+      });
+      this.setState({
+        data: newData
+      });
+    } else {
+      this.setState({ data: this.arrayholder });
+    }
+  }
+
+  componentWillMount() {
     this.makeRemoteRequest();
   }
 
@@ -33,39 +41,20 @@ class Profile extends Component {
     this.setState({
       data: nextProps.product
     });
-  }
 
-  updateIndex(selectedIndex) {
-    this.setState({ selectedIndex });
-    if (selectedIndex == 0) {
-      const newData = this.arrayholder.filter(item => {
-        return item.owner.indexOf(firebase.auth().currentUser.uid) > -1;
-      });
-      this.setState({
-        data: newData
-      });
-    } else {
-      this.setState({
-        data: this.arrayholder
-      });
-    }
+    this.updateIndex(0);
   }
 
   makeRemoteRequest = () => {
-    this.props.profileFetch(firebase.auth().currentUser.uid);
     this.props.productFetch();
-    var arr = _.values(this.props.product);
-    this.setState({
-      data: arr
-    });
-    this.arrayholder = arr;
+    this.arrayholder = _.values(this.props.product);
   };
 
   ListEmptyView = () => {
     return (
       <View style={styles.container}>
         <Text style={styles.notFoundStyle}>
-          ¡ Vaya parece que no hay ofertas de este tipo =( !
+          ¡ Vaya parece que no hay ofertas =( !
         </Text>
       </View>
     );
@@ -76,11 +65,6 @@ class Profile extends Component {
     const { selectedIndex } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: "white" }}>
-        <NavigationEvents
-          onWillFocus={() => {
-            this.props.profileFetch(firebase.auth().currentUser.uid);
-          }}
-        />
         <View
           style={{
             height: 220,
@@ -95,13 +79,6 @@ class Profile extends Component {
                   name="pencil"
                   type="font-awesome"
                   color="#30A66D"
-                  onPress={() =>
-                    Actions.EdProfile({
-                      nameOfUsr: this.props.nameOfUser,
-                      uriProfile: this.props.uriPhoto,
-                      uidUser: firebase.auth().currentUser.uid
-                    })
-                  }
                 />
               </View>
               <View
@@ -117,16 +94,16 @@ class Profile extends Component {
                   large
                   rounded
                   source={{
-                    uri: this.props.uriPhoto
+                    uri: this.props.uri
                   }}
                 />
                 <Text style={{ fontSize: 18, color: "white" }}>
-                  {this.props.nameOfUser}
+                  {this.props.nameV}
                 </Text>
                 {/* <Text>Seguidores</Text>
               <Text>100</Text>
               <Text>Siguiendo</Text>
-              <Text>10</Text> */}
+            <Text>10</Text> */}
               </View>
             </View>
           </LinearGradient>
@@ -149,6 +126,13 @@ class Profile extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  const product = _.map(state.product, (val, uid) => {
+    return { ...val, uid };
+  });
+  return { product };
+};
+
 const styles = {
   container: {
     justifyContent: "center",
@@ -163,17 +147,7 @@ const styles = {
   }
 };
 
-const mapStateToProps = state => {
-  const product = _.map(state.product, (val, uid) => {
-    return { ...val, uid };
-  });
-
-  const { nameOfUser, uriPhoto } = state.profile;
-
-  return { product, nameOfUser, uriPhoto };
-};
-
 export default connect(
   mapStateToProps,
-  { productFetch, profileFetch }
-)(Profile);
+  { productFetch }
+)(ProfileUser);

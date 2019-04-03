@@ -146,7 +146,7 @@ class ListBasicItem extends Component {
                     textAlign: "center"
                   }}
                 >
-                  Parece que no estas identificado, unete a la lucha contra el
+                  Parece que no estás identificado, únete a la lucha contra el
                   desperdicio de comida y disfruta de todas las funcionalidades
                   disponibles.
                 </Text>
