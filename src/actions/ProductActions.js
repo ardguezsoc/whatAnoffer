@@ -98,16 +98,13 @@ export const productEdit = ({
   date,
   priceOld,
   priceNew,
-  currentTime,
-  status,
   urlOfImag,
-  owner
 }) => {
   return dispatch => {
     firebase
       .database()
       .ref(`/offer/${uid}`)
-      .set({
+      .update({
         placeValue,
         productValue,
         productKindValue,
@@ -115,10 +112,7 @@ export const productEdit = ({
         date,
         priceOld,
         priceNew,
-        currentTime,
-        status,
         urlOfImag,
-        owner
       })
       .then(() => {
         dispatch({ type: PRODUCT_CREATE });
@@ -130,13 +124,12 @@ export const productEdit = ({
 export const productDelete = ({
   uid
 }) => {
-  const status = "hidden";
   return () => {
     firebase
       .database()
       .ref(`/offer/${uid}`)
       .update({
-        status
+        status: "hidden"
       })
       .then(() => {
         Actions.pop();

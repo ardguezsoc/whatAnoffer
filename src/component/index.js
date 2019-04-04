@@ -6,6 +6,6 @@ export * from './ListProductItem';
 export * from './ListKind';
 export * from './CardProductView';
 export * from './CardText';
-export * from './ModalConfirm';
+export * from './MyModal';
 export * from './ButtonImag';
 export * from  './Spinner';

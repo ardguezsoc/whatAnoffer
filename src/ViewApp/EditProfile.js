@@ -7,12 +7,10 @@ import {
   ActivityIndicator
 } from "react-native";
 import _ from "lodash";
-import { Button } from "react-native-elements";
 import { connect } from "react-redux";
-import { Input, ButtonOwn, CardContainer } from "../component";
+import { Input, ButtonOwn, CardContainer, MyModal } from "../component";
 import { productUpdate, uploadFile, profileEdit } from "../actions";
 import ImagePicker from "react-native-image-picker";
-import Modal from "react-native-modal";
 
 class EditProfile extends Component {
   constructor(props) {
@@ -52,7 +50,7 @@ class EditProfile extends Component {
   }
 
   onAccept() {
-    this.setState({ modalStatus: false});
+    this.setState({ modalStatus: false });
     this.onButtonPress();
   }
   onDecline() {
@@ -62,7 +60,7 @@ class EditProfile extends Component {
   onButtonPress() {
     this.setState({ buttonStatus: true });
     const nameValue = this.state.nameOfUsuario;
-    const uid = this.props.uidUser
+    const uid = this.props.uidUser;
     if (this.state.uriOfUsuario != this.props.uriProfile) {
       uploadFile(this.state.fileToImage)
         .then(response => response.json())
@@ -129,70 +127,13 @@ class EditProfile extends Component {
             </ButtonOwn>
           )}
         </CardContainer>
-
-        <View style={{ flex: 1 }}>
-          <Modal
-            isVisible={this.state.modalStatus}
-            onBackButtonPress={() => this.onDecline()}
-            onBackdropPress={() => this.onDecline()}
-          >
-            <View
-              style={{
-                backgroundColor: "white",
-                width: "100%",
-                height: "40%",
-                borderRadius: 15
-              }}
-            >
-              <View
-                style={{
-                  alignItems: "flex-end",
-                  marginTop: 10,
-                  marginRight: 10
-                }}
-              />
-              <View style={{ alignSelf: "center", alignItems: "center" }}>
-                <Text
-                  style={{
-                    fontFamily: "Pacifico",
-                    fontSize: 24,
-                    color: "#30A66D"
-                  }}
-                >
-                  ¿Seguro?
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    padding: 10
-                  }}
-                >
-                  ¿Quieres guardar los cambios realizados?
-                </Text>
-                <View style={{ flexDirection: "row", marginTop: 20 }}>
-                  <Button
-                    title="Cancelar"
-                    onPress={() => this.onDecline()}
-                    buttonStyle={{
-                      borderRadius: 15,
-                      width: 120,
-                      backgroundColor: "#ff3333"
-                    }}
-                  />
-                  <Button
-                    title="Aceptar"
-                    onPress={() => this.onAccept()}
-                    buttonStyle={{
-                      backgroundColor: "#109C59",
-                      borderRadius: 15,
-                      width: 120
-                    }}
-                  />
-                </View>
-              </View>
-            </View>
-          </Modal>
-        </View>
+        <MyModal
+          modalStatus={this.state.modalStatus}
+          Decline={() => this.onDecline()}
+          title="¿Seguro?"
+          subTitle="¿Quieres guardar los cambios realizados?"
+          Accept = { () => this.onAccept()}
+        />
       </View>
     );
   }
