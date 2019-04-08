@@ -8,9 +8,11 @@ import Modal from "react-native-modal";
 import { connect } from "react-redux";
 import { ButtonOwn } from "../component";
 import { Actions } from "react-native-router-flux";
+import firebase from "@firebase/app"
+import "@firebase/auth";
 
 class ProductView extends Component {
-  state = { modalStatus: false, imgUrl: this.props.product.urlOfImag };
+  state = { modalStatus: false, imgUrl: this.props.product.urlOfImag, firebaseAuth: firebase.auth().currentUser.uid };
 
   componentWillMount() {
     this.props.profileFetch(this.props.product.owner);
@@ -40,26 +42,32 @@ class ProductView extends Component {
             imagUrl={this.state.imgUrl}
             uriAvatar={this.props.uriPhoto}
             nameOfUsr={this.props.nameOfUser}
-            ownerProduct = {this.props.product.owner}
+            ownerProduct={this.props.product.owner}
+            authUser = {this.state.firebaseAuth}
           />
         </View>
         <View style={{ backgroundColor: "white", height: "70%" }}>
-          <View style={{ flexDirection: "row", marginTop: 3, marginBottom: 3 }}>
-            <ButtonOwn
-              onPress={() => this.editOffer()}
-              style={{ borderColor: "#086BC5" }}
+          {this.props.product.owner == this.state.firebaseAuth ? (
+            <View
+              style={{ flexDirection: "row", marginTop: 3, marginBottom: 3 }}
             >
-              <Text style={{ color: "#086BC5" }}>Editar</Text>
-            </ButtonOwn>
-            <ButtonOwn
-              onPress={() =>
-                this.setState({ modalStatus: !this.state.modalStatus })
-              }
-              style={{ borderColor: "#E31616" }}
-            >
-              <Text style={{ color: "#E31616" }}> Eliminar </Text>
-            </ButtonOwn>
-          </View>
+              <ButtonOwn
+                onPress={() => this.editOffer()}
+                style={{ borderColor: "#086BC5" }}
+              >
+                <Text style={{ color: "#086BC5" }}>Editar</Text>
+              </ButtonOwn>
+              <ButtonOwn
+                onPress={() =>
+                  this.setState({ modalStatus: !this.state.modalStatus })
+                }
+                style={{ borderColor: "#E31616" }}
+              >
+                <Text style={{ color: "#E31616" }}> Eliminar </Text>
+              </ButtonOwn>
+            </View>
+          ) : null}
+
           <View style={{ marginTop: "4%" }}>
             <CardText
               style={{ justifyContent: "center", alignSelf: "center" }}

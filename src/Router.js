@@ -1,5 +1,5 @@
 import React from "react";
-import { Scene, Router } from "react-native-router-flux";
+import { Scene, Router, Actions } from "react-native-router-flux";
 import ListProduct from "./ViewApp/ListProduct";
 import CreateOffer from "./ViewApp/CreateOffer";
 import ProductView from "./ViewApp/ProductView";
@@ -15,6 +15,7 @@ import KindOfLogin from "./ViewApp/KindOfLogin";
 import Profile from "./ViewApp/Profile";
 import EditProfile from "./ViewApp/EditProfile";
 import ProfileUser from "./ViewApp/ProfileUser";
+import SearchPeople from "./ViewApp/SearchPeople";
 
 class TabIcon extends React.Component {
   render() {
@@ -24,14 +25,6 @@ class TabIcon extends React.Component {
           name={this.props.iconName}
           color={this.props.focused ? "#109C59" : "#808080"}
           size={22}
-        />
-      );
-    } else if (this.props.iconName == "home") {
-      return (
-        <Icon
-          name={this.props.iconName}
-          color={this.props.focused ? "#109C59" : "#808080"}
-          size={26}
         />
       );
     } else {
@@ -109,17 +102,13 @@ const RouterComponent = () => {
               title="WAO!"
               headerTitleStyle={styles.textTitle}
               navigationBarStyle={styles.colorBack}
+              onRight={() => Actions.ProfileView()}
+              rightTitle={<Icon name={"cog"} color="white" size={24} />}
             />
           </Scene>
 
-          <Scene key="Profile" title="Perfil" iconName={"user"} icon={TabIcon}>
-            <Scene
-              key="ProfileView"
-              component={Profile}
-              title="Perfil"
-              headerTitleStyle={[styles.textTitle, { fontFamily: "Semib" }]}
-              navigationBarStyle={styles.colorBack}
-            />
+          <Scene key="SearchPepl" title="" iconName={"users"} icon={TabIcon}>
+            <Scene key="SearchPeople" component={SearchPeople} hideNavBar />
           </Scene>
 
           <Scene key="Search" title="search" iconName={"search"} icon={TabIcon}>
@@ -139,6 +128,14 @@ const RouterComponent = () => {
         <Scene
           key="ProfileUser"
           component={ProfileUser}
+          title="Perfil"
+          headerTitleStyle={[styles.textTitle, { fontFamily: "Semib" }]}
+          navigationBarStyle={styles.colorBack}
+        />
+
+        <Scene
+          key="ProfileView"
+          component={Profile}
           title="Perfil"
           headerTitleStyle={[styles.textTitle, { fontFamily: "Semib" }]}
           navigationBarStyle={styles.colorBack}

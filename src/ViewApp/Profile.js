@@ -8,7 +8,6 @@ import { Actions } from "react-native-router-flux";
 import { productFetch, profileFetch } from "../actions";
 import ListProductItem from "../component/ListProductItem";
 import { connect } from "react-redux";
-import { NavigationEvents } from "react-navigation";
 import LinearGradient from "react-native-linear-gradient";
 
 class Profile extends Component {
@@ -18,7 +17,8 @@ class Profile extends Component {
     this.state = {
       data: [],
       error: null,
-      selectedIndex: -1
+      selectedIndex: -1,
+      uidUser : firebase.auth().currentUser.uid
     };
 
     this.arrayholder = [];
@@ -33,13 +33,15 @@ class Profile extends Component {
     this.setState({
       data: nextProps.product
     });
+    this.updateIndex(0);
+
   }
 
   updateIndex(selectedIndex) {
     this.setState({ selectedIndex });
     if (selectedIndex == 0) {
       const newData = this.arrayholder.filter(item => {
-        return item.owner.indexOf(firebase.auth().currentUser.uid) > -1;
+        return item.owner.indexOf(this.state.uidUser) > -1;
       });
       this.setState({
         data: newData
@@ -52,13 +54,14 @@ class Profile extends Component {
   }
 
   makeRemoteRequest = () => {
-    this.props.profileFetch(firebase.auth().currentUser.uid);
+    this.props.profileFetch(this.state.uidUser);
     this.props.productFetch();
     var arr = _.values(this.props.product);
     this.setState({
       data: arr
     });
     this.arrayholder = arr;
+
   };
 
   ListEmptyView = () => {
@@ -76,11 +79,6 @@ class Profile extends Component {
     const { selectedIndex } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: "white" }}>
-        <NavigationEvents
-          onWillFocus={() => {
-            this.props.profileFetch(firebase.auth().currentUser.uid);
-          }}
-        />
         <View
           style={{
             height: 220,
@@ -99,7 +97,7 @@ class Profile extends Component {
                     Actions.EdProfile({
                       nameOfUsr: this.props.nameOfUser,
                       uriProfile: this.props.uriPhoto,
-                      uidUser: firebase.auth().currentUser.uid
+                      uidUser: this.state.uidUser
                     })
                   }
                 />

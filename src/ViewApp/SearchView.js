@@ -9,14 +9,16 @@ import {
 } from "react-native";
 import { SearchBar, ButtonGroup, Button, Slider } from "react-native-elements";
 import Modal from "react-native-modal";
-import { productFetch,  todayEpoch } from "../actions";
+import { productFetch, todayEpoch } from "../actions";
 import ListProductItem from "../component/ListProductItem";
 import { connect } from "react-redux";
 import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
 import { Icon } from "react-native-elements";
 
 const component1 = () => (
-  <FontAwesome style={{ fontSize: 28 }} type={IconTypes.FAS}>{Icons.fish}</FontAwesome>
+  <FontAwesome style={{ fontSize: 28 }} type={IconTypes.FAS}>
+    {Icons.fish}
+  </FontAwesome>
 );
 
 const component2 = () => (
@@ -122,10 +124,10 @@ class SearchView extends Component {
     });
     const filterProduct = this.whatProduct(this.state.trueSelectedValue);
     var timeFilter;
-    if(this.state.trueHourValue == 0){
-      timeFilter = 0
-    }else{
-      timeFilter = todayEpoch() - this.state.trueHourValue * 3600000; 
+    if (this.state.trueHourValue == 0) {
+      timeFilter = 0;
+    } else {
+      timeFilter = todayEpoch() - this.state.trueHourValue * 3600000;
     }
     const newData = this.arrayholder.filter(item => {
       const itemKind = item.productKindValue;
@@ -133,7 +135,9 @@ class SearchView extends Component {
       const itemData = item.productValue.toUpperCase();
       const textData = text.toUpperCase();
       return (
-        itemData.indexOf(textData) > -1 && itemKind.indexOf(filterProduct) > -1 && parseInt(itemTime) > timeFilter
+        itemData.indexOf(textData) > -1 &&
+        itemKind.indexOf(filterProduct) > -1 &&
+        parseInt(itemTime) > timeFilter
       );
     });
     this.setState({
@@ -144,11 +148,12 @@ class SearchView extends Component {
   ListEmptyView = () => {
     return (
       <View style={styles.container}>
-        <Text style={styles.notFoundStyle}>¡ Vaya parece que no hay ofertas de este tipo =( !</Text>
+        <Text style={styles.notFoundStyle}>
+          ¡ Vaya parece que no hay ofertas de este tipo =( !
+        </Text>
       </View>
-
     );
-  }
+  };
 
   readyFilter = () => {
     this.setState(
@@ -159,7 +164,6 @@ class SearchView extends Component {
       },
       () => {
         this.searchFilterFunction(this.state.value);
-
       }
     );
   };
@@ -299,8 +303,8 @@ class SearchView extends Component {
                     selectedIndex={this.state.selectedIndex}
                     buttons={buttons}
                     containerStyle={{
-                      alignItems:"center",
-                      justifyContent:"center",
+                      alignItems: "center",
+                      justifyContent: "center",
                       height: 70,
                       width: 350,
                       borderRadius: 15
@@ -384,11 +388,8 @@ const styles = {
     fontSize: 18,
     textAlign: "center",
     marginTop: 30
- 
   }
-
-}
-
+};
 
 const mapStateToProps = state => {
   const product = _.map(state.product, (val, uid) => {

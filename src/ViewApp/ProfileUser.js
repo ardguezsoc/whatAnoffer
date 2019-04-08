@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, FlatList } from "react-native";
-import { Avatar, Icon } from "react-native-elements";
-import { productFetch } from "../actions";
+import { Avatar, Button } from "react-native-elements";
+import { productFetch, profileFetch } from "../actions";
 import ListProductItem from "../component/ListProductItem";
 import { connect } from "react-redux";
 import { ButtonGroup } from "react-native-elements";
@@ -47,6 +47,7 @@ class ProfileUser extends Component {
 
   makeRemoteRequest = () => {
     this.props.productFetch();
+    this.props.profileFetch(this.props.ownerValue)
     this.arrayholder = _.values(this.props.product);
   };
 
@@ -74,12 +75,14 @@ class ProfileUser extends Component {
           <LinearGradient colors={["#30A66D", "#a3dbbc"]} style={{ flex: 1 }}>
             <View style={{ flex: 1, marginTop: 10 }}>
               <View style={{ marginRight: 10, alignSelf: "flex-end" }}>
-                <Icon
-                  raised
-                  name="pencil"
-                  type="font-awesome"
-                  color="#30A66D"
-                />
+              <Button
+                title="Seguir"
+                buttonStyle={{
+                  borderRadius: 15,
+                  width: 80,
+                  backgroundColor: "#109C59"
+                }}
+              />
               </View>
               <View
                 style={{
@@ -94,11 +97,11 @@ class ProfileUser extends Component {
                   large
                   rounded
                   source={{
-                    uri: this.props.uri
+                    uri: this.props.uriPhoto
                   }}
                 />
                 <Text style={{ fontSize: 18, color: "white" }}>
-                  {this.props.nameV}
+                  {this.props.nameOfUser}
                 </Text>
                 {/* <Text>Seguidores</Text>
               <Text>100</Text>
@@ -130,7 +133,9 @@ const mapStateToProps = state => {
   const product = _.map(state.product, (val, uid) => {
     return { ...val, uid };
   });
-  return { product };
+  const {nameOfUser, uriPhoto} = state.profile;
+
+  return { product, nameOfUser, uriPhoto };
 };
 
 const styles = {
@@ -149,5 +154,5 @@ const styles = {
 
 export default connect(
   mapStateToProps,
-  { productFetch }
+  { productFetch, profileFetch }
 )(ProfileUser);

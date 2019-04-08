@@ -18,6 +18,8 @@ export const PROFILE_UPDATE = "profile_update";
 export const NAMEPROFIL_CHANGED = "nameprofil_changed";
 export const PROFILE_CREATE = "profile_create";
 
+export const PEOPLE_FETCH_SUCCESS = "people_fetch_success";
+
 export const KIND_FETCH_SUCCESS = "kind_fetch_success";
 
 export const PLACE_FETCH_SUCCESS = "place_fetch_success";

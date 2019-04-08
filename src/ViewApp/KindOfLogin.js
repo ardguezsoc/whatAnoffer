@@ -62,13 +62,13 @@ class KindOfLogin extends Component {
         <Button
         title="Acceder como anónimo"
         buttonStyle={buttonS}
-        textStyle={[textS,{color: "black"}]}
+        textStyle={[textS]}
         onPress={ () => Actions.noUserLogin()}
       />
       <Button
         title="Acceder con mi cuenta"
-        buttonStyle={[buttonS,{backgroundColor:"#109C59"}]}
-        textStyle={[textS,{color:"white"}]}
+        buttonStyle={[buttonS]}
+        textStyle={[textS]}
         onPress={() => Actions.Login()}
       />
       <Button title="Registrarse" buttonStyle={buttonS} textStyle={textS} onPress={ () => Actions.newUser()} />

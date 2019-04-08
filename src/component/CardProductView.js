@@ -3,7 +3,13 @@ import { View, Text, ImageBackground } from "react-native";
 import { Avatar } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 
-const CardProductView = ({ imagUrl, uriAvatar, nameOfUsr, ownerProduct }) => {
+const CardProductView = ({
+  imagUrl,
+  uriAvatar,
+  nameOfUsr,
+  ownerProduct,
+  authUser
+}) => {
   const { viewContainer } = styles;
 
   return (
@@ -19,14 +25,29 @@ const CardProductView = ({ imagUrl, uriAvatar, nameOfUsr, ownerProduct }) => {
             alignItems: "center"
           }}
         >
-          <Avatar
-            large
-            rounded
-            source={{
-              uri: uriAvatar
-            }}
-            onPress={() => Actions.ProfileUser({ ownerValue: ownerProduct, uri : uriAvatar, nameV: nameOfUsr })}
-          />
+          {ownerProduct === authUser ? (
+            <Avatar
+              large
+              rounded
+              source={{
+                uri: uriAvatar
+              }}
+              onPress={() => Actions.ProfileView()}
+            />
+          ) : (
+            <Avatar
+              large
+              rounded
+              source={{
+                uri: uriAvatar
+              }}
+              onPress={() =>
+                Actions.ProfileUser({
+                  ownerValue: ownerProduct  
+                })
+              }
+            />
+          )}
           <Text style={styles.textStyle}>{nameOfUsr}</Text>
         </View>
       </ImageBackground>
