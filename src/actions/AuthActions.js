@@ -108,8 +108,6 @@ export const reseterLogin = () => {
 //crear usuario y guardar datos en el móvil
 export const CreateUsers = (emailV, passwordV, name) => {
   const { currentUser } = firebase.auth();
-  const urlOfImag =
-        "https://res.cloudinary.com/dfir4b1pq/image/upload/q_auto:good/v1550940285/nophoto.jpg";
   return () => {
     firebase
       .database()
@@ -118,7 +116,8 @@ export const CreateUsers = (emailV, passwordV, name) => {
       .child(currentUser.uid)
       .set({
         nameOfUser: name,
-        uriPhoto: urlOfImag
+        uriPhoto: "https://res.cloudinary.com/dfir4b1pq/image/upload/q_auto:good/v1550940285/nophoto.jpg"
+         
       })
       .then(() => {
         let obj = {

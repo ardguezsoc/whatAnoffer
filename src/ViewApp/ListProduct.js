@@ -7,6 +7,8 @@ import FAB from "react-native-fab";
 import ListProductItem from '../component/ListProductItem';
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
+import firebase from "@firebase/app";
+import "@firebase/auth";
 
 class ListProduct extends Component {
   constructor(props) {
@@ -15,7 +17,8 @@ class ListProduct extends Component {
     this.state = {
       loading: false,
       data: [],
-      error: null
+      error: null,
+      stateUid: firebase.auth().currentUser.uid
     };
   }
 
@@ -49,7 +52,7 @@ class ListProduct extends Component {
       <View style={{ flex: 1, backgroundColor: "white" }}>
         <FlatList
           data={this.state.data}
-          renderItem={({ item }) => <ListProductItem product={item} />}
+          renderItem={({ item }) => <ListProductItem product={item} uidUser={this.state.stateUid} />}
           keyExtractor={item => item.uid}
           ListHeaderComponent={this.renderHeader}
         />

@@ -1,21 +1,48 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import { CardProductView, CardText } from "../component";
-import { productUpdate, productDelete, profileFetch } from "../actions";
+import {
+  productUpdate,
+  productDelete,
+  profileFetch,
+  likeOffer,
+  dislikeOffer,
+  saveOffer,
+  unSaveOffer
+} from "../actions";
 import _ from "lodash";
-import { Button, Avatar } from "react-native-elements";
+import { Button } from "react-native-elements";
 import Modal from "react-native-modal";
 import { connect } from "react-redux";
 import { ButtonOwn } from "../component";
 import { Actions } from "react-native-router-flux";
-import firebase from "@firebase/app"
+import firebase from "@firebase/app";
 import "@firebase/auth";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 class ProductView extends Component {
-  state = { modalStatus: false, imgUrl: this.props.product.urlOfImag, firebaseAuth: firebase.auth().currentUser.uid };
+  state = {
+    modalStatus: false,
+    imgUrl: this.props.product.urlOfImag,
+    firebaseAuth: firebase.auth().currentUser.uid,
+    likeStatus: false,
+    saveStatus: false
+  };
 
   componentWillMount() {
     this.props.profileFetch(this.props.product.owner);
+    this.setState({
+      likeStatus: _.includes(
+        this.props.product.likes,
+        this.state.firebaseAuth,
+        0
+      ),
+      saveStatus: _.includes(
+        this.props.product.saved,
+        this.state.firebaseAuth,
+        0
+      )
+    });
   }
 
   resetCancel() {
@@ -26,6 +53,29 @@ class ProductView extends Component {
 
   editOffer() {
     Actions.editView({ product: this.props.product });
+  }
+
+  doLike() {
+    const { uid } = this.props.product;
+    this.props.likeOffer({ uid }, this.state.firebaseAuth);
+    this.setState({ likeStatus: !this.state.likeStatus });
+  }
+
+  dontLike() {
+    const { uid } = this.props.product;
+    this.props.dislikeOffer({ uid }, this.state.firebaseAuth);
+    this.setState({ likeStatus: !this.state.likeStatus });
+  }
+
+  save(checkV) {
+    const { uid } = this.props.product;
+    if(checkV){
+      this.props.saveOffer({ uid }, this.state.firebaseAuth);
+    }else{
+      this.props.unSaveOffer({ uid }, this.state.firebaseAuth);
+      
+    }
+    this.setState({ saveStatus: !this.state.saveStatus });
   }
 
   onAccept() {
@@ -43,10 +93,45 @@ class ProductView extends Component {
             uriAvatar={this.props.uriPhoto}
             nameOfUsr={this.props.nameOfUser}
             ownerProduct={this.props.product.owner}
-            authUser = {this.state.firebaseAuth}
+            authUser={this.state.firebaseAuth}
           />
         </View>
         <View style={{ backgroundColor: "white", height: "70%" }}>
+          <View style={{ marginTop: 10, marginLeft: 8, flexDirection: "row" }}>
+            {!this.state.likeStatus ? (
+              <Icon
+                name="heart"
+                color="grey"
+                size={27}
+                onPress={() => this.doLike()}
+              />
+            ) : (
+              <Icon
+                name="heart"
+                color="#ED4956"
+                size={27}
+                onPress={() => this.setState(() => this.dontLike())}
+              />
+            )}
+
+            {this.state.saveStatus ? (
+              <Icon
+                name="bookmark"
+                color="green"
+                size={27}
+                style={{ marginLeft: 20 }}
+                onPress={() => this.save(false)}
+              />
+            ) : (
+              <Icon
+                name="bookmark"
+                color="grey"
+                size={27}
+                style={{ marginLeft: 20 }}
+                onPress={() => this.save(true)}
+              />
+            )}
+          </View>
           {this.props.product.owner == this.state.firebaseAuth ? (
             <View
               style={{ flexDirection: "row", marginTop: 3, marginBottom: 3 }}
@@ -169,5 +254,13 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { productUpdate, productDelete, profileFetch }
+  {
+    productUpdate,
+    productDelete,
+    profileFetch,
+    likeOffer,
+    dislikeOffer,
+    saveOffer,
+    unSaveOffer
+  }
 )(ProductView);

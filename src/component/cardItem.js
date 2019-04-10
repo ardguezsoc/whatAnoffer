@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, ImageBackground } from "react-native";
-import { Icon } from "react-native-elements";
+import _ from "lodash";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const CardItem = ({
   title,
@@ -8,7 +9,10 @@ const CardItem = ({
   priceOld,
   address,
   dateProd,
-  urlImag
+  urlImag,
+  likes,
+  saved,
+  uidUser
 }) => {
   const {
     roundBorder,
@@ -40,14 +44,29 @@ const CardItem = ({
         </ImageBackground>
       </View>
       <View style={{ backgroundColor: "white", width: "60%", height: "100%" }}>
-        <Icon
-          name="md-bookmark"
-          type="ionicon"
-          color="green"
-          alignSelf="flex-end"
-          marginTop="3%"
-          marginRight="2%"
-        />
+        <View style={{ flexDirection: "row", marginTop: "3%" }}>
+          <Text
+            style={{
+              alignSelf: "flex-start",
+              color: "#ED4956",
+              marginLeft: "4%",
+              fontSize: 12,
+              marginRight: 2
+            }}
+          >
+            {_.size(likes)}
+          </Text>
+          <Icon name="heart" color="#ED4956" size={15} />
+          <View style={{ alignItems: "flex-end", flex: 1, marginRight: 5 }}>
+          { _.includes(saved, uidUser, 0) ? 
+              <Icon name="bookmark" color="green" size={23} />
+              :
+              <Icon name="bookmark" color="grey" size={23} />
+
+          }
+            
+          </View>
+        </View>
         <Text
           style={{
             fontFamily: "sans-serif-medium",
@@ -58,13 +77,14 @@ const CardItem = ({
           {title}
         </Text>
         {priceOld == "n/a" ? (
-          <Text style={[textStyle,textSt,{fontSize: 18 }]}> {priceOld} </Text>
+          <Text style={[textStyle, textSt, { fontSize: 18 }]}>{priceOld}</Text>
         ) : (
           <Text
             style={[
-              textStyle,textSt,
+              textStyle,
+              textSt,
               {
-                textDecorationLine: "line-through",
+                textDecorationLine: "line-through"
               }
             ]}
           >
@@ -100,7 +120,7 @@ const styles = {
   },
   textSt: {
     color: "grey",
-    fontSize: 18,
+    fontSize: 18
   },
   timeStyle: {
     fontFamily: "sans-serif-medium",

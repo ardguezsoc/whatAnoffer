@@ -1,6 +1,7 @@
 export const PRODUCT_UPDATE = "product_update";
 export const PRODUCT_CREATE = "product_create";
 export const PRODUCT_FETCH_SUCCESS = "product_fetch_success";
+export const PRODUCT_DELETE = "product_delete"
 
 export const EMAIL_CHANGED = "email_changed";
 export const PASSWORD_CHANGED = "password_changed";

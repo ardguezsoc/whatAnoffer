@@ -3,7 +3,8 @@ import {
   PRODUCT_CREATE,
   PRODUCT_FETCH_SUCCESS,
   KIND_FETCH_SUCCESS,
-  PLACE_FETCH_SUCCESS
+  PLACE_FETCH_SUCCESS,
+  PRODUCT_DELETE
 } from "./type";
 import firebase from "@firebase/app";
 import "@firebase/database";
@@ -17,6 +18,55 @@ export const productUpdate = ({ prop, value }) => {
   };
 };
 
+export const likeOffer = ({ uid }, uidWhoLikes) => {
+  return dispatch => {
+    firebase
+      .database()
+      .ref()
+      .child(`offer/${uid}/likes/${uidWhoLikes}`)
+      .set(`${uidWhoLikes}`)
+      .then(() => {
+        dispatch({ type: PRODUCT_CREATE });
+      });
+  };
+};
+
+export const dislikeOffer = ({ uid }, uidWhoLikes) => {
+  return dispatch => {
+    firebase
+      .database()
+      .ref(`offer/${uid}/likes/${uidWhoLikes}`)
+      .remove()
+      .then(() => {
+        dispatch({ type: PRODUCT_DELETE })
+      });
+  };
+};
+
+export const saveOffer = ({ uid }, uidWhoLikes) => {
+  return dispatch => {
+    firebase
+      .database()
+      .ref()
+      .child(`offer/${uid}/saved/${uidWhoLikes}`)
+      .set(`${uidWhoLikes}`)
+      .then(() => {
+        dispatch({ type: PRODUCT_CREATE });
+      });
+  };
+};
+
+export const unSaveOffer = ({ uid }, uidWhoLikes) => {
+  return dispatch => {
+    firebase
+      .database()
+      .ref(`offer/${uid}/saved/${uidWhoLikes}`)
+      .remove()
+      .then(() => {
+        dispatch({ type: PRODUCT_DELETE })
+      });
+  };
+};
 export const productCreate = ({
   placeValue,
   productValue,
@@ -98,7 +148,7 @@ export const productEdit = ({
   date,
   priceOld,
   priceNew,
-  urlOfImag,
+  urlOfImag
 }) => {
   return dispatch => {
     firebase
@@ -112,7 +162,7 @@ export const productEdit = ({
         date,
         priceOld,
         priceNew,
-        urlOfImag,
+        urlOfImag
       })
       .then(() => {
         dispatch({ type: PRODUCT_CREATE });
@@ -121,9 +171,7 @@ export const productEdit = ({
   };
 };
 
-export const productDelete = ({
-  uid
-}) => {
+export const productDelete = ({ uid }) => {
   return () => {
     firebase
       .database()
