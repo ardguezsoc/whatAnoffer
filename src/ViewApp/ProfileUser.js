@@ -1,19 +1,31 @@
 import React, { Component } from "react";
 import { View, Text, FlatList } from "react-native";
 import { Avatar, Button } from "react-native-elements";
-import { productFetch, profileFetch } from "../actions";
+import {
+  productFetch,
+  profileFetch,
+  followUser,
+  followFetch,
+  unFollowUser
+} from "../actions";
 import ListProductItem from "../component/ListProductItem";
 import { connect } from "react-redux";
 import { ButtonGroup } from "react-native-elements";
 import _ from "lodash";
+import { MyModal } from "../component";
 import LinearGradient from "react-native-linear-gradient";
+import firebase from "@firebase/app";
+import "@firebase/auth";
 
 class ProfileUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedIndex: -1,
-      data: []
+      data: [],
+      firebaseAuth: firebase.auth().currentUser.uid,
+      statusFollow: false,
+      modalStatus: false
     };
     this.arrayholder = [];
     this.updateIndex = this.updateIndex.bind(this);
@@ -33,13 +45,29 @@ class ProfileUser extends Component {
     }
   }
 
+  follow(check) {
+    check
+      ? this.props.followUser(this.state.firebaseAuth, this.props.ownerValue)
+      : this.setState({ modalStatus: true });
+  }
+
+  onDecline() {
+    this.setState({ modalStatus: false });
+  }
+
+  onAccept() {
+    this.props.unFollowUser(this.state.firebaseAuth, this.props.ownerValue);
+    this.setState({ modalStatus: false });
+  }
+
   componentWillMount() {
     this.makeRemoteRequest();
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      data: nextProps.product
+      data: nextProps.product,
+      statusFollow: _.includes(nextProps.siguiendo, this.props.ownerValue, 0)
     });
 
     this.updateIndex(0);
@@ -47,7 +75,8 @@ class ProfileUser extends Component {
 
   makeRemoteRequest = () => {
     this.props.productFetch();
-    this.props.profileFetch(this.props.ownerValue)
+    this.props.profileFetch(this.props.ownerValue);
+    this.props.followFetch(this.state.firebaseAuth);
     this.arrayholder = _.values(this.props.product);
   };
 
@@ -74,15 +103,32 @@ class ProfileUser extends Component {
         >
           <LinearGradient colors={["#30A66D", "#a3dbbc"]} style={{ flex: 1 }}>
             <View style={{ flex: 1, marginTop: 10 }}>
-              <View style={{ marginRight: 10, alignSelf: "flex-end" }}>
-              <Button
-                title="Seguir"
-                buttonStyle={{
-                  borderRadius: 15,
-                  width: 80,
-                  backgroundColor: "#109C59"
-                }}
-              />
+              <View style={{ marginRight: 4, alignSelf: "flex-end" }}>
+                {!this.state.statusFollow ? (
+                  <Button
+                    title="Seguir"
+                    buttonStyle={{
+                      borderRadius: 15,
+                      width: 90,
+                      backgroundColor: "#109C59",
+                      borderWidth: 1,
+                      borderColor: "white"
+                    }}
+                    onPress={() => this.follow(true)}
+                  />
+                ) : (
+                  <Button
+                    title="Siguiendo"
+                    buttonStyle={{
+                      borderRadius: 15,
+                      width: 100,
+                      backgroundColor: "green",
+                      borderWidth: 1,
+                      borderColor: "white"
+                    }}
+                    onPress={() => this.follow(false)}
+                  />
+                )}
               </View>
               <View
                 style={{
@@ -124,6 +170,13 @@ class ProfileUser extends Component {
           keyExtractor={item => item.uid}
           ListEmptyComponent={this.ListEmptyView}
         />
+        <MyModal
+          title="¿Seguro?"
+          modalStatus={this.state.modalStatus}
+          subTitle="¿Quieres dejar de seguir a este usuario?"
+          Decline={() => this.onDecline()}
+          Accept={() => this.onAccept()}
+        />
       </View>
     );
   }
@@ -133,9 +186,10 @@ const mapStateToProps = state => {
   const product = _.map(state.product, (val, uid) => {
     return { ...val, uid };
   });
-  const {nameOfUser, uriPhoto} = state.profile;
+  const { nameOfUser, uriPhoto } = state.profile;
+  const { siguiendo } = state.people;
 
-  return { product, nameOfUser, uriPhoto };
+  return { product, nameOfUser, uriPhoto, siguiendo };
 };
 
 const styles = {
@@ -154,5 +208,5 @@ const styles = {
 
 export default connect(
   mapStateToProps,
-  { productFetch, profileFetch }
+  { productFetch, profileFetch, followUser, unFollowUser, followFetch }
 )(ProfileUser);

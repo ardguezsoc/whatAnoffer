@@ -5,6 +5,7 @@ import { SearchBar, ListItem } from "react-native-elements";
 import { productFetch, peopleFetch } from "../actions";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
+import { NavigationEvents } from "react-navigation";
 import firebase from "@firebase/app";
 import "@firebase/auth";
 
@@ -97,6 +98,11 @@ class SearchPeople extends Component {
     } else {
       return (
         <View style={{ flex: 1, backgroundColor: "white" }}>
+        <NavigationEvents
+          onWillFocus={() => {
+            this.props.peopleFetch();
+          }}
+        />
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (

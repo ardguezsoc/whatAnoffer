@@ -1,5 +1,10 @@
 import React from "react";
-import { View, Text, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableNativeFeedback
+} from "react-native";
 import _ from "lodash";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -12,7 +17,12 @@ const CardItem = ({
   urlImag,
   likes,
   saved,
-  uidUser
+  uidUser,
+  onLike,
+  onDislike,
+  saveOff,
+  unSaveOff,
+  pressItem
 }) => {
   const {
     roundBorder,
@@ -23,86 +33,148 @@ const CardItem = ({
     timeStyle,
     textSt
   } = styles;
+
   return (
     <View style={[roundBorder, viewContainer]}>
-      <View style={{ width: "40%", height: "100%" }}>
-        <ImageBackground
-          source={{ uri: urlImag }}
-          style={{ width: "100%", height: "100%", marginRight: 0 }}
-        >
-          <View style={[roundBorder2, priceStyle]}>
-            {priceNew == "n/a" ? (
-              <Text style={{ textAlign: "center", color: "white" }}>
-                {priceNew}
+      <TouchableNativeFeedback onPress={pressItem}>
+        <View style={{ width: "40%", height: "100%" }}>
+          <ImageBackground
+            source={{ uri: urlImag }}
+            style={{ width: "100%", height: "100%", marginRight: 0 }}
+          >
+            <View style={[roundBorder2, priceStyle]}>
+              {priceNew == "n/a" ? (
+                <Text style={{ textAlign: "center", color: "white" }}>
+                  {priceNew}
+                </Text>
+              ) : (
+                <Text style={{ textAlign: "center", color: "white" }}>
+                  {priceNew} €
+                </Text>
+              )}
+            </View>
+          </ImageBackground>
+        </View>
+      </TouchableNativeFeedback>
+      <View style={{ backgroundColor: "white", width: "60%", height: "100%" }}>
+        <TouchableNativeFeedback onPress={pressItem}>
+          <View>
+            <Text
+              style={{
+                fontFamily: "sans-serif-medium",
+                fontSize: 18,
+                textAlign: "center",
+                marginTop: 11
+              }}
+            >
+              {title}
+            </Text>
+            {priceOld == "n/a" ? (
+              <Text style={[textStyle, textSt, { fontSize: 18 }]}>
+                {priceOld}
               </Text>
             ) : (
-              <Text style={{ textAlign: "center", color: "white" }}>
-                {priceNew} €
+              <Text
+                style={[
+                  textStyle,
+                  textSt,
+                  {
+                    textDecorationLine: "line-through"
+                  }
+                ]}
+              >
+                {priceOld}€
               </Text>
             )}
+            <Text style={[textStyle]}>{dateProd}</Text>
+            <Text
+              style={{
+                fontSize: 15,
+                marginTop: "3%",
+                color: "grey",
+                marginLeft: "3%"
+              }}
+            >
+              {address}
+            </Text>
           </View>
-        </ImageBackground>
-      </View>
-      <View style={{ backgroundColor: "white", width: "60%", height: "100%" }}>
-        <View style={{ flexDirection: "row", marginTop: "3%" }}>
-          <Text
+        </TouchableNativeFeedback>
+        {/* <Text style={timeStyle}>5 min</Text> */}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            alignSelf: "center",
+            flex: 1
+          }}
+        >
+          {_.includes(likes, uidUser, 0) ? (
+            <View
+              style={{
+                flexDirection: "row",
+                flex: 1,
+                justifyContent: "center"
+              }}
+            >
+              <Text
+                style={{
+                  alignSelf: "flex-start",
+                  color: "#ED4956",
+                  fontSize: 15,
+                  marginRight: 2
+                }}
+              >
+                {_.size(likes)}
+              </Text>
+              <Icon
+                name="heart"
+                color="#ED4956"
+                size={25}
+                onPress={onDislike}
+              />
+            </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: "row",
+                flex: 1,
+                justifyContent: "center"
+              }}
+            >
+              <Text
+                style={{
+                  alignSelf: "flex-start",
+                  color: "grey",
+                  fontSize: 15,
+                  marginRight: 2
+                }}
+              >
+                {_.size(likes)}
+              </Text>
+              <Icon name="heart" color="grey" size={25} onPress={onLike} />
+            </View>
+          )}
+          <View
             style={{
-              alignSelf: "flex-start",
-              color: "#ED4956",
-              marginLeft: "4%",
-              fontSize: 12,
-              marginRight: 2
+              alignItems: "flex-start",
+              flex: 1,
+              marginLeft: 40,
+              justifyContent: "center"
             }}
           >
-            {_.size(likes)}
-          </Text>
-          <Icon name="heart" color="#ED4956" size={15} />
-          <View style={{ alignItems: "flex-end", flex: 1, marginRight: 5 }}>
-          { _.includes(saved, uidUser, 0) ? 
-              <Icon name="bookmark" color="green" size={23} />
-              :
-              <Icon name="bookmark" color="grey" size={23} />
-
-          }
-            
+            {_.includes(saved, uidUser, 0) ? (
+              <Icon
+                name="cart-plus"
+                color="green"
+                size={25}
+                onPress={unSaveOff}
+              />
+            ) : (
+              <Icon name="cart-plus" color="grey" size={25} onPress={saveOff} />
+            )}
           </View>
         </View>
-        <Text
-          style={{
-            fontFamily: "sans-serif-medium",
-            fontSize: 18,
-            textAlign: "center"
-          }}
-        >
-          {title}
-        </Text>
-        {priceOld == "n/a" ? (
-          <Text style={[textStyle, textSt, { fontSize: 18 }]}>{priceOld}</Text>
-        ) : (
-          <Text
-            style={[
-              textStyle,
-              textSt,
-              {
-                textDecorationLine: "line-through"
-              }
-            ]}
-          >
-            {priceOld}€
-          </Text>
-        )}
-        <Text style={[textStyle]}>{dateProd}</Text>
-        <Text
-          style={{
-            fontSize: 15,
-            marginTop: "3%",
-            color: "grey",
-            marginLeft: "3%"
-          }}
-        >
-          {address}
-        </Text>
-        {/* <Text style={timeStyle}>5 min</Text> */}
       </View>
     </View>
   );
@@ -145,7 +217,7 @@ const styles = {
 
   viewContainer: {
     width: "92%",
-    height: 170,
+    height: 180,
     marginTop: 10,
     flex: 1,
     flexDirection: "row",

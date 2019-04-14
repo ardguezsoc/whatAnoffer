@@ -15,7 +15,7 @@ const MyModal = ({modalStatus, Decline, title, subTitle, Accept}) => {
           style={{
             backgroundColor: "white",
             width: "100%",
-            height: "40%",
+            height: "32%",
             borderRadius: 15
           }}
         >
