@@ -6,6 +6,7 @@ import PlaceReducer from "./PlaceReducer";
 import AuthReducer from "./AuthReducers";
 import ProfileReducer from "./ProfileReducer";
 import PeopleReducer from "./PeopleReducer";
+import FollowReducers from "./FollowReducers";
 
 export default combineReducers({
   productForm: ProductFormReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   place: PlaceReducer,
   auth: AuthReducer,
   profile: ProfileReducer,
-  people: PeopleReducer
+  people: PeopleReducer,
+  followRed: FollowReducers
 });

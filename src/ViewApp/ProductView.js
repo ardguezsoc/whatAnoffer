@@ -116,7 +116,7 @@ class ProductView extends Component {
 
             {this.state.saveStatus ? (
               <Icon
-                name="bookmark"
+                name="cart-plus"
                 color="green"
                 size={27}
                 style={{ marginLeft: 20 }}
@@ -124,7 +124,7 @@ class ProductView extends Component {
               />
             ) : (
               <Icon
-                name="bookmark"
+                name="cart-plus"
                 color="grey"
                 size={27}
                 style={{ marginLeft: 20 }}
@@ -134,7 +134,7 @@ class ProductView extends Component {
           </View>
           {this.props.product.owner == this.state.firebaseAuth ? (
             <View
-              style={{ flexDirection: "row", marginTop: 3, marginBottom: 3 }}
+              style={{ flexDirection: "row", marginTop: 10 }}
             >
               <ButtonOwn
                 onPress={() => this.editOffer()}

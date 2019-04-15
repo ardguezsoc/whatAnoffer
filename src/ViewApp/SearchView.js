@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import {
-  View,
-  FlatList,
-  ActivityIndicator,
-  Text,
-  TouchableOpacity
-} from "react-native";
+import {View,FlatList,ActivityIndicator,Text,TouchableOpacity} from "react-native";
 import { SearchBar, ButtonGroup, Button, Slider } from "react-native-elements";
 import Modal from "react-native-modal";
 import { productFetch, todayEpoch } from "../actions";
@@ -14,6 +8,8 @@ import ListProductItem from "../component/ListProductItem";
 import { connect } from "react-redux";
 import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
 import { Icon } from "react-native-elements";
+import firebase from "@firebase/app";
+import "@firebase/auth";
 
 const component1 = () => (
   <FontAwesome style={{ fontSize: 28 }} type={IconTypes.FAS}>
@@ -56,7 +52,8 @@ class SearchView extends Component {
       value: "",
       trueSelectedValue: -1,
       number: 0,
-      trueHourValue: 0
+      trueHourValue: 0,
+      stateUid: firebase.auth().currentUser.uid
     };
 
     this.arrayholder = [];
@@ -243,7 +240,9 @@ class SearchView extends Component {
         <View style={{ flex: 1, backgroundColor: "white" }}>
           <FlatList
             data={this.state.data}
-            renderItem={({ item }) => <ListProductItem product={item} />}
+            renderItem={({ item }) => (
+              <ListProductItem product={item} uidUser={this.state.stateUid} />
+            )}
             keyExtractor={item => item.uid}
             ListHeaderComponent={this.renderHeader}
             ListEmptyComponent={this.ListEmptyView}

@@ -116,7 +116,8 @@ export const CreateUsers = (emailV, passwordV, name) => {
       .child(currentUser.uid)
       .set({
         nameOfUser: name,
-        uriPhoto: "https://res.cloudinary.com/dfir4b1pq/image/upload/q_auto:good/v1550940285/nophoto.jpg"
+        uriPhoto: "https://res.cloudinary.com/dfir4b1pq/image/upload/q_auto:good/v1550940285/nophoto.jpg",
+        status: "Bronce"
          
       })
       .then(() => {

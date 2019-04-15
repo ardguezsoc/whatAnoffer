@@ -24,3 +24,5 @@ export const PEOPLE_FETCH_SUCCESS = "people_fetch_success";
 export const KIND_FETCH_SUCCESS = "kind_fetch_success";
 
 export const PLACE_FETCH_SUCCESS = "place_fetch_success";
+
+export const FOLLOW_FETCH_SUCCESS = "follow_fetch_success";

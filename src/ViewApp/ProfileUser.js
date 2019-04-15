@@ -25,7 +25,9 @@ class ProfileUser extends Component {
       data: [],
       firebaseAuth: firebase.auth().currentUser.uid,
       statusFollow: false,
-      modalStatus: false
+      modalStatus: false,
+      stateFollowers: 0,
+      stateFollowing: 0
     };
     this.arrayholder = [];
     this.updateIndex = this.updateIndex.bind(this);
@@ -40,8 +42,20 @@ class ProfileUser extends Component {
       this.setState({
         data: newData
       });
+    } else if (selectedIndex == 1) {
+      newData = this.arrayholder.filter(item => {
+        return _.includes(item.likes, this.props.ownerValue, 0) == true;
+      });
+      this.setState({
+        data: newData
+      });
     } else {
-      this.setState({ data: this.arrayholder });
+      newData = this.arrayholder.filter(item => {
+        return _.includes(item.saved, this.props.ownerValue, 0) == true;
+      });
+      this.setState({
+        data: newData
+      });
     }
   }
 
@@ -60,14 +74,20 @@ class ProfileUser extends Component {
     this.setState({ modalStatus: false });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.makeRemoteRequest();
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       data: nextProps.product,
-      statusFollow: _.includes(nextProps.siguiendo, this.props.ownerValue, 0)
+      statusFollow: _.includes(
+        nextProps.seguidores,
+        this.state.firebaseAuth,
+        0
+      ),
+      stateFollowers: _.size(nextProps.seguidores),
+      stateFollowing: _.size(nextProps.siguiendo)
     });
 
     this.updateIndex(0);
@@ -76,7 +96,7 @@ class ProfileUser extends Component {
   makeRemoteRequest = () => {
     this.props.productFetch();
     this.props.profileFetch(this.props.ownerValue);
-    this.props.followFetch(this.state.firebaseAuth);
+    this.props.followFetch(this.props.ownerValue);
     this.arrayholder = _.values(this.props.product);
   };
 
@@ -110,9 +130,8 @@ class ProfileUser extends Component {
                     buttonStyle={{
                       borderRadius: 15,
                       width: 90,
-                      backgroundColor: "#109C59",
-                      borderWidth: 1,
-                      borderColor: "white"
+                      height: 40,
+                      backgroundColor: "#109C59"
                     }}
                     onPress={() => this.follow(true)}
                   />
@@ -122,9 +141,8 @@ class ProfileUser extends Component {
                     buttonStyle={{
                       borderRadius: 15,
                       width: 100,
-                      backgroundColor: "green",
-                      borderWidth: 1,
-                      borderColor: "white"
+                      height: 40,
+                      backgroundColor: "#109C59"
                     }}
                     onPress={() => this.follow(false)}
                   />
@@ -149,10 +167,20 @@ class ProfileUser extends Component {
                 <Text style={{ fontSize: 18, color: "white" }}>
                   {this.props.nameOfUser}
                 </Text>
-                {/* <Text>Seguidores</Text>
-              <Text>100</Text>
-              <Text>Siguiendo</Text>
-            <Text>10</Text> */}
+                <View style={{ flexDirection: "row", height: 40 }}>
+                  <View style={{ flex: 1, alignItems: "center", marginTop: 0 }}>
+                    <Text style={styles.textStyle}> Seguidores</Text>
+                    <Text style={styles.textStyle}>
+                      {this.state.stateFollowers}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1, alignItems: "center" }}>
+                    <Text style={styles.textStyle}>Siguiendo</Text>
+                    <Text style={styles.textStyle}>
+                      {this.state.stateFollowing}
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           </LinearGradient>
@@ -187,9 +215,12 @@ const mapStateToProps = state => {
     return { ...val, uid };
   });
   const { nameOfUser, uriPhoto } = state.profile;
-  const { siguiendo } = state.people;
-
-  return { product, nameOfUser, uriPhoto, siguiendo };
+  if (state.followRed !== null) {
+    const { seguidores, siguiendo } = state.followRed;
+    return { product, nameOfUser, uriPhoto, siguiendo, seguidores };
+  } else {
+    return { product, nameOfUser, uriPhoto };
+  }
 };
 
 const styles = {
@@ -203,6 +234,10 @@ const styles = {
     fontSize: 18,
     textAlign: "center",
     marginTop: 30
+  },
+  textStyle: {
+    fontSize: 15,
+    color: "white"
   }
 };
 

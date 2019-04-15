@@ -106,7 +106,8 @@ const CardItem = ({
             justifyContent: "center",
             alignItems: "center",
             alignSelf: "center",
-            flex: 1
+            flex: 1,
+            marginTop: 10
           }}
         >
           {_.includes(likes, uidUser, 0) ? (
@@ -117,22 +118,22 @@ const CardItem = ({
                 justifyContent: "center"
               }}
             >
-              <Text
-                style={{
-                  alignSelf: "flex-start",
-                  color: "#ED4956",
-                  fontSize: 15,
-                  marginRight: 2
-                }}
-              >
-                {_.size(likes)}
-              </Text>
               <Icon
                 name="heart"
                 color="#ED4956"
                 size={25}
                 onPress={onDislike}
               />
+              <Text
+                style={{
+                  alignSelf: "flex-start",
+                  color: "#ED4956",
+                  fontSize: 15,
+                  marginLeft: 5
+                }}
+              >
+                {_.size(likes)}
+              </Text>
             </View>
           ) : (
             <View
@@ -142,17 +143,17 @@ const CardItem = ({
                 justifyContent: "center"
               }}
             >
+              <Icon name="heart" color="grey" size={25} onPress={onLike} />
               <Text
                 style={{
                   alignSelf: "flex-start",
                   color: "grey",
                   fontSize: 15,
-                  marginRight: 2
+                  marginLeft: 5
                 }}
               >
                 {_.size(likes)}
               </Text>
-              <Icon name="heart" color="grey" size={25} onPress={onLike} />
             </View>
           )}
           <View
@@ -211,7 +212,7 @@ const styles = {
   },
   textStyle: {
     fontSize: 16,
-    marginTop: "3%",
+    marginTop: "2%",
     marginLeft: "3%"
   },
 
