@@ -1,13 +1,14 @@
 import React from "react";
 import { TextInput, View, Text } from "react-native";
 import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 function renderIcon(iconData) {
   switch (iconData) {
     case "coins":
       return (
         <FontAwesome
-          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}
+          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color: "#747474" }}
           type={IconTypes.FAS}
         >
           {Icons.coins}
@@ -16,7 +17,7 @@ function renderIcon(iconData) {
     case "billet":
       return (
         <FontAwesome
-          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}
+          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color: "#747474" }}
           type={IconTypes.FAS}
         >
           {Icons.moneyBillWave}
@@ -26,7 +27,7 @@ function renderIcon(iconData) {
     case "address":
       return (
         <FontAwesome
-          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}
+          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color: "#747474" }}
           type={IconTypes.FAS}
         >
           {Icons.mapMarkerAlt}
@@ -35,32 +36,36 @@ function renderIcon(iconData) {
 
     case "Carne y Pescado":
       return (
-        <FontAwesome style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}>
+        <FontAwesome
+          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color: "#747474" }}
+        >
           {Icons.fish}
         </FontAwesome>
       );
 
     case "Frutas & Vegetales":
       return (
-        <FontAwesome
-          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}
-          type={IconTypes.FAB}
-        >
-          {Icons.apple}
-        </FontAwesome>
+        <Icon
+          size={26}
+          name="food-apple"
+          style={{ paddingLeft: 10, flex: 1, color: "#747474" }}
+        />
       );
 
     case "Dulces":
       return (
-        <FontAwesome style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}>
-          {Icons.cookie}
-        </FontAwesome>
+        <Icon
+          size={30}
+          name="cupcake"
+          size={26}
+          style={{ paddingLeft: 10, flex: 1, color: "#747474" }}
+        />
       );
 
     case "Lácteos":
       return (
         <FontAwesome
-          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}
+          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color: "#747474" }}
           type={IconTypes.FAB}
         >
           {Icons.gulp}
@@ -70,7 +75,7 @@ function renderIcon(iconData) {
     case "Bebidas":
       return (
         <FontAwesome
-          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}
+          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color: "#747474" }}
           type={IconTypes.FAS}
         >
           {Icons.glassMartiniAlt}
@@ -80,7 +85,7 @@ function renderIcon(iconData) {
     case "description":
       return (
         <FontAwesome
-          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}
+          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color: "#747474" }}
           type={IconTypes.FAS}
         >
           {Icons.fileSignature}
@@ -90,7 +95,7 @@ function renderIcon(iconData) {
     case "product":
       return (
         <FontAwesome
-          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color:"#747474" }}
+          style={{ fontSize: 26, paddingLeft: 10, flex: 1, color: "#747474" }}
           type={IconTypes.FAB}
         >
           {Icons.productHunt}

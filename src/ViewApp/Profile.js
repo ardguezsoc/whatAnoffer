@@ -37,29 +37,29 @@ class Profile extends Component {
       stateFollowers: _.size(nextProps.seguidores),
       stateFollowing: _.size(nextProps.siguiendo)
     });
-    this.updateIndex(0);
+     this.updateIndex(0);
   }
 
   updateIndex(selectedIndex) {
-    this.setState({ selectedIndex });
+    // this.setState({ selectedIndex });
     var newData;
     if (selectedIndex == 0) {
        newData = this.arrayholder.filter(item => {
-        return item.owner.indexOf(this.state.uidUser) > -1;
+        return item.owner.indexOf(this.state.uidUser) > -1 && item.status.indexOf("hidden") == -1;
       });
       this.setState({
         data: newData
       });
     } else if(selectedIndex == 1) {
        newData = this.arrayholder.filter(item => {
-        return _.includes(item.likes,this.state.uidUser,0) == true;
+        return _.includes(item.likes,this.state.uidUser,0) == true && item.status.indexOf("hidden") == -1;
       });
       this.setState({
         data: newData
       });
     }else{
       newData = this.arrayholder.filter(item => {
-        return _.includes(item.saved,this.state.uidUser,0) == true;
+        return _.includes(item.saved,this.state.uidUser,0) == true && item.status.indexOf("noStock") ==  -1 && item.status.indexOf("hidden") == -1;
       });
       this.setState({
         data: newData
@@ -82,7 +82,7 @@ class Profile extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.notFoundStyle}>
-          ¡ Vaya parece que no hay ofertas de este tipo =( !
+          ¡ Vaya parece que no hay ofertas =( !
         </Text>
       </View>
     );
@@ -161,7 +161,7 @@ class Profile extends Component {
         </View>
         <FlatList
           data={this.state.data}
-          renderItem={({ item }) => <ListProductItem product={item} />}
+          renderItem={({ item }) => <ListProductItem product={item}  uidUser={this.state.uidUser} />}
           keyExtractor={item => item.uid}
           ListEmptyComponent={this.ListEmptyView}
         />

@@ -18,7 +18,7 @@ import { ButtonOwn } from "../component";
 import { Actions } from "react-native-router-flux";
 import firebase from "@firebase/app";
 import "@firebase/auth";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 class ProductView extends Component {
   state = {
@@ -69,11 +69,10 @@ class ProductView extends Component {
 
   save(checkV) {
     const { uid } = this.props.product;
-    if(checkV){
+    if (checkV) {
       this.props.saveOffer({ uid }, this.state.firebaseAuth);
-    }else{
+    } else {
       this.props.unSaveOffer({ uid }, this.state.firebaseAuth);
-      
     }
     this.setState({ saveStatus: !this.state.saveStatus });
   }
@@ -116,7 +115,7 @@ class ProductView extends Component {
 
             {this.state.saveStatus ? (
               <Icon
-                name="cart-plus"
+                name="cart"
                 color="green"
                 size={27}
                 style={{ marginLeft: 20 }}
@@ -124,7 +123,7 @@ class ProductView extends Component {
               />
             ) : (
               <Icon
-                name="cart-plus"
+                name="cart"
                 color="grey"
                 size={27}
                 style={{ marginLeft: 20 }}
@@ -133,9 +132,7 @@ class ProductView extends Component {
             )}
           </View>
           {this.props.product.owner == this.state.firebaseAuth ? (
-            <View
-              style={{ flexDirection: "row", marginTop: 10 }}
-            >
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
               <ButtonOwn
                 onPress={() => this.editOffer()}
                 style={{ borderColor: "#086BC5" }}
@@ -153,7 +150,7 @@ class ProductView extends Component {
             </View>
           ) : null}
 
-          <View style={{ marginTop: "4%" }}>
+          <View>
             <CardText
               style={{ justifyContent: "center", alignSelf: "center" }}
               value={this.props.product.productValue}

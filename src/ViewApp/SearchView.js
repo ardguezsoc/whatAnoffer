@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import {View,FlatList,ActivityIndicator,Text,TouchableOpacity} from "react-native";
+import {
+  View,
+  FlatList,
+  ActivityIndicator,
+  Text,
+  TouchableOpacity
+} from "react-native";
 import { SearchBar, ButtonGroup, Button, Slider } from "react-native-elements";
 import Modal from "react-native-modal";
 import { productFetch, todayEpoch } from "../actions";
 import ListProductItem from "../component/ListProductItem";
 import { connect } from "react-redux";
 import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
-import { Icon } from "react-native-elements";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import firebase from "@firebase/app";
 import "@firebase/auth";
 
@@ -17,15 +23,9 @@ const component1 = () => (
   </FontAwesome>
 );
 
-const component2 = () => (
-  <FontAwesome style={{ fontSize: 30 }} type={IconTypes.FAB}>
-    {Icons.apple}
-  </FontAwesome>
-);
+const component2 = () => <Icon size={30} name="food-apple" />;
 
-const component3 = () => (
-  <FontAwesome style={{ fontSize: 26 }}>{Icons.cookie}</FontAwesome>
-);
+const component3 = () => <Icon size={30} name="cupcake" />;
 
 const component4 = () => (
   <FontAwesome style={{ fontSize: 32 }} type={IconTypes.FAB}>
@@ -53,7 +53,9 @@ class SearchView extends Component {
       trueSelectedValue: -1,
       number: 0,
       trueHourValue: 0,
-      stateUid: firebase.auth().currentUser.uid
+      stateUid: firebase.auth().currentUser.uid,
+      arr: [],
+      check: false
     };
 
     this.arrayholder = [];
@@ -66,9 +68,15 @@ class SearchView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      data: nextProps.product
-    });
+    this.setState(
+      {
+        data: nextProps.product,
+        arr: nextProps.product
+      },
+      () => {
+        this.readyFilter();
+      }
+    );
     this.setState({ loading: false });
   }
 
@@ -103,12 +111,12 @@ class SearchView extends Component {
 
   makeRemoteRequest = () => {
     this.props.productFetch();
-    var arr = _.values(this.props.product);
+    //  this.state.arr = _.values(this.props.product);
     this.setState({
-      data: arr,
+      //  data: this.arr,
       loading: false
     });
-    this.arrayholder = arr;
+    //  this.arrayholder = this.state.arr;
     this.setState({ loading: false });
   };
 
@@ -117,7 +125,8 @@ class SearchView extends Component {
 
   searchFilterFunction = text => {
     this.setState({
-      value: text
+      value: text,
+      check: true
     });
     const filterProduct = this.whatProduct(this.state.trueSelectedValue);
     var timeFilter;
@@ -126,7 +135,7 @@ class SearchView extends Component {
     } else {
       timeFilter = todayEpoch() - this.state.trueHourValue * 3600000;
     }
-    const newData = this.arrayholder.filter(item => {
+    const newData = this.state.arr.filter(item => {
       const itemKind = item.productKindValue;
       const itemTime = item.currentTime;
       const itemData = item.productValue.toUpperCase();
@@ -206,14 +215,22 @@ class SearchView extends Component {
             borderBottomWidth: 1
           }}
         >
-          <Icon
-            reverse
-            size={19}
-            name="list-ul"
-            type="font-awesome"
-            color="#109C59"
-            onPress={this._toggleModal}
-          />
+          <View
+            style={{
+              justifyContent: "center",
+              alignSelf: "center",
+              alignItems: "center",
+              height: "100%",
+              paddingRight: 7
+            }}
+          >
+            <Icon
+              name="filter-variant"
+              color="white"
+              size={27}
+              onPress={this._toggleModal}
+            />
+          </View>
         </View>
       </View>
     );
@@ -330,7 +347,6 @@ class SearchView extends Component {
                       <Text
                         style={{ marginTop: 14, marginBottom: 5, fontSize: 15 }}
                       >
-                        {" "}
                         Mostrar ofertas creadas a culaquier hora
                       </Text>
                     )}

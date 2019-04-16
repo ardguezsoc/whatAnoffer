@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const CardItem = ({
+const CardItemIcons = ({
   title,
   priceNew,
   priceOld,
@@ -18,11 +18,11 @@ const CardItem = ({
   likes,
   saved,
   uidUser,
-  onLike,
+  onDislike,
   saveOff,
   unSaveOff,
   pressItem,
-  onNolike,
+  onRemoveNolike,
   likeStat
 }) => {
   const {
@@ -76,7 +76,13 @@ const CardItem = ({
               </Text>
             ) : (
               <Text
-  style={[textStyle,textSt,{textDecorationLine: "line-through"}]}
+                style={[
+                  textStyle,
+                  textSt,
+                  {
+                    textDecorationLine: "line-through"
+                  }
+                ]}
               >
                 {priceOld}€
               </Text>
@@ -105,7 +111,7 @@ const CardItem = ({
             marginTop: 10
           }}
         >
-          <View style={{ flexDirection: "row", flex: 1 }}>
+          {likeStat ? (
             <View
               style={{
                 flexDirection: "row",
@@ -113,11 +119,16 @@ const CardItem = ({
                 justifyContent: "center"
               }}
             >
-              <Icon name="heart" color="grey" size={25} onPress={onLike} />
+              <Icon
+                name="heart"
+                color="#ED4956"
+                size={25}
+                onPress={onDislike}
+              />
               <Text
                 style={{
                   alignSelf: "flex-start",
-                  color: "grey",
+                  color: "#ED4956",
                   fontSize: 15,
                   marginLeft: 5
                 }}
@@ -125,16 +136,17 @@ const CardItem = ({
                 {_.size(likes)}
               </Text>
             </View>
-
+          ) : (
             <View style={styles.styleHeart}>
               <Icon
                 name="heart-broken"
-                color="grey"
+                color="#ED4956"
                 size={25}
-                onPress={onNolike}
+                onPress={onRemoveNolike}
               />
             </View>
-
+          )}
+          <View style={{ flexDirection: "row", flex: 1 }}>
             <View
               style={{
                 alignItems: "flex-start",
@@ -224,4 +236,4 @@ const styles = {
   }
 };
 
-export { CardItem };
+export { CardItemIcons };

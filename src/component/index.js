@@ -9,3 +9,4 @@ export * from './CardText';
 export * from './MyModal';
 export * from './ButtonImag';
 export * from  './Spinner';
+export * from './CardItemIcons';

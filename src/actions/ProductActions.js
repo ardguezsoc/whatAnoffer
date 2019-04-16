@@ -38,7 +38,48 @@ export const dislikeOffer = ({ uid }, uidWhoLikes) => {
       .ref(`offer/${uid}/likes/${uidWhoLikes}`)
       .remove()
       .then(() => {
-        dispatch({ type: PRODUCT_DELETE })
+        dispatch({ type: PRODUCT_DELETE });
+      });
+  };
+};
+
+export const nolikeOffer = ({ uid }, uidWho) => {
+  return dispatch => {
+    firebase
+      .database()
+      .ref()
+      .child(`offer/${uid}/dislikes/${uidWho}`)
+      .set(`${uidWho}`)
+      .then(() => {
+        if (firebase.auth().currentUser.uid == uidWho) {
+          firebase
+            .database()
+            .ref()
+            .child(`offer/${uid}`)
+            .update({ status: "noStock" });
+        } else {
+          dispatch({ type: PRODUCT_CREATE });
+        }
+      });
+  };
+};
+
+export const removeNolikeOffer = ({ uid }, uidWho) => {
+  return dispatch => {
+    firebase
+      .database()
+      .ref(`offer/${uid}/dislikes/${uidWho}`)
+      .remove()
+      .then(() => {
+        if (firebase.auth().currentUser.uid == uidWho) {
+          firebase
+            .database()
+            .ref()
+            .child(`offer/${uid}`)
+            .update({ status: "read" });
+        } else {
+          dispatch({ type: PRODUCT_DELETE });
+        }
       });
   };
 };
@@ -63,7 +104,7 @@ export const unSaveOffer = ({ uid }, uidWhoLikes) => {
       .ref(`offer/${uid}/saved/${uidWhoLikes}`)
       .remove()
       .then(() => {
-        dispatch({ type: PRODUCT_DELETE })
+        dispatch({ type: PRODUCT_DELETE });
       });
   };
 };
@@ -109,8 +150,7 @@ export const productFetch = () => {
     firebase
       .database()
       .ref(`/offer`)
-      .orderByChild("status")
-      .equalTo("read")
+      .orderByChild("currentTime")
       .on("value", snapshot => {
         dispatch({ type: PRODUCT_FETCH_SUCCESS, payload: snapshot.val() });
       });
