@@ -18,15 +18,35 @@ import { ButtonOwn } from "../component";
 import { Actions } from "react-native-router-flux";
 import firebase from "@firebase/app";
 import "@firebase/auth";
+import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Share from "react-native-share";
 
 class ProductView extends Component {
+  constructor(props) {
+    super(props);
+    shareOptions = {
+      title: "Compartir oferta",
+      message:
+        "Hay una oferta de " +
+        this.props.product.productValue +
+        " en " +
+        this.props.product.placeValue +
+        " por solo " +
+        this.props.product.priceNew +
+        "€. \n" +
+        "Para conocer más ofertas como esta bajate WAO!",
+      url: "http://DirecciónDescargaWaoApp.com",
+      subject: "Share Link"
+    };
+  }
   state = {
     modalStatus: false,
     imgUrl: this.props.product.urlOfImag,
     firebaseAuth: firebase.auth().currentUser.uid,
     likeStatus: false,
-    saveStatus: false
+    saveStatus: false,
+    visible: false
   };
 
   componentWillMount() {
@@ -43,6 +63,15 @@ class ProductView extends Component {
         0
       )
     });
+  }
+
+  onCancel() {
+    this.setState({ visible: false });
+  }
+  onOpen() {
+    setTimeout(() => {
+      Share.open(shareOptions);
+    }, 300);
   }
 
   resetCancel() {
@@ -130,7 +159,15 @@ class ProductView extends Component {
                 onPress={() => this.save(true)}
               />
             )}
+            <FontAwesome
+              style={{ fontSize: 22, marginLeft: 20 }}
+              color="grey"
+              onPress={() => this.onOpen()}
+            >
+              {Icons.paperPlane}
+            </FontAwesome>
           </View>
+
           {this.props.product.owner == this.state.firebaseAuth ? (
             <View style={{ flexDirection: "row", marginTop: 10 }}>
               <ButtonOwn
