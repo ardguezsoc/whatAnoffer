@@ -43,7 +43,7 @@ export const dislikeOffer = ({ uid }, uidWhoLikes) => {
   };
 };
 
-export const nolikeOffer = ({ uid }, uidWho) => {
+export const nolikeOffer = ({ uid, owner }, uidWho) => {
   return dispatch => {
     firebase
       .database()
@@ -51,7 +51,7 @@ export const nolikeOffer = ({ uid }, uidWho) => {
       .child(`offer/${uid}/dislikes/${uidWho}`)
       .set(`${uidWho}`)
       .then(() => {
-        if (firebase.auth().currentUser.uid == uidWho) {
+        if (firebase.auth().currentUser.uid == owner) {
           firebase
             .database()
             .ref()
@@ -71,7 +71,7 @@ export const removeNolikeOffer = ({ uid }, uidWho) => {
       .ref(`offer/${uid}/dislikes/${uidWho}`)
       .remove()
       .then(() => {
-        if (firebase.auth().currentUser.uid == uidWho) {
+        if (firebase.auth().currentUser.uid == owner) {
           firebase
             .database()
             .ref()

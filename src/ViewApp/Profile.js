@@ -17,10 +17,11 @@ class Profile extends Component {
     this.state = {
       data: [],
       error: null,
-      selectedIndex: -1,
+      selectedIndex: 0,
       uidUser: firebase.auth().currentUser.uid,
       stateFollowers: 0,
-      stateFollowing: 0
+      stateFollowing: 0,
+      arr: []
     };
 
     this.arrayholder = [];
@@ -28,55 +29,61 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    this.makeRemoteRequest();
+    this.props.profileFetch(this.state.uidUser);
+    this.props.productFetch();
+    this.props.followFetch(this.state.uidUser);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      data: nextProps.product,
-      stateFollowers: _.size(nextProps.seguidores),
-      stateFollowing: _.size(nextProps.siguiendo)
-    });
-     this.updateIndex(0);
+    this.setState(
+      {
+        data: nextProps.product,
+        arr: nextProps.product,
+        stateFollowers: _.size(nextProps.seguidores),
+        stateFollowing: _.size(nextProps.siguiendo)
+      },
+      () => {
+        this.updateIndex(this.state.selectedIndex);
+      }
+    );
   }
 
   updateIndex(selectedIndex) {
-    // this.setState({ selectedIndex });
+    this.setState({ selectedIndex });
     var newData;
     if (selectedIndex == 0) {
-       newData = this.arrayholder.filter(item => {
-        return item.owner.indexOf(this.state.uidUser) > -1 && item.status.indexOf("hidden") == -1;
+      newData = this.state.arr.filter(item => {
+        return (
+          item.owner.indexOf(this.state.uidUser) > -1 &&
+          item.status.indexOf("hidden") == -1
+        );
       });
       this.setState({
         data: newData
       });
-    } else if(selectedIndex == 1) {
-       newData = this.arrayholder.filter(item => {
-        return _.includes(item.likes,this.state.uidUser,0) == true && item.status.indexOf("hidden") == -1;
+    } else if (selectedIndex == 1) {
+      newData = this.state.arr.filter(item => {
+        return (
+          _.includes(item.likes, this.state.uidUser, 0) == true &&
+          item.status.indexOf("hidden") == -1
+        );
       });
       this.setState({
         data: newData
       });
-    }else{
-      newData = this.arrayholder.filter(item => {
-        return _.includes(item.saved,this.state.uidUser,0) == true && item.status.indexOf("noStock") ==  -1 && item.status.indexOf("hidden") == -1;
+    } else {
+      newData = this.state.arr.filter(item => {
+        return (
+          _.includes(item.saved, this.state.uidUser, 0) == true &&
+          item.status.indexOf("noStock") == -1 &&
+          item.status.indexOf("hidden") == -1
+        );
       });
       this.setState({
         data: newData
       });
     }
   }
-
-  makeRemoteRequest = () => {
-    this.props.profileFetch(this.state.uidUser);
-    this.props.productFetch();
-    this.props.followFetch(this.state.uidUser);
-    var arr = _.values(this.props.product);
-    this.setState({
-      data: arr
-    });
-    this.arrayholder = arr;
-  };
 
   ListEmptyView = () => {
     return (
@@ -161,7 +168,9 @@ class Profile extends Component {
         </View>
         <FlatList
           data={this.state.data}
-          renderItem={({ item }) => <ListProductItem product={item}  uidUser={this.state.uidUser} />}
+          renderItem={({ item }) => (
+            <ListProductItem product={item} uidUser={this.state.uidUser} />
+          )}
           keyExtractor={item => item.uid}
           ListEmptyComponent={this.ListEmptyView}
         />

@@ -50,11 +50,11 @@ class ListProductItem extends Component {
   }
 
   dislike(checkV) {
-    const { uid } = this.props.product;
+    const { uid, owner } = this.props.product;
     if (checkV) {
-      this.props.nolikeOffer({ uid }, this.state.firebaseAuth);
+      this.props.nolikeOffer({ uid, owner }, this.state.firebaseAuth);
     } else {
-      this.props.removeNolikeOffer({ uid }, this.state.firebaseAuth);
+      this.props.removeNolikeOffer({ uid, owner }, this.state.firebaseAuth);
     }
     this.setState({ dislikeStatus: !this.state.dislikeStatus });
   }
