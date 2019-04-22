@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import _ from "lodash";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
 const CardItem = ({
   title,
   priceNew,
@@ -17,13 +16,12 @@ const CardItem = ({
   urlImag,
   likes,
   saved,
-  uidUser,
   onLike,
   saveOff,
   unSaveOff,
   pressItem,
   onNolike,
-  likeStat
+  statusOffer
 }) => {
   const {
     roundBorder,
@@ -32,7 +30,7 @@ const CardItem = ({
     roundBorder2,
     textStyle,
     timeStyle,
-    textSt
+    textSt,
   } = styles;
 
   return (
@@ -43,7 +41,12 @@ const CardItem = ({
             source={{ uri: urlImag }}
             style={{ width: "100%", height: "100%", marginRight: 0 }}
           >
-            <View style={[roundBorder2, priceStyle]}>
+            <View
+              style={[
+                roundBorder2,priceStyle,
+                statusOffer == "read" ? null  :   {backgroundColor:"grey"}
+              ]}
+            >
               {priceNew == "n/a" ? (
                 <Text style={{ textAlign: "center", color: "white" }}>
                   {priceNew}
@@ -76,7 +79,11 @@ const CardItem = ({
               </Text>
             ) : (
               <Text
-  style={[textStyle,textSt,{textDecorationLine: "line-through"}]}
+                style={[
+                  textStyle,
+                  textSt,
+                  { textDecorationLine: "line-through" }
+                ]}
               >
                 {priceOld}€
               </Text>
@@ -143,7 +150,7 @@ const CardItem = ({
                 justifyContent: "center"
               }}
             >
-              { saved ? (
+              {saved ? (
                 <Icon name="cart" color="green" size={25} onPress={unSaveOff} />
               ) : (
                 <Icon name="cart" color="grey" size={25} onPress={saveOff} />
@@ -217,6 +224,7 @@ const styles = {
     alignItems: "center",
     backgroundColor: "#52A128"
   },
+
   styleHeart: {
     flexDirection: "row",
     flex: 1,

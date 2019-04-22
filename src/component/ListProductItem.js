@@ -78,8 +78,7 @@ class ListProductItem extends Component {
       date,
       urlOfImag,
       likes,
-      dislikes,
-      saved
+      status
     } = this.props.product;
 
     return (
@@ -95,13 +94,13 @@ class ListProductItem extends Component {
               urlImag={urlOfImag}
               likes={likes}
               saved={this.state.savedStatus}
-              uidUser={this.props.uidUser}
               onLike={() => this.doLike(true)}
               onDislike={() => this.doLike(false)}
               saveOff={() => this.save(true)}
               unSaveOff={() => this.save(false)}
               pressItem={this.onItemPress.bind(this)}
               onNolike={() => this.dislike(true)}
+              statusOffer = {status}
             />
           ) : (
             <CardItemIcons
@@ -120,6 +119,7 @@ class ListProductItem extends Component {
               unSaveOff={() => this.save(false)}
               pressItem={this.onItemPress.bind(this)}
               onRemoveNolike={() => this.dislike(false)}
+              statusOffer = {status}
             />
           )}
         </View>

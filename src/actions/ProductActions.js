@@ -51,7 +51,7 @@ export const nolikeOffer = ({ uid, owner }, uidWho) => {
       .child(`offer/${uid}/dislikes/${uidWho}`)
       .set(`${uidWho}`)
       .then(() => {
-        if (firebase.auth().currentUser.uid == owner) {
+        if (uidWho == owner) {
           firebase
             .database()
             .ref()
@@ -64,14 +64,14 @@ export const nolikeOffer = ({ uid, owner }, uidWho) => {
   };
 };
 
-export const removeNolikeOffer = ({ uid }, uidWho) => {
+export const removeNolikeOffer = ({ uid, owner }, uidWho) => {
   return dispatch => {
     firebase
       .database()
       .ref(`offer/${uid}/dislikes/${uidWho}`)
       .remove()
       .then(() => {
-        if (firebase.auth().currentUser.uid == owner) {
+        if (uidWho == owner) {
           firebase
             .database()
             .ref()
@@ -117,7 +117,8 @@ export const productCreate = ({
   priceOld,
   priceNew,
   currentTime,
-  urlOfImag
+  urlOfImag,
+  // longLat
 }) => {
   const status = "read";
   const owner = firebase.auth().currentUser.uid;
@@ -136,7 +137,8 @@ export const productCreate = ({
         currentTime,
         urlOfImag,
         status,
-        owner
+        owner,
+        // longLat
       })
       .then(() => {
         dispatch({ type: PRODUCT_CREATE });

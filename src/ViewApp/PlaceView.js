@@ -31,7 +31,9 @@ class PlaceView extends Component {
         geoM = Geohash.encode(lat, long, 7);
         this.props.placeFetch();
       },
-      (error) => {geoM = 0, this.props.placeFetch()},
+      error => {
+        (geoM = 0), this.props.placeFetch();
+      },
       { enableHighAccuracy: true, timeout: 5000, maximumAge: 1000 }
     );
   }
@@ -110,7 +112,8 @@ class ListPlaces extends Component {
     Actions.finalCreateOffer({
       placeValue: value,
       productValue: this.props.prodVal,
-      productKindValue: this.props.kindOfProduct
+      productKindValue: this.props.kindOfProduct,
+      // longLat: longLatV
     });
   }
 
@@ -120,7 +123,8 @@ class ListPlaces extends Component {
     var arr = _.values(this.props.place);
     for (var i = 0; i < arr.length - 1; i++) {
       aux = _.values(arr[i]);
-      const auxStreet = aux[1];
+      const auxStreet = aux[2];
+      // const longLat = aux[1];
       if (aux[0] != this.props.geoHashV) {
         payment.push(
           <ButtonOwn
@@ -129,7 +133,7 @@ class ListPlaces extends Component {
             onPress={() => this.onItemPress(auxStreet)}
             style={styles.styleList}
           >
-            <Text style={{ color: "black" }}>{aux[1]}</Text>
+            <Text style={{ color: "black" }}>{aux[2]}</Text>
           </ButtonOwn>
         );
       } else {
@@ -140,7 +144,7 @@ class ListPlaces extends Component {
             onPress={() => this.onItemPress(auxStreet)}
             style={styles.styleList}
           >
-            <Text style={{ color: "black" }}>{aux[1]}</Text>
+            <Text style={{ color: "black" }}>{aux[2]}</Text>
           </ButtonOwn>
         );
       }

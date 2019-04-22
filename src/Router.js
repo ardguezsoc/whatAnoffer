@@ -119,7 +119,7 @@ const RouterComponent = () => {
         <Scene
           key="createOffer"
           component={CreateOffer}
-          title="Tipo de producto a crear"
+          title="Tipo de producto"
           headerTitleStyle={styles.textNav}
           barButtonIconStyle={{ tintColor: "red" }}
           navigationBarStyle={styles.colorBack}
@@ -129,7 +129,7 @@ const RouterComponent = () => {
           key="ProfileUser"
           component={ProfileUser}
           title="Perfil"
-          headerTitleStyle={[styles.textTitle, { fontFamily: "Semib" }]}
+          headerTitleStyle={styles.textNavCenter}
           navigationBarStyle={styles.colorBack}
         />
 
@@ -137,7 +137,7 @@ const RouterComponent = () => {
           key="ProfileView"
           component={Profile}
           title="Perfil"
-          headerTitleStyle={[styles.textTitle, { fontFamily: "Semib" }]}
+          headerTitleStyle={styles.textNavCenter}
           navigationBarStyle={styles.colorBack}
         />
 

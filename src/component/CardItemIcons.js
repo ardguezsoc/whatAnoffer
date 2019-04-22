@@ -17,13 +17,13 @@ const CardItemIcons = ({
   urlImag,
   likes,
   saved,
-  uidUser,
   onDislike,
   saveOff,
   unSaveOff,
   pressItem,
   onRemoveNolike,
-  likeStat
+  likeStat,
+  statusOffer
 }) => {
   const {
     roundBorder,
@@ -43,7 +43,13 @@ const CardItemIcons = ({
             source={{ uri: urlImag }}
             style={{ width: "100%", height: "100%", marginRight: 0 }}
           >
-            <View style={[roundBorder2, priceStyle]}>
+            <View
+              style={[
+                roundBorder2,
+                priceStyle,
+                statusOffer == "read" ? null : { backgroundColor: "grey" }
+              ]}
+            >
               {priceNew == "n/a" ? (
                 <Text style={{ textAlign: "center", color: "white" }}>
                   {priceNew}
@@ -155,7 +161,7 @@ const CardItemIcons = ({
                 justifyContent: "center"
               }}
             >
-              { saved ? (
+              {saved ? (
                 <Icon name="cart" color="green" size={25} onPress={unSaveOff} />
               ) : (
                 <Icon name="cart" color="grey" size={25} onPress={saveOff} />

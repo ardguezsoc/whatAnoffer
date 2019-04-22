@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableHighlight, Linking, Platform } from "react-native";
 import { CardProductView, CardText } from "../component";
 import {
   productUpdate,
@@ -18,7 +18,7 @@ import { ButtonOwn } from "../component";
 import { Actions } from "react-native-router-flux";
 import firebase from "@firebase/app";
 import "@firebase/auth";
-import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
+import FontAwesome, { Icons } from "react-native-fontawesome";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Share from "react-native-share";
 
@@ -110,6 +110,22 @@ class ProductView extends Component {
     this.setState({ modalStatus: false });
     const { uid } = this.props.product;
     this.props.productDelete({ uid });
+  }
+
+  openInMap() {
+    const scheme = Platform.select({
+      ios: "maps:0,0?q=",
+      android: "geo:0,0?q="
+    });
+    // const latLng = this.props.product.longLat;
+    const label = "Offer Address";
+    const url = Platform.select({
+      // ios: `${scheme}${label}@${latLng}`,
+      ios: 'http://maps.apple.com/?q=1' + `${this.props.product.placeValue}`,
+      //  android: `${scheme}${latLng}(${label})`
+       android: 'https://www.google.com/maps/search/?api=1&query=' + `${this.props.product.placeValue}`
+    });
+    Linking.openURL(url)
   }
 
   render() {
@@ -210,7 +226,16 @@ class ProductView extends Component {
               value={this.props.product.productKindValue}
             />
             <CardText value={this.props.product.description} />
-            <CardText text="Dirección:" value={this.props.product.placeValue} />
+            <TouchableHighlight
+              onPress={() => {
+                this.openInMap();
+              }}
+            >
+              <CardText
+                text="Dirección:"
+                value={this.props.product.placeValue}
+              />
+            </TouchableHighlight>
           </View>
         </View>
         <View style={{ flex: 1 }}>

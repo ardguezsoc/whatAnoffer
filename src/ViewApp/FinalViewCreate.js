@@ -52,7 +52,8 @@ class FinalViewCreate extends Component {
       description,
       date,
       priceOld,
-      priceNew
+      priceNew,
+      // longLat
     } = this.props;
     if(typeof(this.props.priceNew) === 'undefined'){
       priceNew = "n/a"
@@ -80,7 +81,8 @@ class FinalViewCreate extends Component {
             priceOld,
             priceNew,
             currentTime,
-            urlOfImag
+            urlOfImag,
+            // longLat
           });
           this.setState({ buttonStatus: true });
         });
@@ -96,7 +98,8 @@ class FinalViewCreate extends Component {
         priceOld,
         priceNew,
         currentTime,
-        urlOfImag
+        urlOfImag,
+        // longLat
       });
       this.setState({ buttonStatus: true });
     }
