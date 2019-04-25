@@ -23,7 +23,8 @@ const CardItemIcons = ({
   pressItem,
   onRemoveNolike,
   likeStat,
-  statusOffer
+  statusOffer,
+  dislikes
 }) => {
   const {
     roundBorder,
@@ -32,7 +33,8 @@ const CardItemIcons = ({
     roundBorder2,
     textStyle,
     timeStyle,
-    textSt
+    textSt,
+    titleStyle
   } = styles;
 
   return (
@@ -66,16 +68,27 @@ const CardItemIcons = ({
       <View style={{ backgroundColor: "white", width: "60%", height: "100%" }}>
         <TouchableNativeFeedback onPress={pressItem}>
           <View>
-            <Text
-              style={{
-                fontFamily: "sans-serif-medium",
-                fontSize: 18,
-                textAlign: "center",
-                marginTop: 11
-              }}
+            <View
+              style={[
+                { marginBottom: 5 },
+                statusOffer == "read"
+                  ? null
+                  : {
+                      backgroundColor: "grey",
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }
+              ]}
             >
-              {title}
-            </Text>
+              <Text
+                style={[
+                  titleStyle,
+                  statusOffer == "read" ? null : { color: "white" }
+                ]}
+              >
+                {title}
+              </Text>
+            </View>
             {priceOld == "n/a" ? (
               <Text style={[textStyle, textSt, { fontSize: 18 }]}>
                 {priceOld}
@@ -110,11 +123,10 @@ const CardItemIcons = ({
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
             alignSelf: "center",
             flex: 1,
-            marginTop: 10
+            marginBottom: 5,
+            alignItems: "flex-end"
           }}
         >
           {likeStat ? (
@@ -150,6 +162,16 @@ const CardItemIcons = ({
                 size={25}
                 onPress={onRemoveNolike}
               />
+              <Text
+                style={{
+                  alignSelf: "flex-start",
+                  color: "#ED4956",
+                  fontSize: 15,
+                  marginLeft: 5
+                }}
+              >
+                {_.size(dislikes)}
+              </Text>
             </View>
           )}
           <View style={{ flexDirection: "row", flex: 1 }}>
@@ -157,8 +179,7 @@ const CardItemIcons = ({
               style={{
                 alignItems: "flex-start",
                 flex: 1,
-                marginLeft: "20%",
-                justifyContent: "center"
+                marginLeft: "20%"
               }}
             >
               {saved ? (
@@ -239,6 +260,12 @@ const styles = {
     flexDirection: "row",
     flex: 1,
     justifyContent: "center"
+  },
+  titleStyle: {
+    fontFamily: "sans-serif-medium",
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 8
   }
 };
 

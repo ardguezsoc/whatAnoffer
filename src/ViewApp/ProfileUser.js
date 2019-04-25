@@ -37,25 +37,31 @@ class ProfileUser extends Component {
     this.setState({ selectedIndex });
     if (selectedIndex == 0) {
       const newData = this.state.arr.filter(item => {
-        return item.owner.indexOf(this.props.ownerValue) > -1 &&
-        item.status.indexOf("hidden") == -1;
+        return (
+          item.owner.indexOf(this.props.ownerValue) > -1 &&
+          item.status.indexOf("hidden") == -1
+        );
       });
       this.setState({
         data: newData
       });
     } else if (selectedIndex == 1) {
       newData = this.state.arr.filter(item => {
-        return _.includes(item.likes, this.props.ownerValue, 0) == true &&
-        item.status.indexOf("hidden") == -1;
+        return (
+          _.includes(item.likes, this.props.ownerValue, 0) == true &&
+          item.status.indexOf("hidden") == -1
+        );
       });
       this.setState({
         data: newData
       });
     } else {
       newData = this.state.arr.filter(item => {
-        return _.includes(item.saved, this.props.ownerValue, 0) == true &&
-        item.status.indexOf("noStock") == -1 &&
-        item.status.indexOf("hidden") == -1;
+        return (
+          _.includes(item.saved, this.props.ownerValue, 0) == true &&
+          item.status.indexOf("noStock") == -1 &&
+          item.status.indexOf("hidden") == -1
+        );
       });
       this.setState({
         data: newData
@@ -75,7 +81,6 @@ class ProfileUser extends Component {
 
   onAccept() {
     this.props.unFollowUser(this.state.firebaseAuth, this.props.ownerValue);
-    this.setState({ modalStatus: false });
   }
 
   componentDidMount() {
@@ -85,21 +90,22 @@ class ProfileUser extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      data: nextProps.product,
-      arr: nextProps.product,
-      statusFollow: _.includes(
-        nextProps.seguidores,
-        this.state.firebaseAuth,
-        0
-      ),
-      stateFollowers: _.size(nextProps.seguidores),
-      stateFollowing: _.size(nextProps.siguiendo)
-    }, () => {
-    this.updateIndex(this.state.selectedIndex);
-
-    });
-
+    this.setState(
+      {
+        data: nextProps.product,
+        arr: nextProps.product,
+        statusFollow: _.includes(
+          nextProps.seguidores,
+          this.state.firebaseAuth,
+          0
+        ),
+        stateFollowers: _.size(nextProps.seguidores),
+        stateFollowing: _.size(nextProps.siguiendo)
+      },
+      () => {
+        this.updateIndex(this.state.selectedIndex);
+      }
+    );
   }
 
   ListEmptyView = () => {
@@ -205,7 +211,11 @@ class ProfileUser extends Component {
           modalStatus={this.state.modalStatus}
           subTitle="¿Quieres dejar de seguir a este usuario?"
           Decline={() => this.onDecline()}
-          Accept={() => this.onAccept()}
+          Accept={() =>
+            this.setState({ modalStatus: false }, () => {
+              this.onAccept();
+            })
+          }
         />
       </View>
     );

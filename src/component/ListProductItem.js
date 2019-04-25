@@ -40,21 +40,21 @@ class ListProductItem extends Component {
   }
 
   doLike(checkV) {
-    const { uid } = this.props.product;
+    const { uid, nStrikeDislikes, dislikes } = this.props.product;
     if (checkV) {
-      this.props.likeOffer({ uid }, this.state.firebaseAuth);
+      this.props.likeOffer({ uid, nStrikeDislikes }, this.state.firebaseAuth);
     } else {
-      this.props.dislikeOffer({ uid }, this.state.firebaseAuth);
+      this.props.dislikeOffer({ uid, nStrikeDislikes }, this.state.firebaseAuth, _.size(dislikes));
     }
     this.setState({ likeStatus: !this.state.likeStatus });
   }
 
   dislike(checkV) {
-    const { uid, owner } = this.props.product;
+    const { uid, owner, nStrikeDislikes } = this.props.product;
     if (checkV) {
-      this.props.nolikeOffer({ uid, owner }, this.state.firebaseAuth);
+      this.props.nolikeOffer({ uid, owner, nStrikeDislikes }, this.state.firebaseAuth);
     } else {
-      this.props.removeNolikeOffer({ uid, owner }, this.state.firebaseAuth);
+      this.props.removeNolikeOffer({ uid, owner, nStrikeDislikes }, this.state.firebaseAuth);
     }
     this.setState({ dislikeStatus: !this.state.dislikeStatus });
   }
@@ -78,7 +78,8 @@ class ListProductItem extends Component {
       date,
       urlOfImag,
       likes,
-      status
+      status,
+      dislikes
     } = this.props.product;
 
     return (
@@ -101,6 +102,7 @@ class ListProductItem extends Component {
               pressItem={this.onItemPress.bind(this)}
               onNolike={() => this.dislike(true)}
               statusOffer = {status}
+              dislikes = {dislikes}
             />
           ) : (
             <CardItemIcons
@@ -120,6 +122,8 @@ class ListProductItem extends Component {
               pressItem={this.onItemPress.bind(this)}
               onRemoveNolike={() => this.dislike(false)}
               statusOffer = {status}
+              dislikes = {dislikes}
+
             />
           )}
         </View>

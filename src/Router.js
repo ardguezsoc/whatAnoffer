@@ -1,4 +1,5 @@
 import React from "react";
+import { AsyncStorage } from "react-native";
 import { Scene, Router, Actions } from "react-native-router-flux";
 import ListProduct from "./ViewApp/ListProduct";
 import CreateOffer from "./ViewApp/CreateOffer";
@@ -139,6 +140,8 @@ const RouterComponent = () => {
           title="Perfil"
           headerTitleStyle={styles.textNavCenter}
           navigationBarStyle={styles.colorBack}
+          onRight={() => AsyncStorage.removeItem("user").then(Actions.kindOfLogin)}
+          rightTitle={<Icon name={"sign-out"} color="white" size={24} />}
         />
 
         <Scene

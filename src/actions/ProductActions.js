@@ -10,6 +10,7 @@ import firebase from "@firebase/app";
 import "@firebase/database";
 import "@firebase/auth";
 import { Actions } from "react-native-router-flux";
+import _ from "lodash";
 
 export const productUpdate = ({ prop, value }) => {
   return {
@@ -18,7 +19,7 @@ export const productUpdate = ({ prop, value }) => {
   };
 };
 
-export const likeOffer = ({ uid }, uidWhoLikes) => {
+export const likeOffer = ({ uid, nStrikeDislikes }, uidWhoLikes) => {
   return dispatch => {
     firebase
       .database()
@@ -26,61 +27,105 @@ export const likeOffer = ({ uid }, uidWhoLikes) => {
       .child(`offer/${uid}/likes/${uidWhoLikes}`)
       .set(`${uidWhoLikes}`)
       .then(() => {
+        if (nStrikeDislikes > -2) {
+          firebase
+            .database()
+            .ref()
+            .child(`offer/${uid}`)
+            .update({ nStrikeDislikes: 0 });
+        }
         dispatch({ type: PRODUCT_CREATE });
       });
   };
 };
 
-export const dislikeOffer = ({ uid }, uidWhoLikes) => {
+export const dislikeOffer = ({ uid, nStrikeDislikes }, uidWhoLikes, sizeDislike) => {
   return dispatch => {
     firebase
       .database()
       .ref(`offer/${uid}/likes/${uidWhoLikes}`)
       .remove()
       .then(() => {
+        if (nStrikeDislikes > -2 && sizeDislike > 0 ) {
+          firebase
+            .database()
+            .ref()
+            .child(`offer/${uid}`)
+            .update({ nStrikeDislikes: nStrikeDislikes - 1 });
+        }
         dispatch({ type: PRODUCT_DELETE });
       });
   };
 };
 
-export const nolikeOffer = ({ uid, owner }, uidWho) => {
+export const nolikeOffer = ({ uid, owner, nStrikeDislikes }, uidWho) => {
   return dispatch => {
     firebase
       .database()
       .ref()
       .child(`offer/${uid}/dislikes/${uidWho}`)
-      .set(`${uidWho}`)
-      .then(() => {
-        if (uidWho == owner) {
-          firebase
-            .database()
-            .ref()
-            .child(`offer/${uid}`)
-            .update({ status: "noStock" });
-        } else {
-          dispatch({ type: PRODUCT_CREATE });
-        }
-      });
+      .set(`${uidWho}`);
+    if (uidWho == owner) {
+      firebase
+        .database()
+        .ref()
+        .child(`offer/${uid}`)
+        .update({ status: "noStock" });
+    } else {
+      if (nStrikeDislikes == 0) {
+        firebase
+          .database()
+          .ref()
+          .child(`offer/${uid}`)
+          .update({ nStrikeDislikes: nStrikeDislikes - 1 });
+      } else if (nStrikeDislikes == -1) {
+        firebase
+          .database()
+          .ref()
+          .child(`offer/${uid}`)
+          .update({ status: "noStock" });
+        firebase
+          .database()
+          .ref()
+          .child(`offer/${uid}`)
+          .update({ nStrikeDislikes: nStrikeDislikes - 1 });
+      }
+    }
   };
 };
 
-export const removeNolikeOffer = ({ uid, owner }, uidWho) => {
+export const removeNolikeOffer = ({ uid, owner, nStrikeDislikes }, uidWho) => {
   return dispatch => {
     firebase
       .database()
       .ref(`offer/${uid}/dislikes/${uidWho}`)
-      .remove()
-      .then(() => {
-        if (uidWho == owner) {
-          firebase
-            .database()
-            .ref()
-            .child(`offer/${uid}`)
-            .update({ status: "read" });
-        } else {
-          dispatch({ type: PRODUCT_DELETE });
-        }
-      });
+      .remove();
+    if (uidWho == owner) {
+      firebase
+        .database()
+        .ref()
+        .child(`offer/${uid}`)
+        .update({ status: "read" });
+    } else {
+      if (nStrikeDislikes == -2) {
+        firebase
+          .database()
+          .ref()
+          .child(`offer/${uid}`)
+          .update({ nStrikeDislikes: nStrikeDislikes + 1 });
+        firebase
+          .database()
+          .ref()
+          .child(`offer/${uid}`)
+          .update({ status: "read" });
+      } else {
+        firebase
+          .database()
+          .ref()
+          .child(`offer/${uid}`)
+          .update({ nStrikeDislikes: nStrikeDislikes + 1 });
+      }
+    }
   };
 };
 
@@ -117,10 +162,9 @@ export const productCreate = ({
   priceOld,
   priceNew,
   currentTime,
-  urlOfImag,
+  urlOfImag
   // longLat
 }) => {
-  const status = "read";
   const owner = firebase.auth().currentUser.uid;
   return dispatch => {
     firebase
@@ -136,8 +180,9 @@ export const productCreate = ({
         priceNew,
         currentTime,
         urlOfImag,
-        status,
+        status: "read",
         owner,
+        nStrikeDislikes: 0
         // longLat
       })
       .then(() => {

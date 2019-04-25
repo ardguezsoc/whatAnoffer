@@ -36,7 +36,7 @@ class ProductView extends Component {
         this.props.product.priceNew +
         "€. \n" +
         "Para conocer más ofertas como esta bajate WAO!",
-      url: "http://DirecciónDescargaWaoApp.com",
+      url: "https://DescargaWaoApp.com",
       subject: "Share Link"
     };
   }
@@ -218,7 +218,7 @@ class ProductView extends Component {
             )}
 
             <CardText
-              text="Consumir pref antes del"
+              text="válida hasta"
               value={this.props.product.date}
             />
             <CardText

@@ -21,7 +21,8 @@ const CardItem = ({
   unSaveOff,
   pressItem,
   onNolike,
-  statusOffer
+  statusOffer,
+  dislikes
 }) => {
   const {
     roundBorder,
@@ -31,6 +32,7 @@ const CardItem = ({
     textStyle,
     timeStyle,
     textSt,
+    titleStyle
   } = styles;
 
   return (
@@ -43,8 +45,9 @@ const CardItem = ({
           >
             <View
               style={[
-                roundBorder2,priceStyle,
-                statusOffer == "read" ? null  :   {backgroundColor:"grey"}
+                roundBorder2,
+                priceStyle,
+                statusOffer == "read" ? null : { backgroundColor: "grey" }
               ]}
             >
               {priceNew == "n/a" ? (
@@ -63,16 +66,25 @@ const CardItem = ({
       <View style={{ backgroundColor: "white", width: "60%", height: "100%" }}>
         <TouchableNativeFeedback onPress={pressItem}>
           <View>
-            <Text
-              style={{
-                fontFamily: "sans-serif-medium",
-                fontSize: 18,
-                textAlign: "center",
-                marginTop: 11
-              }}
+            <View
+              style={ [{marginBottom: 5},
+                statusOffer == "read"
+                  ? null
+                  : { backgroundColor: "grey", justifyContent:"center", alignItems:"center" }
+              ]
+              }
             >
-              {title}
-            </Text>
+              <Text
+                style={[
+                  titleStyle,
+                  statusOffer == "read"
+                    ? null
+                    : { color: "white"}
+                ]}
+              >
+                {title}
+              </Text>
+            </View>
             {priceOld == "n/a" ? (
               <Text style={[textStyle, textSt, { fontSize: 18 }]}>
                 {priceOld}
@@ -105,21 +117,14 @@ const CardItem = ({
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
             alignSelf: "center",
             flex: 1,
-            marginTop: 10
+            marginBottom: 5,
+            alignItems: "flex-end"
           }}
         >
-          <View style={{ flexDirection: "row", flex: 1 }}>
-            <View
-              style={{
-                flexDirection: "row",
-                flex: 1,
-                justifyContent: "center"
-              }}
-            >
+          <View style={{ flexDirection: "row", flex: 1, alignItems:"flex-end" }}>
+            <View style={styles.styleHeart}>
               <Icon name="heart" color="grey" size={25} onPress={onLike} />
               <Text
                 style={{
@@ -140,11 +145,20 @@ const CardItem = ({
                 size={25}
                 onPress={onNolike}
               />
+              <Text
+                style={{
+                  alignSelf: "flex-start",
+                  color: "grey",
+                  fontSize: 15,
+                  marginLeft: 5
+                }}
+              >
+                {_.size(dislikes)}
+              </Text>
             </View>
 
             <View
               style={{
-                alignItems: "flex-start",
                 flex: 1,
                 marginLeft: "20%",
                 justifyContent: "center"
@@ -229,6 +243,12 @@ const styles = {
     flexDirection: "row",
     flex: 1,
     justifyContent: "center"
+  },
+  titleStyle: {
+    fontFamily: "sans-serif-medium",
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 8
   }
 };
 

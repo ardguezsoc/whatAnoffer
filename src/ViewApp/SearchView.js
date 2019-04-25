@@ -111,12 +111,9 @@ class SearchView extends Component {
 
   makeRemoteRequest = () => {
     this.props.productFetch();
-    //  this.state.arr = _.values(this.props.product);
     this.setState({
-      //  data: this.arr,
       loading: false
     });
-    //  this.arrayholder = this.state.arr;
     this.setState({ loading: false });
   };
 
