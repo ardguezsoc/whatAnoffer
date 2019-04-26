@@ -5,17 +5,19 @@ import {
   FlatList,
   ActivityIndicator,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Switch
 } from "react-native";
 import { SearchBar, ButtonGroup, Button, Slider } from "react-native-elements";
 import Modal from "react-native-modal";
-import { productFetch, todayEpoch } from "../actions";
+import { productFetch, todayEpoch, followFetch } from "../actions";
 import ListProductItem from "../component/ListProductItem";
 import { connect } from "react-redux";
 import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import firebase from "@firebase/app";
 import "@firebase/auth";
+import { NavigationEvents } from "react-navigation";
 
 const component1 = () => (
   <FontAwesome style={{ fontSize: 28 }} type={IconTypes.FAS}>
@@ -39,38 +41,47 @@ const component5 = () => (
   </FontAwesome>
 );
 
+const component7 = () => <Text>Alfabéticamente</Text>;
+const component6 = () => <Text>Más Recientes</Text>;
+
 class SearchView extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       loading: false,
       data: [],
       error: null,
       isModalVisible: false,
       selectedIndex: -1,
+      selectedOrder: 0,
       value: "",
       trueSelectedValue: -1,
+      trueOrder: 0,
       number: 0,
       trueHourValue: 0,
       stateUid: firebase.auth().currentUser.uid,
       arr: [],
-      check: false
+      check: false,
+      valueSwitch: false,
+      followData: []
     };
 
     this.arrayholder = [];
     this.updateIndex = this.updateIndex.bind(this);
+    this.updateOrder = this.updateOrder.bind(this);
   }
 
   componentDidMount() {
     this.setState({ loading: true });
-    this.makeRemoteRequest();
+    this.props.productFetch();
+    this.props.followFetch(this.state.stateUid);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState(
       {
         data: nextProps.product,
+        followData: nextProps.siguiendo,
         arr: nextProps.product
       },
       () => {
@@ -84,12 +95,17 @@ class SearchView extends Component {
     this.setState({
       isModalVisible: false,
       selectedIndex: this.state.trueSelectedValue,
+      selectedOrder: this.state.trueOrder,
       number: this.state.trueHourValue
     });
   }
 
   updateIndex(selectedIndex) {
     this.setState({ selectedIndex });
+  }
+
+  updateOrder(selectedOrder) {
+    this.setState({ selectedOrder });
   }
 
   whatProduct(value) {
@@ -109,17 +125,6 @@ class SearchView extends Component {
     }
   }
 
-  makeRemoteRequest = () => {
-    this.props.productFetch();
-    this.setState({
-      loading: false
-    });
-    this.setState({ loading: false });
-  };
-
-  _toggleModal = () =>
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-
   searchFilterFunction = text => {
     this.setState({
       value: text,
@@ -137,15 +142,32 @@ class SearchView extends Component {
       const itemTime = item.currentTime;
       const itemData = item.productValue.toUpperCase();
       const textData = text.toUpperCase();
-      return (
-        itemData.indexOf(textData) > -1 &&
-        itemKind.indexOf(filterProduct) > -1 &&
-        parseInt(itemTime) > timeFilter
-      );
+      if (this.state.valueSwitch) {
+        return (
+          itemData.indexOf(textData) > -1 &&
+          itemKind.indexOf(filterProduct) > -1 &&
+          parseInt(itemTime) > timeFilter &&
+          _.includes(this.state.followData, item.owner, 0) == true &&
+          item.status.indexOf("expired") == -1
+        );
+      } else {
+        return (
+          itemData.indexOf(textData) > -1 &&
+          itemKind.indexOf(filterProduct) > -1 &&
+          parseInt(itemTime) > timeFilter &&
+          item.status.indexOf("expired") == -1
+        );
+      }
     });
-    this.setState({
-      data: newData
-    });
+    {
+      this.state.selectedOrder == 0
+        ? this.setState({
+            data: _.orderBy(newData, ["currentTime"], ["desc"])
+          })
+        : this.setState({
+            data: _.orderBy(newData, ["productValue"], ["asc"])
+          });
+    }
   };
 
   ListEmptyView = () => {
@@ -163,6 +185,7 @@ class SearchView extends Component {
       {
         isModalVisible: false,
         trueSelectedValue: this.state.selectedIndex,
+        trueOrder: this.state.selectedOrder,
         trueHourValue: this.state.number
       },
       () => {
@@ -178,7 +201,9 @@ class SearchView extends Component {
         trueSelectedValue: -1,
         selectedIndex: -1,
         trueHourValue: 0,
-        number: 0
+        number: 0,
+        valueSwitch: false,
+        selectedIndex: 0
       },
       () => {
         this.searchFilterFunction(this.state.value);
@@ -225,7 +250,9 @@ class SearchView extends Component {
               name="filter-variant"
               color="white"
               size={27}
-              onPress={this._toggleModal}
+              onPress={() => {
+                this.setState({ isModalVisible: !this.state.isModalVisible });
+              }}
             />
           </View>
         </View>
@@ -241,6 +268,7 @@ class SearchView extends Component {
       { element: component4 },
       { element: component5 }
     ];
+    const buttonsOrder = [{ element: component6 }, { element: component7 }];
     if (this.state.loading) {
       return (
         <View
@@ -252,6 +280,11 @@ class SearchView extends Component {
     } else {
       return (
         <View style={{ flex: 1, backgroundColor: "white" }}>
+          <NavigationEvents
+            onWillFocus={() => {
+              this.props.followFetch(this.state.stateUid);
+            }}
+          />
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
@@ -273,40 +306,56 @@ class SearchView extends Component {
                 style={{
                   backgroundColor: "white",
                   width: "100%",
-                  height: "60%"
+                  height: 475
                 }}
               >
                 <View
                   style={{
-                    alignItems: "flex-end",
-                    marginTop: 10,
-                    marginRight: 10
+                    flexDirection: "row"
                   }}
                 >
-                  <TouchableOpacity onPress={() => this.resetCancel()}>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      alignSelf: "center",
+                      flex: 1
+                    }}
+                  >
                     <Text
                       style={{
-                        color: "grey",
-                        fontSize: 20,
-                        fontFamily: "Sniglet"
+                        fontFamily: "Pacifico",
+                        fontSize: 30,
+                        color: "#30A66D",
+                        textAlign: "center"
                       }}
                     >
-                      X
+                      Filtros
                     </Text>
-                  </TouchableOpacity>
+                  </View>
+                  <View
+                    style={{
+                      alignItems: "flex-end",
+                      marginTop: 10,
+                      marginRight: 10,
+                      width: 25
+                    }}
+                  >
+                    <TouchableOpacity onPress={() => this.resetCancel()}>
+                      <Text
+                        style={{
+                          color: "grey",
+                          fontSize: 20,
+                          fontFamily: "Sniglet"
+                        }}
+                      >
+                        X
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 <View style={{ alignSelf: "center", alignItems: "center" }}>
                   <Text
-                    style={{
-                      fontFamily: "Pacifico",
-                      fontSize: 30,
-                      color: "#30A66D"
-                    }}
-                  >
-                    Filtros
-                  </Text>
-                  <Text
-                    style={{ marginTop: 10, marginBottom: 5, fontSize: 17 }}
+                    style={{ marginTop: 9, marginBottom: 5, fontSize: 17 }}
                   >
                     Solo mostrar este tipo producto:
                   </Text>
@@ -331,7 +380,7 @@ class SearchView extends Component {
                   >
                     {this.state.number > 0 ? (
                       <Text
-                        style={{ marginTop: 14, marginBottom: 5, fontSize: 15 }}
+                        style={{ marginTop: 13, marginBottom: 3, fontSize: 16 }}
                       >
                         Mostrar ofertas creadas hace {this.state.number}
                         {this.state.number == 1 ? (
@@ -342,7 +391,7 @@ class SearchView extends Component {
                       </Text>
                     ) : (
                       <Text
-                        style={{ marginTop: 14, marginBottom: 5, fontSize: 15 }}
+                        style={{ marginTop: 14, marginBottom: 8, fontSize: 16 }}
                       >
                         Mostrar ofertas creadas a culaquier hora
                       </Text>
@@ -359,8 +408,57 @@ class SearchView extends Component {
                       minimumTrackTintColor="#077B43"
                       onValueChange={number => this.setState({ number })}
                     />
+                    <View
+                      style={{
+                        flexDirection: "row"
+                      }}
+                    >
+                      <Text
+                        style={{ marginTop: 10, marginBottom: 8, fontSize: 15 }}
+                      >
+                        Mostrar solo ofertas de usuarios que sigo:
+                      </Text>
+                      <Switch
+                        value={this.state.valueSwitch}
+                        thumbColor="#52BA88"
+                        trackColor="#d3d3d3"
+                        onValueChange={() => {
+                          this.setState({
+                            valueSwitch: !this.state.valueSwitch
+                          });
+                        }}
+                        style={{ marginTop: 4 }}
+                      />
+                    </View>
+                    <Text
+                      style={{ marginTop: 10, marginBottom: 5, fontSize: 15 }}
+                    >
+                      Ordenar ofertas:
+                    </Text>
+                    <View style={{alignSelf:"center"}}>
+                      <ButtonGroup
+                        selectedButtonStyle={{
+                          backgroundColor: "#30A66D"
+                        }}
+                        onPress={this.updateOrder}
+                        selectedIndex={this.state.selectedOrder}
+                        buttons={buttonsOrder}
+                        containerStyle={{
+                          alignItems: "center",
+                          justifyContent: "center",
+                          height: 40,
+                          width: 275,
+                          borderRadius: 15
+                        }}
+                      />
+                    </View>
                   </View>
-                  <View style={{ flexDirection: "row", marginTop: 20 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginTop: 25
+                    }}
+                  >
                     <Button
                       title="Listo"
                       onPress={() => this.readyFilter()}
@@ -407,11 +505,15 @@ const mapStateToProps = state => {
   const product = _.map(state.product, (val, uid) => {
     return { ...val, uid };
   });
-
-  return { product };
+  if (state.followRed != null) {
+    const { siguiendo } = state.followRed;
+    return { product, siguiendo };
+  } else {
+    return { product };
+  }
 };
 
 export default connect(
   mapStateToProps,
-  { productFetch }
+  { productFetch, followFetch }
 )(SearchView);

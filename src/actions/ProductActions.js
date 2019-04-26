@@ -39,14 +39,18 @@ export const likeOffer = ({ uid, nStrikeDislikes }, uidWhoLikes) => {
   };
 };
 
-export const dislikeOffer = ({ uid, nStrikeDislikes }, uidWhoLikes, sizeDislike) => {
+export const dislikeOffer = (
+  { uid, nStrikeDislikes },
+  uidWhoLikes,
+  sizeDislike
+) => {
   return dispatch => {
     firebase
       .database()
       .ref(`offer/${uid}/likes/${uidWhoLikes}`)
       .remove()
       .then(() => {
-        if (nStrikeDislikes > -2 && sizeDislike > 0 ) {
+        if (nStrikeDislikes > -2 && sizeDislike > 0) {
           firebase
             .database()
             .ref()
@@ -200,6 +204,18 @@ export const productFetch = () => {
       .orderByChild("currentTime")
       .on("value", snapshot => {
         dispatch({ type: PRODUCT_FETCH_SUCCESS, payload: snapshot.val() });
+      });
+  };
+};
+
+export const productExpired = ( uid ) => {
+  return dispatch => {
+    firebase
+      .database()
+      .ref(`/offer/${uid}`)
+      .update({ status: "expired" })
+      .then(() => {
+        dispatch({ type: PRODUCT_CREATE });
       });
   };
 };

@@ -71,7 +71,9 @@ class ProfileUser extends Component {
 
   follow(check) {
     check
-      ? this.props.followUser(this.state.firebaseAuth, this.props.ownerValue)
+      ? this.setState({ statusFollow: true }, () => {
+          this.props.followUser(this.state.firebaseAuth, this.props.ownerValue);
+        })
       : this.setState({ modalStatus: true });
   }
 
@@ -80,7 +82,9 @@ class ProfileUser extends Component {
   }
 
   onAccept() {
-    this.props.unFollowUser(this.state.firebaseAuth, this.props.ownerValue);
+    this.setState({ modalStatus: false }, () => {
+      this.props.unFollowUser(this.state.firebaseAuth, this.props.ownerValue);
+    });
   }
 
   componentDidMount() {

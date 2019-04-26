@@ -2,7 +2,7 @@ import _ from "lodash";
 import React, { Component } from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
 import { Actions } from "react-native-router-flux";
-import { productFetch, followFetch } from "../actions";
+import { productFetch, followFetch, momentChecker,productExpired } from "../actions";
 import FAB from "react-native-fab";
 import ListProductItem from "../component/ListProductItem";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -20,7 +20,7 @@ class ListProduct extends Component {
       data: [],
       error: null,
       stateUid: firebase.auth().currentUser.uid,
-      followData: [], 
+      followData: [],
       check: false
     };
   }
@@ -46,17 +46,29 @@ class ListProduct extends Component {
   }
 
   filterList() {
-    if(this.state.check){
+    if (this.state.check) {
       this.setState({
         loading: false
-      })
+      });
     }
     const newData = this.state.data.filter(item => {
-      return (
-        (_.includes(this.state.followData, item.owner, 0) == true ||
-          item.owner == this.state.stateUid) &&
-        item.status.indexOf("read") != -1
-      );
+      if (
+        new Date(
+          item.date
+            .split("-")
+            .reverse()
+            .join("-")
+        ) < new Date(momentChecker()) &&
+        item.status == "read"
+      ) {
+          this.props.productExpired(item.uid)
+      } else if(item.status != "expired") {
+        return (
+          (_.includes(this.state.followData, item.owner, 0) == true ||
+            item.owner == this.state.stateUid) &&
+          (item.status.indexOf("read") != -1 || item.status.indexOf("noStock") != -1 )
+        );
+      }
     });
     this.setState({
       data: _.orderBy(newData, ["currentTime"], ["desc"]),
@@ -115,5 +127,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { productFetch, followFetch }
+  { productFetch, followFetch,momentChecker,productExpired }
 )(ListProduct);
