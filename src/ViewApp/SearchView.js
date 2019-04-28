@@ -203,7 +203,7 @@ class SearchView extends Component {
         trueHourValue: 0,
         number: 0,
         valueSwitch: false,
-        selectedIndex: 0
+        selectedOrder: 0
       },
       () => {
         this.searchFilterFunction(this.state.value);
@@ -268,7 +268,7 @@ class SearchView extends Component {
       { element: component4 },
       { element: component5 }
     ];
-    const buttonsOrder = [{ element: component6 }, { element: component7 }];
+    const buttonsOrder = ["Más recientes", "Alfabéticamente"];
     if (this.state.loading) {
       return (
         <View
@@ -354,9 +354,7 @@ class SearchView extends Component {
                   </View>
                 </View>
                 <View style={{ alignSelf: "center", alignItems: "center" }}>
-                  <Text
-                    style={{ marginTop: 9, marginBottom: 5, fontSize: 17 }}
-                  >
+                  <Text style={{ marginTop: 9, marginBottom: 5, fontSize: 17 }}>
                     Solo mostrar este tipo producto:
                   </Text>
                   <ButtonGroup
@@ -435,21 +433,16 @@ class SearchView extends Component {
                     >
                       Ordenar ofertas:
                     </Text>
-                    <View style={{alignSelf:"center"}}>
+                    <View style={{ alignSelf: "center" }}>
                       <ButtonGroup
                         selectedButtonStyle={{
                           backgroundColor: "#30A66D"
                         }}
+                        selectedTextStyle={{ color: "white" }}
                         onPress={this.updateOrder}
                         selectedIndex={this.state.selectedOrder}
                         buttons={buttonsOrder}
-                        containerStyle={{
-                          alignItems: "center",
-                          justifyContent: "center",
-                          height: 40,
-                          width: 275,
-                          borderRadius: 15
-                        }}
+                        containerStyle={styles.containerOrder}
                       />
                     </View>
                   </View>
@@ -498,6 +491,13 @@ const styles = {
     fontSize: 18,
     textAlign: "center",
     marginTop: 30
+  },
+  containerOrder: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40,
+    width: 275,
+    borderRadius: 15,
   }
 };
 

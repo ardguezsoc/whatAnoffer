@@ -225,7 +225,11 @@ class ProductView extends Component {
               text="Tipo:"
               value={this.props.product.productKindValue}
             />
-            <CardText value={this.props.product.description} />
+            {this.props.product.description == "" ? 
+            <CardText value="Sin descripción" />            
+            : 
+            <CardText value={this.props.product.description} />            
+            }
             <TouchableHighlight
               onPress={() => {
                 this.openInMap();

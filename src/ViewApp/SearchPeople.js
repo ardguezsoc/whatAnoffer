@@ -98,11 +98,6 @@ class SearchPeople extends Component {
     } else {
       return (
         <View style={{ flex: 1, backgroundColor: "white" }}>
-          {/* <NavigationEvents
-          onWillFocus={() => {
-            this.props.peopleFetch();
-          }}
-        /> */}
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (

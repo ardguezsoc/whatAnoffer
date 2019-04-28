@@ -43,7 +43,7 @@ const CardProductView = ({
               }}
               onPress={() =>
                 Actions.ProfileUser({
-                  ownerValue: ownerProduct  
+                  ownerValue: ownerProduct
                 })
               }
             />
@@ -69,7 +69,10 @@ const styles = {
     fontFamily: "Semib",
     fontWeight: "200",
     fontSize: 25,
-    width: 280
+    width: 280,
+    textShadowColor: "rgba(0, 0, 0, 0.50)",
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 10
   }
 };
 
