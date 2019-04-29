@@ -17,6 +17,7 @@ import Profile from "./ViewApp/Profile";
 import EditProfile from "./ViewApp/EditProfile";
 import ProfileUser from "./ViewApp/ProfileUser";
 import SearchPeople from "./ViewApp/SearchPeople";
+import MapView from "./ViewApp/MyMap";
 
 class TabIcon extends React.Component {
   render() {
@@ -108,6 +109,10 @@ const RouterComponent = () => {
             />
           </Scene>
 
+          <Scene key="MapBox" title="" iconName={"map"} icon={TabIcon}>
+            <Scene key="MapView" component={MapView} hideNavBar />
+          </Scene>
+
           <Scene key="SearchPepl" title="" iconName={"users"} icon={TabIcon}>
             <Scene key="SearchPeople" component={SearchPeople} hideNavBar />
           </Scene>
@@ -140,7 +145,9 @@ const RouterComponent = () => {
           title="Perfil"
           headerTitleStyle={styles.textNavCenter}
           navigationBarStyle={styles.colorBack}
-          onRight={() => AsyncStorage.removeItem("user").then(Actions.kindOfLogin)}
+          onRight={() =>
+            AsyncStorage.removeItem("user").then(Actions.kindOfLogin)
+          }
           rightTitle={<Icon name={"sign-out"} color="white" size={24} />}
         />
 
