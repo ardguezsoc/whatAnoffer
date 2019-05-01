@@ -299,7 +299,6 @@ class SearchView extends Component {
             <Modal
               isVisible={this.state.isModalVisible}
               style={{ justifyContent: "flex-end", margin: 0 }}
-              onBackButtonPress={() => this.resetCancel()}
               onBackdropPress={() => this.resetCancel()}
             >
               <View

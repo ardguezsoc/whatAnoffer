@@ -1,4 +1,5 @@
 import RNFetchBlob from "react-native-fetch-blob";
+import { Linking, Platform } from "react-native";
 
 const cloudyName = "dfir4b1pq";
 const cloudyPreset = "rihdprth";
@@ -95,3 +96,19 @@ export const momentChecker = () => {
   var tTime = yyyy + "-" + mm + "-" + dd;
   return tTime;
 };
+
+export const openInMap = (placeAddress) =>  {
+  const scheme = Platform.select({
+    ios: "maps:0,0?q=",
+    android: "geo:0,0?q="
+  });
+  // const latLng = this.props.product.longLat;
+  const label = "Offer Address";
+  const url = Platform.select({
+    // ios: `${scheme}${label}@${latLng}`,
+    ios: 'http://maps.apple.com/?q=1' + `${placeAddress}`,
+    //  android: `${scheme}${latLng}(${label})`
+     android: 'https://www.google.com/maps/search/?api=1&query=' + `${placeAddress}`
+  });
+  Linking.openURL(url)
+}

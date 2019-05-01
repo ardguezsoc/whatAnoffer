@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableHighlight, Linking, Platform } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import { CardProductView, CardText } from "../component";
 import {
   productUpdate,
@@ -8,7 +8,8 @@ import {
   likeOffer,
   dislikeOffer,
   saveOffer,
-  unSaveOffer
+  unSaveOffer,
+  openInMap
 } from "../actions";
 import _ from "lodash";
 import { Button } from "react-native-elements";
@@ -110,22 +111,6 @@ class ProductView extends Component {
     this.setState({ modalStatus: false });
     const { uid } = this.props.product;
     this.props.productDelete({ uid });
-  }
-
-  openInMap() {
-    const scheme = Platform.select({
-      ios: "maps:0,0?q=",
-      android: "geo:0,0?q="
-    });
-    // const latLng = this.props.product.longLat;
-    const label = "Offer Address";
-    const url = Platform.select({
-      // ios: `${scheme}${label}@${latLng}`,
-      ios: 'http://maps.apple.com/?q=1' + `${this.props.product.placeValue}`,
-      //  android: `${scheme}${latLng}(${label})`
-       android: 'https://www.google.com/maps/search/?api=1&query=' + `${this.props.product.placeValue}`
-    });
-    Linking.openURL(url)
   }
 
   render() {
@@ -232,7 +217,7 @@ class ProductView extends Component {
             }
             <TouchableHighlight
               onPress={() => {
-                this.openInMap();
+                openInMap(this.props.product.placeValue);
               }}
             >
               <CardText
@@ -324,6 +309,7 @@ export default connect(
     likeOffer,
     dislikeOffer,
     saveOffer,
-    unSaveOffer
+    unSaveOffer,
+    openInMap
   }
 )(ProductView);

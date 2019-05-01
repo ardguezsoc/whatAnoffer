@@ -24,7 +24,9 @@ const CardItemIcons = ({
   onRemoveNolike,
   likeStat,
   statusOffer,
-  dislikes
+  dislikes,
+  
+
 }) => {
   const {
     roundBorder,

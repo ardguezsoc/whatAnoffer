@@ -5,7 +5,6 @@ import { SearchBar, ListItem } from "react-native-elements";
 import { productFetch, peopleFetch } from "../actions";
 import { connect } from "react-redux";
 import { Actions } from "react-native-router-flux";
-import { NavigationEvents } from "react-navigation";
 import firebase from "@firebase/app";
 import "@firebase/auth";
 

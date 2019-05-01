@@ -34,7 +34,7 @@ class PlaceView extends Component {
       error => {
         (geoM = 0), this.props.placeFetch();
       },
-      { enableHighAccuracy: true, timeout: 5000, maximumAge: 1000 }
+      { enableHighAccuracy: false, timeout: 5000, maximumAge: 1000 }
     );
   }
 

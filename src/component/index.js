@@ -7,6 +7,7 @@ export * from './ListKind';
 export * from './CardProductView';
 export * from './CardText';
 export * from './MyModal';
+export * from './MapModal';
 export * from './ButtonImag';
 export * from  './Spinner';
 export * from './CardItemIcons';

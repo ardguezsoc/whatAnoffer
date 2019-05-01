@@ -59,8 +59,7 @@ class ProfileUser extends Component {
       newData = this.state.arr.filter(item => {
         return (
           _.includes(item.saved, this.props.ownerValue, 0) == true &&
-          item.status.indexOf("noStock") == -1 &&
-          item.status.indexOf("hidden") == -1
+          item.status.indexOf("read") != -1
         );
       });
       this.setState({

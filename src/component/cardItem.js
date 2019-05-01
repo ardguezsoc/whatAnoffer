@@ -22,7 +22,9 @@ const CardItem = ({
   pressItem,
   onNolike,
   statusOffer,
-  dislikes
+  dislikes,
+  
+
 }) => {
   const {
     roundBorder,

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import { CardItem } from "../component";
+import { CardItem, CardItemIcons } from "../component";
 import {
   likeOffer,
   dislikeOffer,
@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import firebase from "@firebase/app";
 import "@firebase/auth";
-import { CardItemIcons } from "./CardItemIcons";
 
 class ListProductItem extends Component {
   state = {
@@ -36,6 +35,7 @@ class ListProductItem extends Component {
     )
   };
   onItemPress() {
+    this.props.pls()
     Actions.productView({ product: this.props.product });
   }
 
