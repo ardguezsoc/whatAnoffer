@@ -1,8 +1,10 @@
 import RNFetchBlob from "react-native-fetch-blob";
 import { Linking, Platform } from "react-native";
+import {cloudyM} from "./ApiMethods";
 
-const cloudyName = "dfir4b1pq";
-const cloudyPreset = "rihdprth";
+var cloudyArray = cloudyM();
+const cloudyName = cloudyArray[0];
+const cloudyPreset = cloudyArray[1];
 
 export const today = () => {
   currentDay = new Date();

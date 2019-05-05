@@ -34,7 +34,7 @@ const MapModal = ({ modalStatus, decline, title, dataFlatList, uidUser }) => {
             <FlatList
               data={dataFlatList}
               renderItem={({ item }) => (
-                <ListProductItem product={item} uidUser={uidUser} pls={decline}  />
+                <ListProductItem product={item} uidUser={uidUser} hideModal={decline}  />
               )}
               keyExtractor={item => item.uid}
               ListHeaderComponent={

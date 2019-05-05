@@ -21,7 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-
+src/actions/ApiMethods.js
 # Android/IntelliJ
 #
 build/

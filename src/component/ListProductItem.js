@@ -35,7 +35,9 @@ class ListProductItem extends Component {
     )
   };
   onItemPress() {
-    this.props.pls()
+    if (typeof this.props.hideModal != "undefined") {
+      this.props.hideModal();
+    }
     Actions.productView({ product: this.props.product });
   }
 
@@ -44,7 +46,11 @@ class ListProductItem extends Component {
     if (checkV) {
       this.props.likeOffer({ uid, nStrikeDislikes }, this.state.firebaseAuth);
     } else {
-      this.props.dislikeOffer({ uid, nStrikeDislikes }, this.state.firebaseAuth, _.size(dislikes));
+      this.props.dislikeOffer(
+        { uid, nStrikeDislikes },
+        this.state.firebaseAuth,
+        _.size(dislikes)
+      );
     }
     this.setState({ likeStatus: !this.state.likeStatus });
   }
@@ -52,9 +58,15 @@ class ListProductItem extends Component {
   dislike(checkV) {
     const { uid, owner, nStrikeDislikes } = this.props.product;
     if (checkV) {
-      this.props.nolikeOffer({ uid, owner, nStrikeDislikes }, this.state.firebaseAuth);
+      this.props.nolikeOffer(
+        { uid, owner, nStrikeDislikes },
+        this.state.firebaseAuth
+      );
     } else {
-      this.props.removeNolikeOffer({ uid, owner, nStrikeDislikes }, this.state.firebaseAuth);
+      this.props.removeNolikeOffer(
+        { uid, owner, nStrikeDislikes },
+        this.state.firebaseAuth
+      );
     }
     this.setState({ dislikeStatus: !this.state.dislikeStatus });
   }
@@ -101,8 +113,8 @@ class ListProductItem extends Component {
               unSaveOff={() => this.save(false)}
               pressItem={this.onItemPress.bind(this)}
               onNolike={() => this.dislike(true)}
-              statusOffer = {status}
-              dislikes = {dislikes}
+              statusOffer={status}
+              dislikes={dislikes}
             />
           ) : (
             <CardItemIcons
@@ -121,9 +133,8 @@ class ListProductItem extends Component {
               unSaveOff={() => this.save(false)}
               pressItem={this.onItemPress.bind(this)}
               onRemoveNolike={() => this.dislike(false)}
-              statusOffer = {status}
-              dislikes = {dislikes}
-
+              statusOffer={status}
+              dislikes={dislikes}
             />
           )}
         </View>

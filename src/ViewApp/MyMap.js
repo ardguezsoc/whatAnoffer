@@ -11,14 +11,14 @@ import Mapbox from "@mapbox/react-native-mapbox-gl";
 import { MapModal, MyModal } from "../component";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
-import { productFetch } from "../actions";
+import { productFetch, mapBoxM } from "../actions";
 import _ from "lodash";
 import MapboxGL from "@mapbox/react-native-mapbox-gl";
 import firebase from "@firebase/app";
 import "@firebase/auth";
 
 Mapbox.setAccessToken(
-  "pk.eyJ1IjoidXNlcm5hbWV0ZXN0IiwiYSI6ImNqdjBpMmoxMTBmazk0OXFjOTludnN5dTgifQ.bEECII2tva-nIsHjo-lvLw"
+  mapBoxM()
 );
 
 class MyMap extends Component {
@@ -234,5 +234,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { productFetch }
+  { productFetch,mapBoxM }
 )(MyMap);
