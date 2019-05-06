@@ -166,8 +166,8 @@ export const productCreate = ({
   priceOld,
   priceNew,
   currentTime,
-  urlOfImag
-  // longLat
+  urlOfImag,
+  longLat
 }) => {
   const owner = firebase.auth().currentUser.uid;
   return dispatch => {
@@ -186,8 +186,8 @@ export const productCreate = ({
         urlOfImag,
         status: "read",
         owner,
-        nStrikeDislikes: 0
-        // longLat
+        nStrikeDislikes: 0,
+        address: longLat
       })
       .then(() => {
         dispatch({ type: PRODUCT_CREATE });

@@ -108,12 +108,12 @@ export default connect(
 )(PlaceView);
 
 class ListPlaces extends Component {
-  onItemPress(value) {
+  onItemPress(value, longLatV) {
     Actions.finalCreateOffer({
       placeValue: value,
       productValue: this.props.prodVal,
       productKindValue: this.props.kindOfProduct,
-      // longLat: longLatV
+      longLat: longLatV
     });
   }
 
@@ -124,13 +124,13 @@ class ListPlaces extends Component {
     for (var i = 0; i < arr.length - 1; i++) {
       aux = _.values(arr[i]);
       const auxStreet = aux[2];
-      // const longLat = aux[1];
+      const longLat = aux[1];
       if (aux[0] != this.props.geoHashV) {
         payment.push(
           <ButtonOwn
             key={aux[1]}
             value={aux[1]}
-            onPress={() => this.onItemPress(auxStreet)}
+            onPress={() => this.onItemPress(auxStreet, longLat)}
             style={styles.styleList}
           >
             <Text style={{ color: "black" }}>{aux[2]}</Text>
@@ -141,7 +141,7 @@ class ListPlaces extends Component {
           <ButtonOwn
             key={aux[1]}
             value={aux[1]}
-            onPress={() => this.onItemPress(auxStreet)}
+            onPress={() => this.onItemPress(auxStreet, longLat)}
             style={styles.styleList}
           >
             <Text style={{ color: "black" }}>{aux[2]}</Text>

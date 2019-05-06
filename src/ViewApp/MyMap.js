@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import Mapbox from "@mapbox/react-native-mapbox-gl";
-import { MapModal, MyModal } from "../component";
+import { MapModal } from "../component";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { productFetch, mapBoxM } from "../actions";
@@ -92,7 +92,7 @@ class MyMap extends Component {
 
   offerPosition() {
     const markers = [];
-    for (var i = 0; i < this.props.product.length - 1; i++) {
+    for (var i = 0; i < this.props.product.length; i++) {
       if (this.props.product[i].status == "read") {
         const varValue = this.props.product[i].placeValue;
         var arrSplit = this.props.product[i].address.split(",");
@@ -164,7 +164,8 @@ class MyMap extends Component {
       <View style={styles.container}>
         <NavigationEvents
           onWillFocus={() => {
-            this.checkPosition();
+            this.checkPosition(),
+            this.props.productFetch()
           }}
         />
         {this.renderAlert()}
