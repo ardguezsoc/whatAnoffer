@@ -21,8 +21,16 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+
+#Included By Adri
+.firebaserc
+firebase.json
+functions/index.js
+functions/package-lock.json
+ functions/package.json
 src/actions/ApiMethods.js
 android/app/google-services.json
+
 # Android/IntelliJ
 #
 build/
