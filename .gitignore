@@ -22,6 +22,7 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 src/actions/ApiMethods.js
+android/app/google-services.json
 # Android/IntelliJ
 #
 build/
