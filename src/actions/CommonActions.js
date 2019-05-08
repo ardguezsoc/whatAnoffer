@@ -1,6 +1,8 @@
 import RNFetchBlob from "react-native-fetch-blob";
 import { Linking, Platform } from "react-native";
 import {cloudyM} from "./ApiMethods";
+import firebase from "react-native-firebase";
+
 
 var cloudyArray = cloudyM();
 const cloudyName = cloudyArray[0];
@@ -114,3 +116,10 @@ export const openInMap = (placeAddress) =>  {
   });
   Linking.openURL(url)
 }
+
+async function getNotifToken() {
+  var fcmToken = await firebase.messaging().getToken();
+  return fcmToken
+}
+
+module.exports.getNotifToken = getNotifToken

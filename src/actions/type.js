@@ -13,6 +13,7 @@ export const RESETER = "reseter";
 export const CREATE_USER_FAIL = "create_user_fail";
 export const FAIL_PASSWORD = "fail_password";
 export const FAIL_NAME = "fail_name";
+export const CREATE_USER_SUCCESS = "create_user_success"
 
 export const PROFILE_FETCH_SUCCESS = "profile_fetch_success";
 export const PROFILE_UPDATE = "profile_update";

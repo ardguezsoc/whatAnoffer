@@ -12,8 +12,10 @@ import {
   RESETER,
   CREATE_USER_FAIL,
   FAIL_PASSWORD,
-  FAIL_NAME
+  FAIL_NAME,
+  CREATE_USER_SUCCESS
 } from "../actions/type";
+import { getNotifToken } from "../actions";
 
 export const emailChanged = text => {
   return {
@@ -105,31 +107,56 @@ export const reseterLogin = () => {
   };
 };
 
+export const createUserOk = () => {
+  return dispatch => {
+    dispatch({
+      type: LOGIN_USER_SUCCESS
+    });
+  };
+};
+
 //crear usuario y guardar datos en el móvil
 export const CreateUsers = (emailV, passwordV, name) => {
   const { currentUser } = firebase.auth();
-  return () => {
-    firebase
-      .database()
-      .ref()
-      .child("Users")
-      .child(currentUser.uid)
-      .set({
-        nameOfUser: name,
-        uriPhoto: "https://res.cloudinary.com/dfir4b1pq/image/upload/q_auto:good/v1550940285/nophoto.jpg",
-        status: "Bronce"
-         
-      })
-      .then(() => {
-        let obj = {
-          email: emailV,
-          password: passwordV
-        };
-        AsyncStorage.setItem("user", JSON.stringify(obj)).then(() => {
-          Actions.waoTab();
+  firebase
+    .database()
+    .ref()
+    .child("Users")
+    .child(currentUser.uid)
+    .set({
+      nameOfUser: name,
+      uriPhoto:
+        "https://res.cloudinary.com/dfir4b1pq/image/upload/q_auto:good/v1550940285/nophoto.jpg",
+      status: "Bronce"
+    })
+    .then(() => {
+      let obj = {
+        email: emailV,
+        password: passwordV
+      };
+      var deviceId;
+      getNotifToken()
+        .then(function(result) {
+          deviceId = result;
+        })
+        .catch(function() {
+          deviceId = "undefined";
         });
+      AsyncStorage.setItem("user", JSON.stringify(obj)).then(() => {
+        Actions.tabsBottom({ type: "reset" })
+        firebase
+          .database()
+          .ref()
+          .child("Notification")
+          .child(currentUser.uid)
+          .set({
+            deviceId,
+            status: "off",
+            uid: currentUser.uid,
+            topics: { todos: "todos" }
+          });
       });
-  };
+    });
 };
 
 export const loginUserSuccess = (dispatch, user, emailV, passwordV) => {
@@ -139,10 +166,10 @@ export const loginUserSuccess = (dispatch, user, emailV, passwordV) => {
   };
 
   AsyncStorage.setItem("user", JSON.stringify(obj)).then(() => {
-      dispatch({
-        type: LOGIN_USER_SUCCESS,
-        payload: user
-      });
-      Actions.waoTab();
+    dispatch({
+      type: LOGIN_USER_SUCCESS,
+      payload: user
+    });
+    Actions.tabsBottom({ type: "reset" })
   });
 };

@@ -17,20 +17,23 @@ class KindOfLogin extends Component {
   }
 
   componentDidMount() {
-    this.displayData()
+    this.displayData();
   }
 
   displayData = async () => {
-    try{
-      let user = await AsyncStorage.getItem('user');
+    try {
+      let user = await AsyncStorage.getItem("user");
       firebase
-      .auth()
-      .signInWithEmailAndPassword(JSON.parse(user).email, JSON.parse(user).password).then( () =>  {Actions.waoTab()} )
-    }catch(err){
-      this.setState({loading: false})
-
+        .auth()
+        .signInWithEmailAndPassword(
+          JSON.parse(user).email,
+          JSON.parse(user).password
+        )
+        .then(() => Actions.tabsBottom({ type: "reset" }));
+    } catch (err) {
+      this.setState({ loading: false });
     }
-  }
+  };
 
   render() {
     const { buttonS, textS } = styles;
@@ -42,11 +45,7 @@ class KindOfLogin extends Component {
           justifyContent: "center"
         }}
       >
-        <Text
-          style={styles.titleStyle}
-        >
-          WAO!
-        </Text>
+        <Text style={styles.titleStyle}>WAO!</Text>
 
         <View
           style={{
@@ -57,25 +56,31 @@ class KindOfLogin extends Component {
             alignSelf: "center"
           }}
         >
-        { this.state.loading ? <ActivityIndicator color="white" size="large" /> : 
-        <View>
-        <Button
-        title="Acceder como anónimo"
-        buttonStyle={buttonS}
-        textStyle={[textS]}
-        onPress={ () => Actions.noUserLogin()}
-      />
-      <Button
-        title="Acceder con mi cuenta"
-        buttonStyle={[buttonS]}
-        textStyle={[textS]}
-        onPress={() => Actions.Login()}
-      />
-      <Button title="Registrarse" buttonStyle={buttonS} textStyle={textS} onPress={ () => Actions.newUser()} />
-      </View>
-      }
-          
-        </View> 
+          {this.state.loading ? (
+            <ActivityIndicator color="white" size="large" />
+          ) : (
+            <View>
+              <Button
+                title="Acceder como anónimo"
+                buttonStyle={buttonS}
+                textStyle={[textS]}
+                onPress={() => Actions.noUserLogin()}
+              />
+              <Button
+                title="Acceder con mi cuenta"
+                buttonStyle={[buttonS]}
+                textStyle={[textS]}
+                onPress={() => Actions.Login()}
+              />
+              <Button
+                title="Registrarse"
+                buttonStyle={buttonS}
+                textStyle={textS}
+                onPress={() => Actions.newUser()}
+              />
+            </View>
+          )}
+        </View>
       </View>
     );
   }

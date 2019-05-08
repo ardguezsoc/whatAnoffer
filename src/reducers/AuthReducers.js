@@ -8,7 +8,8 @@ import {
   CREATE_USER_FAIL,
   RESETER,
   FAIL_PASSWORD,
-  FAIL_NAME
+  FAIL_NAME,
+  CREATE_USER_SUCCESS
 } from "../actions/type";
 
 const INITIAL_STATE = {
@@ -68,6 +69,16 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         error: "El nombre es demasiado corto",
         password: "",
+        load: false
+      };
+
+    case CREATE_USER_SUCCESS:
+      return {
+        ...state,
+        error: "",
+        password: "",
+        email: "",
+        name: "",
         load: false
       };
 

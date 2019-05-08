@@ -97,7 +97,7 @@ const RouterComponent = () => {
           tabBarStyle={{ backgroundColor: "#FFFFFF" }}
           showLabel={false}
         >
-          <Scene key="waoTab" title="Home" iconName={"home"} icon={TabIcon}>
+          <Scene key="waoTab" title="Home" iconName={"home"} icon={TabIcon}  initial>
             <Scene
               key="home"
               component={ListProduct}
@@ -146,7 +146,7 @@ const RouterComponent = () => {
           headerTitleStyle={styles.textNavCenter}
           navigationBarStyle={styles.colorBack}
           onRight={() =>
-            AsyncStorage.removeItem("user").then(Actions.kindOfLogin)
+            AsyncStorage.removeItem("user").then(Actions.kindOfLogin({type: "reset"}))
           }
           rightTitle={<Icon name={"sign-out"} color="white" size={24} />}
         />
