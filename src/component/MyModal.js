@@ -51,13 +51,15 @@ const MyModal = ({modalStatus, Decline, title, subTitle, Accept}) => {
                 buttonStyle={{
                   borderRadius: 15,
                   width: 120,
-                  backgroundColor: "#ff3333"
+                  backgroundColor: "#ff3333",
+                  marginRight: 10
                 }}
               />
               <Button
                 title="Aceptar"
                 onPress={ Accept}
                 buttonStyle={{
+                  marginLeft: 10,
                   backgroundColor: "#109C59",
                   borderRadius: 15,
                   width: 120

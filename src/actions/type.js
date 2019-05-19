@@ -27,3 +27,5 @@ export const KIND_FETCH_SUCCESS = "kind_fetch_success";
 export const PLACE_FETCH_SUCCESS = "place_fetch_success";
 
 export const FOLLOW_FETCH_SUCCESS = "follow_fetch_success";
+
+export const NOTIFICATION_FETCH_SUCCESS = "notification_fetch_success";

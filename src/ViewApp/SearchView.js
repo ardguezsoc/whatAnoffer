@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SearchBar, ButtonGroup, Button, Slider } from "react-native-elements";
 import Modal from "react-native-modal";
-import { productFetch, todayEpoch, followFetch } from "../actions";
+import { productFetch, todayEpoch, followFetch, whatProduct } from "../actions";
 import ListProductItem from "../component/ListProductItem";
 import { connect } from "react-redux";
 import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
@@ -41,8 +41,6 @@ const component5 = () => (
   </FontAwesome>
 );
 
-const component7 = () => <Text>Alfabéticamente</Text>;
-const component6 = () => <Text>Más Recientes</Text>;
 
 class SearchView extends Component {
   constructor(props) {
@@ -108,29 +106,12 @@ class SearchView extends Component {
     this.setState({ selectedOrder });
   }
 
-  whatProduct(value) {
-    switch (value) {
-      case 0:
-        return "Carne y Pescado";
-      case 1:
-        return "Frutas & Vegetales";
-      case 2:
-        return "Dulces";
-      case 3:
-        return "Lácteos";
-      case 4:
-        return "Bebidas";
-      default:
-        return "";
-    }
-  }
-
   searchFilterFunction = text => {
     this.setState({
       value: text,
       check: true
     });
-    const filterProduct = this.whatProduct(this.state.trueSelectedValue);
+    const filterProduct = whatProduct(this.state.trueSelectedValue);
     var timeFilter;
     if (this.state.trueHourValue == 0) {
       timeFilter = 0;
@@ -217,9 +198,9 @@ class SearchView extends Component {
         <SearchBar
           placeholder="Buscar oferta"
           inputStyle={{
-            backgroundColor: "white",
-            color: "black"
+            color:"black"
           }}
+          inputContainerStyle={{backgroundColor:"white"}}
           clearIcon
           containerStyle={{
             backgroundColor: "#109C59",
@@ -514,5 +495,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { productFetch, followFetch }
+  { productFetch, followFetch, whatProduct }
 )(SearchView);

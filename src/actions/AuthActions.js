@@ -134,10 +134,10 @@ export const CreateUsers = (emailV, passwordV, name) => {
         email: emailV,
         password: passwordV
       };
-      var deviceId;
+      var valueId;
       getNotifToken()
         .then(function(result) {
-          deviceId = result;
+          valueId = result;
         })
         .catch(function() {
           deviceId = "undefined";
@@ -150,8 +150,8 @@ export const CreateUsers = (emailV, passwordV, name) => {
           .child("Notification")
           .child(currentUser.uid)
           .set({
-            deviceId,
-            status: "off",
+            deviceId:valueId,
+            status: false,
             uid: currentUser.uid,
             topics: { todos: "todos" }
           });
@@ -164,7 +164,7 @@ export const loginUserSuccess = (dispatch, user, emailV, passwordV) => {
     email: emailV,
     password: passwordV
   };
-
+  
   AsyncStorage.setItem("user", JSON.stringify(obj)).then(() => {
     dispatch({
       type: LOGIN_USER_SUCCESS,

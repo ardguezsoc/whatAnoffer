@@ -68,9 +68,9 @@ class SearchPeople extends Component {
         <SearchBar
           placeholder="Buscar usuario"
           inputStyle={{
-            backgroundColor: "white",
-            color: "black"
+            color:"black"
           }}
+          inputContainerStyle={{backgroundColor:"white"}}
           clearIcon
           containerStyle={{
             backgroundColor: "#109C59",
@@ -103,7 +103,7 @@ class SearchPeople extends Component {
               <ListItem
                 roundAvatar
                 title={item.nameOfUser}
-                avatar={{ uri: item.uriPhoto }}
+                leftAvatar={{ source: { uri: item.uriPhoto } }}
                 containerStyle={{ borderBottomWidth: 0 }}
                 onPress={() => {
                   item.uid == firebase.auth().currentUser.uid

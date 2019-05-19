@@ -169,7 +169,7 @@ class ProfileUser extends Component {
                 }}
               >
                 <Avatar
-                  large
+                  size="large"
                   rounded
                   source={{
                     uri: this.props.uriPhoto
@@ -200,6 +200,7 @@ class ProfileUser extends Component {
               onPress={this.updateIndex}
               selectedIndex={selectedIndex}
               buttons={buttons}
+              selectedButtonStyle={{ backgroundColor: "#30A66D" }}
             />
           </View>
         </View>

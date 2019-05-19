@@ -63,19 +63,19 @@ class KindOfLogin extends Component {
               <Button
                 title="Acceder como anónimo"
                 buttonStyle={buttonS}
-                textStyle={[textS]}
+                titleStyle={[textS]}
                 onPress={() => Actions.noUserLogin()}
               />
               <Button
                 title="Acceder con mi cuenta"
                 buttonStyle={[buttonS]}
-                textStyle={[textS]}
+                titleStyle={[textS]}
                 onPress={() => Actions.Login()}
               />
               <Button
                 title="Registrarse"
                 buttonStyle={buttonS}
-                textStyle={textS}
+                titleStyle={textS}
                 onPress={() => Actions.newUser()}
               />
             </View>

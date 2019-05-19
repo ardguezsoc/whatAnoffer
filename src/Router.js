@@ -18,6 +18,7 @@ import EditProfile from "./ViewApp/EditProfile";
 import ProfileUser from "./ViewApp/ProfileUser";
 import SearchPeople from "./ViewApp/SearchPeople";
 import MapView from "./ViewApp/MyMap";
+import EditNotifications from "./ViewApp/EditNotifications";
 
 class TabIcon extends React.Component {
   render() {
@@ -97,7 +98,13 @@ const RouterComponent = () => {
           tabBarStyle={{ backgroundColor: "#FFFFFF" }}
           showLabel={false}
         >
-          <Scene key="waoTab" title="Home" iconName={"home"} icon={TabIcon}  initial>
+          <Scene
+            key="waoTab"
+            title="Home"
+            iconName={"home"}
+            icon={TabIcon}
+            initial
+          >
             <Scene
               key="home"
               component={ListProduct}
@@ -146,9 +153,19 @@ const RouterComponent = () => {
           headerTitleStyle={styles.textNavCenter}
           navigationBarStyle={styles.colorBack}
           onRight={() =>
-            AsyncStorage.removeItem("user").then(Actions.kindOfLogin({type: "reset"}))
+            AsyncStorage.removeItem("user").then(
+              Actions.kindOfLogin({ type: "reset" })
+            )
           }
           rightTitle={<Icon name={"sign-out"} color="white" size={24} />}
+        />
+
+        <Scene
+          key="editNotif"
+          component={EditNotifications}
+          title="Notificaciones"
+          headerTitleStyle={styles.textNavCenter}
+          navigationBarStyle={styles.colorBack}
         />
 
         <Scene

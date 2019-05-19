@@ -7,6 +7,7 @@ import AuthReducer from "./AuthReducers";
 import ProfileReducer from "./ProfileReducer";
 import PeopleReducer from "./PeopleReducer";
 import FollowReducers from "./FollowReducers";
+import NotificationReducer from "./NotificationReducer";
 
 export default combineReducers({
   productForm: ProductFormReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   auth: AuthReducer,
   profile: ProfileReducer,
   people: PeopleReducer,
-  followRed: FollowReducers
+  followRed: FollowReducers,
+  notif: NotificationReducer
 });

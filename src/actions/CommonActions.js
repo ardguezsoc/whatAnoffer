@@ -1,8 +1,7 @@
 import RNFetchBlob from "react-native-fetch-blob";
 import { Linking, Platform } from "react-native";
-import {cloudyM} from "./ApiMethods";
+import { cloudyM } from "./ApiMethods";
 import firebase from "react-native-firebase";
-
 
 var cloudyArray = cloudyM();
 const cloudyName = cloudyArray[0];
@@ -101,7 +100,7 @@ export const momentChecker = () => {
   return tTime;
 };
 
-export const openInMap = (placeAddress) =>  {
+export const openInMap = placeAddress => {
   const scheme = Platform.select({
     ios: "maps:0,0?q=",
     android: "geo:0,0?q="
@@ -110,16 +109,51 @@ export const openInMap = (placeAddress) =>  {
   const label = "Offer Address";
   const url = Platform.select({
     // ios: `${scheme}${label}@${latLng}`,
-    ios: 'http://maps.apple.com/?q=1' + `${placeAddress}`,
+    ios: "http://maps.apple.com/?q=1" + `${placeAddress}`,
     //  android: `${scheme}${latLng}(${label})`
-     android: 'https://www.google.com/maps/search/?api=1&query=' + `${placeAddress}`
+    android:
+      "https://www.google.com/maps/search/?api=1&query=" + `${placeAddress}`
   });
-  Linking.openURL(url)
-}
+  Linking.openURL(url);
+};
 
 async function getNotifToken() {
   var fcmToken = await firebase.messaging().getToken();
-  return fcmToken
+  return fcmToken;
 }
 
-module.exports.getNotifToken = getNotifToken
+export const whatProduct = value => {
+  switch (value) {
+    case 0:
+      return "Carne y Pescado";
+    case 1:
+      return "Frutas & Vegetales";
+    case 2:
+      return "Dulces";
+    case 3:
+      return "Lácteos";
+    case 4:
+      return "Bebidas";
+    default:
+      return "";
+  }
+};
+
+export const whatIndex = value => {
+  switch (value) {
+    case "Carne y Pescado":
+      return 0;
+    case "Frutas & Vegetales":
+      return 1;
+    case "Dulces":
+      return 2 ;
+    case "Lácteos":
+      return 3 ;
+    case "Bebidas":
+      return  4;
+    default:
+      return -1;
+  }
+}
+
+module.exports.getNotifToken = getNotifToken;

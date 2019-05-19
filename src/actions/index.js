@@ -5,3 +5,4 @@ export * from './ProfileActions';
 export * from './PeopleActions';
 export * from './FollowActions';
 export * from './ApiMethods';
+export * from './NotifiActions';

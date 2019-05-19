@@ -27,7 +27,7 @@ const CardProductView = ({
         >
           {ownerProduct === authUser ? (
             <Avatar
-              large
+              size="large"
               rounded
               source={{
                 uri: uriAvatar
@@ -36,7 +36,7 @@ const CardProductView = ({
             />
           ) : (
             <Avatar
-              large
+              size="large"
               rounded
               source={{
                 uri: uriAvatar

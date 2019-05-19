@@ -32,15 +32,20 @@ export const nameProfileChange = text => {
   };
 };
 
-export const profileEdit = ({ nameValue, uid, uriValue }) => {
+export const profileEdit = ({ nameValue, uid, uriValue },status ) => {
   return () => {
     firebase
       .database()
       .ref(`/Users/${uid}`)
       .update({ nameOfUser: nameValue, uriPhoto: uriValue })
+      firebase
+      .database()
+      .ref(`/Notification/${uid}`)
+      .update({ status })
       .then(() => {
         Actions.pop({ refresh: { nameOfUser: nameValue, uriPhoto: uriValue } });
       });
+      
   };
 };
 
