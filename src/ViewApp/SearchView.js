@@ -129,14 +129,17 @@ class SearchView extends Component {
           itemKind.indexOf(filterProduct) > -1 &&
           parseInt(itemTime) > timeFilter &&
           _.includes(this.state.followData, item.owner, 0) == true &&
-          item.status.indexOf("expired") == -1
+          item.status.indexOf("expired") == -1 &&
+          item.status.indexOf("hidden") == -1
         );
       } else {
         return (
           itemData.indexOf(textData) > -1 &&
           itemKind.indexOf(filterProduct) > -1 &&
           parseInt(itemTime) > timeFilter &&
-          item.status.indexOf("expired") == -1
+          item.status.indexOf("expired") == -1 
+          &&
+          item.status.indexOf("hidden") == -1
         );
       }
     });
@@ -438,7 +441,9 @@ class SearchView extends Component {
                       buttonStyle={{
                         borderRadius: 15,
                         backgroundColor: "#109C59",
-                        width: 100
+                        width: 100,
+                        marginRight: 15
+
                       }}
                     />
                     <Button
@@ -446,7 +451,9 @@ class SearchView extends Component {
                       onPress={() => this.rmFilter()}
                       buttonStyle={{
                         borderRadius: 15,
-                        backgroundColor: "#ff3333"
+                        backgroundColor: "#ff3333",
+                        marginLeft: 15
+
                       }}
                     />
                   </View>

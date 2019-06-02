@@ -45,7 +45,10 @@ class TabIcon extends React.Component {
 const RouterComponent = () => {
   return (
     <Router>
-      <Scene key="root">
+      <Scene key="root" 
+              headerLayoutPreset="center"
+      
+      >
         <Scene
           key="kindOfLogin"
           title="homie"
@@ -109,7 +112,7 @@ const RouterComponent = () => {
               key="home"
               component={ListProduct}
               title="WAO!"
-              headerTitleStyle={styles.textTitle}
+              titleStyle={styles.textTitle}
               navigationBarStyle={styles.colorBack}
               onRight={() => Actions.ProfileView()}
               rightTitle={<Icon name={"cog"} color="white" size={24} />}
@@ -223,6 +226,7 @@ const styles = {
   textTitle: {
     textAlign: "center",
     flex: 1,
+    alignSelf:"center",
     color: "white",
     fontFamily: "Pacifico",
     fontWeight: "200",

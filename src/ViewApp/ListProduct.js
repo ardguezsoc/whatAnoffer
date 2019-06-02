@@ -17,7 +17,7 @@ class ListProduct extends Component {
 
     this.state = {
       loading: true,
-      data: [],
+      data: "",
       error: null,
       stateUid: firebase.auth().currentUser.uid,
       followData: [],
@@ -46,11 +46,6 @@ class ListProduct extends Component {
   }
 
   filterList() {
-    if (this.state.check) {
-      this.setState({
-        loading: false
-      });
-    }
     const newData = this.state.data.filter(item => {
       if (
         new Date(
@@ -72,15 +67,15 @@ class ListProduct extends Component {
     });
     this.setState({
       data: _.orderBy(newData, ["currentTime"], ["desc"]),
-      check: true
+      loading: false
     });
   }
 
   render() {
-    if (this.state.loading) {
+    if (this.state.data == "") {
       return (
         <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          style={{ flex: 1, alignItems: "center", justifyContent: "center"}}
         >
           <ActivityIndicator />
         </View>

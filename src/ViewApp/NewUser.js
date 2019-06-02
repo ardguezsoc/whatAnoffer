@@ -149,8 +149,7 @@ class newUser extends Component {
                     borderRadius: 5
                   }}
                   titleStyle={{
-                    fontSize: 11,
-                    fontFamily: "Pacifico"
+                    fontSize: 14
                   }}
                   onPress={this.onButtonPress.bind(this)}
                 />

@@ -47,7 +47,8 @@ class ProductView extends Component {
     firebaseAuth: firebase.auth().currentUser.uid,
     likeStatus: false,
     saveStatus: false,
-    visible: false
+    visible: false,
+    loader: false
   };
 
   componentWillMount() {
@@ -117,13 +118,15 @@ class ProductView extends Component {
     return (
       <View>
         <View style={{ height: "30%", width: "100%" }}>
-          <CardProductView
-            imagUrl={this.state.imgUrl}
-            uriAvatar={this.props.uriPhoto}
-            nameOfUsr={this.props.nameOfUser}
-            ownerProduct={this.props.product.owner}
-            authUser={this.state.firebaseAuth}
-          />
+          {this.state.loader ? null : (
+            <CardProductView
+              imagUrl={this.state.imgUrl}
+              uriAvatar={this.props.uriPhoto}
+              nameOfUsr={this.props.nameOfUser}
+              ownerProduct={this.props.product.owner}
+              authUser={this.state.firebaseAuth}
+            />
+          )}
         </View>
         <View style={{ backgroundColor: "white", height: "70%" }}>
           <View style={{ marginTop: 10, marginLeft: 8, flexDirection: "row" }}>
@@ -202,19 +205,16 @@ class ProductView extends Component {
               />
             )}
 
-            <CardText
-              text="válida hasta"
-              value={this.props.product.date}
-            />
+            <CardText text="válida hasta" value={this.props.product.date} />
             <CardText
               text="Tipo:"
               value={this.props.product.productKindValue}
             />
-            {this.props.product.description == "" ? 
-            <CardText value="Sin descripción" />            
-            : 
-            <CardText value={this.props.product.description} />            
-            }
+            {this.props.product.description == "" ? (
+              <CardText value="Sin descripción" />
+            ) : (
+              <CardText value={this.props.product.description} />
+            )}
             <TouchableHighlight
               onPress={() => {
                 openInMap(this.props.product.placeValue);
@@ -271,14 +271,17 @@ class ProductView extends Component {
                     title="Cancelar"
                     onPress={() => this.resetCancel()}
                     buttonStyle={{
+                      marginRight: 10,
                       borderRadius: 15,
-                      width: 120
+                      width: 120,
+                      backgroundColor: "grey"
                     }}
                   />
                   <Button
                     title="Aceptar"
                     onPress={() => this.onAccept()}
                     buttonStyle={{
+                      marginLeft: 10,
                       borderRadius: 15,
                       width: 120,
                       backgroundColor: "#ff3333"

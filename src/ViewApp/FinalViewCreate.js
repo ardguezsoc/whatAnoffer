@@ -133,7 +133,10 @@ class FinalViewCreate extends Component {
               />
             ) : (
               <Image
-                source={require("./camera-flat.png")}
+              source={{
+                uri:
+                  "https://res.cloudinary.com/dfir4b1pq/image/upload/v1558401494/camera-flat.png"
+              }}
                 style={{ height: 80, width: 80, borderRadius: 40 }}
               />
             )}

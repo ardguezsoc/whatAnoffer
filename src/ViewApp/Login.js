@@ -138,8 +138,7 @@ class Login extends Component {
                   title="Crear una cuenta"
                   buttonStyle={{ backgroundColor: "#0A874B", borderRadius: 5 }}
                   titleStyle={{
-                    fontSize: 11,
-                    fontFamily: "Pacifico"
+                    fontSize: 14,
                   }}
                   onPress={() => this.props.reseterLogin()}
                 />

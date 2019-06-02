@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ImageBackground } from "react-native";
+import { View, Text, ImageBackground, ActivityIndicator } from "react-native";
 import { Avatar } from "react-native-elements";
 import { Actions } from "react-native-router-flux";
 
@@ -10,6 +10,7 @@ const CardProductView = ({
   ownerProduct,
   authUser
 }) => {
+  
   const { viewContainer } = styles;
 
   return (

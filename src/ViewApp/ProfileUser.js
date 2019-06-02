@@ -28,7 +28,8 @@ class ProfileUser extends Component {
       modalStatus: false,
       stateFollowers: 0,
       stateFollowing: 0,
-      arr: []
+      arr: [],
+      control: false
     };
     this.updateIndex = this.updateIndex.bind(this);
   }
@@ -70,9 +71,15 @@ class ProfileUser extends Component {
 
   follow(check) {
     check
-      ? this.setState({ statusFollow: true }, () => {
-          this.props.followUser(this.state.firebaseAuth, this.props.ownerValue);
-        })
+      ? this.setState(
+          { statusFollow: true, stateFollowers: this.state.stateFollowers + 1 },
+          () => {
+            this.props.followUser(
+              this.state.firebaseAuth,
+              this.props.ownerValue
+            );
+          }
+        )
       : this.setState({ modalStatus: true });
   }
 
@@ -81,9 +88,12 @@ class ProfileUser extends Component {
   }
 
   onAccept() {
-    this.setState({ modalStatus: false }, () => {
-      this.props.unFollowUser(this.state.firebaseAuth, this.props.ownerValue);
-    });
+    this.setState(
+      { modalStatus: false, stateFollowers: this.state.stateFollowers - 1 },
+      () => {
+        this.props.unFollowUser(this.state.firebaseAuth, this.props.ownerValue);
+      }
+    );
   }
 
   componentDidMount() {
@@ -93,17 +103,22 @@ class ProfileUser extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (!this.state.control ) {
+      this.setState({
+        stateFollowers: _.size(nextProps.seguidores),
+        stateFollowing: _.size(nextProps.siguiendo)
+      });
+    }
     this.setState(
       {
+        control: true,
         data: nextProps.product,
         arr: nextProps.product,
         statusFollow: _.includes(
           nextProps.seguidores,
           this.state.firebaseAuth,
           0
-        ),
-        stateFollowers: _.size(nextProps.seguidores),
-        stateFollowing: _.size(nextProps.siguiendo)
+        )
       },
       () => {
         this.updateIndex(this.state.selectedIndex);

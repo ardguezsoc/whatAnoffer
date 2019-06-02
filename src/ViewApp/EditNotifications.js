@@ -5,7 +5,7 @@ import FontAwesome, { Icons, IconTypes } from "react-native-fontawesome";
 import { whatProduct, whatIndex, updateNotif } from "../actions";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import _ from "lodash";
-import { ButtonOwn } from "../component";
+import { ButtonOwn, ModalError } from "../component";
 import { connect } from "react-redux";
 
 const component1 = () => (
@@ -42,7 +42,8 @@ class EditNotifications extends Component {
       loading: false,
       data: [],
       value: "",
-      indexSelected: this.arrayholder
+      indexSelected: this.arrayholder,
+      warning: false
     };
   }
 
@@ -63,8 +64,12 @@ class EditNotifications extends Component {
   }
 
   updateTopics() {
-    this.setState({ loading: true });
-    this.props.updateNotif(this.kindProduct);
+    if (this.arrayholder.length > 0) {
+      this.setState({ loading: true });
+      this.props.updateNotif(this.kindProduct);
+    } else {
+      this.setState({ warning: true });
+    }
   }
 
   render() {
@@ -117,6 +122,12 @@ class EditNotifications extends Component {
             </ButtonOwn>
           )}
         </View>
+        <ModalError
+          title="Error"
+          modalStatus={this.state.warning}
+          subTitle="Al menos hay que marcar una..."
+          Accept={() => this.setState({ warning: false })}
+        />
       </View>
     );
   }

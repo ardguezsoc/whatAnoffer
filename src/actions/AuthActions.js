@@ -153,7 +153,7 @@ export const CreateUsers = (emailV, passwordV, name) => {
             deviceId:valueId,
             status: false,
             uid: currentUser.uid,
-            topics: { todos: "todos" }
+            topics: ["Frutas & Vegetales","Carne y Pescado","Dulces","Lácteos","Bebidas"]
           });
       });
     });
